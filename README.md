@@ -154,7 +154,10 @@ leaves the rest of the object in place.
 The IOS-XE Terraform provider keeps its Plugin Framework implementation in an
 `internal/` package, which Go does not allow other modules to import. Running
 it in-process therefore requires a fork of the Terraform provider that exports
-it. The fork adds a single package:
+it, which lives at
+[upbound/terraform-provider-iosxe](https://github.com/upbound/terraform-provider-iosxe)
+on the `upbound-v1.0.0` branch. The fork keeps the upstream module path and
+adds a single package:
 
 ```go
 // xpprovider/xpprovider.go
@@ -168,14 +171,19 @@ func GetProvider(version string) provider.Provider {
 and is wired in through a `replace` directive in `go.mod`:
 
 ```text
-replace github.com/CiscoDevNet/terraform-provider-iosxe => ../upbound/terraform-provider-iosxe
+replace github.com/CiscoDevNet/terraform-provider-iosxe => github.com/upbound/terraform-provider-iosxe v0.0.0-20260824124157-eb27f95b8016
 ```
 
 > [!IMPORTANT]
-> The replace directive currently points at a local checkout. Before CI can
-> build this repository, push the fork (for example to
-> `github.com/upbound/terraform-provider-iosxe`) and change the directive to
-> that module and a pinned pseudo-version.
+> The fork is a private repository, so fetching it bypasses the module proxy
+> and needs credentials for `github.com/upbound`. The Makefile exports
+> `GOPRIVATE=github.com/upbound/*`; builds that do not go through it need the
+> same setting, and CI needs a token that can read the fork.
+
+To move the fork to a newer upstream release, rebase its `xpprovider` commit
+onto the new tag, push it, and update the pseudo-version in the `replace`
+directive along with `TERRAFORM_PROVIDER_VERSION` in the Makefile and
+`TerraformProviderVersion` in [config/framework.go](config/framework.go).
 
 ### Code generation
 

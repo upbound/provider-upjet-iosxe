@@ -171,4 +171,4 @@ require (
 	sigs.k8s.io/yaml v1.6.0 // indirect
 )
 
-replace github.com/CiscoDevNet/terraform-provider-iosxe => ../upbound/terraform-provider-iosxe
+replace github.com/CiscoDevNet/terraform-provider-iosxe => github.com/upbound/terraform-provider-iosxe v0.0.0-20260824124157-eb27f95b8016

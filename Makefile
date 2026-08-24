@@ -21,6 +21,12 @@ export TERRAFORM_DOCS_PATH ?= docs/resources
 # in-process, so neither the Terraform CLI nor the provider plugin binary is
 # needed at runtime.
 
+# The Cisco IOS-XE Terraform provider is consumed from github.com/upbound/terraform-provider-iosxe,
+# a fork that exports its Terraform Plugin Framework implementation. That
+# repository is private, so fetching it goes directly to GitHub instead of the
+# module proxy and needs credentials for github.com/upbound.
+export GOPRIVATE ?= github.com/upbound/*
+
 
 PLATFORMS ?= linux_amd64 linux_arm64
 
