@@ -1,0 +1,17 @@
+apiVersion: acl.iosxe.upbound.io/v1alpha1
+kind: IPv6
+metadata:
+  annotations:
+    meta.upbound.io/example-id: acl/v1alpha1/ipv6
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    entries:
+    - aceRuleAction: permit
+      aceRuleProtocol: tcp
+      destinationAny: true
+      sequence: 10
+      sourceAny: true
+    name: V6ACL1

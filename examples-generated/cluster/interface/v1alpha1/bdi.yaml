@@ -1,0 +1,13 @@
+apiVersion: interface.iosxe.upbound.io/v1alpha1
+kind: BDI
+metadata:
+  annotations:
+    meta.upbound.io/example-id: interface/v1alpha1/bdi
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    ipMtu: 1400
+    macAddress: 0000.11AA.22BB
+    name: "100"

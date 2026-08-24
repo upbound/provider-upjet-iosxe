@@ -1,0 +1,16 @@
+apiVersion: crypto.iosxe.upbound.io/v1alpha1
+kind: PKI
+metadata:
+  annotations:
+    meta.upbound.io/example-id: crypto/v1alpha1/pki
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    trustpoints:
+    - enrollmentPkcs12: true
+      hash: sha256
+      id: trustpoint1
+      revocationCheck:
+      - none

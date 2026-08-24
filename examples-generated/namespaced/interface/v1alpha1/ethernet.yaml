@@ -1,0 +1,71 @@
+apiVersion: interface.iosxe.m.upbound.io/v1alpha1
+kind: Ethernet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: interface/v1alpha1/ethernet
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    arpTimeout: 300
+    bandwidth: 1000000
+    bpduguardDisable: false
+    bpduguardEnable: false
+    carrierDelayMsec: 250
+    cdpEnable: true
+    cdpTlvLocation: false
+    cdpTlvServerLocation: false
+    description: My Interface Description
+    helperAddresses:
+    - address: 10.10.10.10
+      global: false
+      vrf: VRF1
+    holdQueues:
+    - direction: in
+      queueLength: 50
+    ipAccessGroupIn: "1"
+    ipAccessGroupInEnable: true
+    ipAccessGroupOut: "1"
+    ipAccessGroupOutEnable: true
+    ipDhcpRelaySourceInterface: Loopback100
+    ipFlowMonitors:
+    - direction: input
+      name: MON1
+    ipIgmpVersion: 3
+    ipNatInside: true
+    ipProxyArp: false
+    ipRedirects: false
+    ipUnreachables: false
+    ipVerifyUnicastSourceAllowDefault: true
+    ipVerifyUnicastSourceAllowSelfPing: true
+    ipVerifyUnicastSourceReachableVia: rx
+    ipv4Address: 15.1.1.1
+    ipv4AddressMask: 255.255.255.252
+    ipv6AddressDhcp: true
+    ipv6Addresses:
+    - eui64: true
+      prefix: 2001:DB8::/32
+    ipv6Enable: true
+    ipv6LinkLocalAddresses:
+    - address: fe80::9656:d028:8652:66b6
+      linkLocal: true
+    ipv6Mtu: 1300
+    ipv6NdRaSuppressAll: true
+    loadInterval: 30
+    loggingEventLinkStatusEnable: false
+    mtu: 1600
+    name: "3"
+    negotiationAuto: false
+    shutdown: false
+    snmpTrapLinkStatus: false
+    sourceTemplate:
+    - merge: false
+      templateName: TEMP1
+    spanningTreeLinkType: point-to-point
+    spanningTreePortfast: true
+    spanningTreePortfastDisable: false
+    spanningTreePortfastEdge: false
+    spanningTreePortfastTrunk: true
+    type: GigabitEthernet

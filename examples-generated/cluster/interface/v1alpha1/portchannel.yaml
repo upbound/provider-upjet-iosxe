@@ -1,0 +1,54 @@
+apiVersion: interface.iosxe.upbound.io/v1alpha1
+kind: PortChannel
+metadata:
+  annotations:
+    meta.upbound.io/example-id: interface/v1alpha1/portchannel
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    arpTimeout: 2147
+    bfdEnable: true
+    bfdLocalAddress: 1.2.3.4
+    bfdTemplate: bfd_template1
+    description: My Interface Description
+    helperAddresses:
+    - address: 10.10.10.10
+      global: false
+    ipAccessGroupIn: "1"
+    ipAccessGroupInEnable: true
+    ipAccessGroupOut: "1"
+    ipAccessGroupOutEnable: true
+    ipArpInspectionLimitRate: 1000
+    ipArpInspectionTrust: true
+    ipDhcpRelaySourceInterface: Loopback100
+    ipFlowMonitors:
+    - direction: input
+      name: MON1
+    ipIgmpVersion: 3
+    ipProxyArp: false
+    ipRedirects: false
+    ipUnreachables: false
+    ipVerifyUnicastSourceAllowDefault: true
+    ipVerifyUnicastSourceAllowSelfPing: true
+    ipVerifyUnicastSourceReachableVia: rx
+    ipv4Address: 192.0.2.1
+    ipv4AddressMask: 255.255.255.0
+    ipv6AddressDhcp: true
+    ipv6Addresses:
+    - eui64: true
+      prefix: 2224:DB8::/32
+    ipv6Enable: true
+    ipv6LinkLocalAddresses:
+    - address: fe80::64
+      linkLocal: true
+    ipv6Mtu: 1300
+    loadInterval: 30
+    loggingEventLinkStatusEnable: false
+    name: 10
+    shutdown: false
+    switchport: false
+    vrfForwardingSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

@@ -1,0 +1,37 @@
+apiVersion: bgp.iosxe.upbound.io/v1alpha1
+kind: Neighbor
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bgp/v1alpha1/neighbor
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    asnSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    clusterId: "1234"
+    description: BGP Neighbor Description
+    disableConnectedCheck: false
+    fallOverBfd: true
+    fallOverBfdCheckControlPlaneFailure: true
+    fallOverBfdSingleHop: true
+    fallOverBfdStrictMode: true
+    fallOverDefaultEnable: false
+    fallOverDefaultRouteMap: RMAP
+    fallOverMaximumMetricRouteMap: RMAP
+    ip: 3.3.3.3
+    logNeighborChanges: true
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    passwordType: 1
+    remoteAs: "65000"
+    shutdown: false
+    timersHoldtime: 866
+    timersKeepaliveInterval: 655
+    timersMinimumNeighborHold: 222
+    updateSourceInterfaceLoopback: 100
+    version: 4

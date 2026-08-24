@@ -1,0 +1,15 @@
+apiVersion: bgp.iosxe.m.upbound.io/v1alpha1
+kind: AddressFamilyVPNv6
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bgp/v1alpha1/addressfamilyvpnv6
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    afName: unicast
+    asnSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

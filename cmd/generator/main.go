@@ -7,7 +7,7 @@ import (
 
 	"github.com/crossplane/upjet/v2/pkg/pipeline"
 
-	"github.com/crossplane/upjet-provider-template/config"
+	"github.com/upbound/provider-upjet-iosxe/config"
 )
 
 func main() {

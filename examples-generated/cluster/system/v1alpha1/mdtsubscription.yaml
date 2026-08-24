@@ -1,0 +1,21 @@
+apiVersion: system.iosxe.upbound.io/v1alpha1
+kind: MDTSubscription
+metadata:
+  annotations:
+    meta.upbound.io/example-id: system/v1alpha1/mdtsubscription
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    encoding: encode-kvgpb
+    filterXpath: /ios-events-ios-xe-oper:ospf-neighbor-state-change
+    receivers:
+    - address: 5.6.7.8
+      port: 57600
+      protocol: grpc-tcp
+    sourceAddress: 1.2.3.4
+    sourceVrf: Mgmt-vrf
+    stream: yang-notif-native
+    subscriptionId: 101
+    updatePolicyOnChange: true

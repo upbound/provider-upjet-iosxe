@@ -1,0 +1,14 @@
+apiVersion: interface.iosxe.upbound.io/v1alpha1
+kind: StackwiseVirtual
+metadata:
+  annotations:
+    meta.upbound.io/example-id: interface/v1alpha1/stackwisevirtual
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    dualActiveDetection: true
+    link: 1
+    name: 1/0/1
+    type: TenGigabitEthernet

@@ -1,0 +1,39 @@
+apiVersion: security.iosxe.m.upbound.io/v1alpha1
+kind: DeviceSensor
+metadata:
+  annotations:
+    meta.upbound.io/example-id: security/v1alpha1/devicesensor
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    filterListsCdp:
+    - name: cdp1
+      tlvNameAddressType: true
+      tlvNameCapabilitiesType: true
+      tlvNameDeviceName: true
+      tlvNamePlatformType: true
+      tlvNamePortIdType: true
+    filterListsDhcp:
+    - name: dhcp1
+      optionNameClassIdentifier: true
+      optionNameClientFqdn: true
+      optionNameClientIdentifier: true
+      optionNameDefaultIpTtl: true
+      optionNameHostName: true
+      optionNameParameterRequestList: true
+      optionNameRequestedAddress: true
+    filterListsLldp:
+    - name: lldp1
+      tlvNamePortDescription: true
+      tlvNamePortId: true
+      tlvNameSystemCapabilities: true
+      tlvNameSystemDescription: true
+      tlvNameSystemName: true
+    filterSpecDhcpIncludes:
+    - name: dhcp1
+    filterSpecLldpIncludes:
+    - name: lldp1
+    notifyAllChanges: true

@@ -1,0 +1,16 @@
+apiVersion: routing.iosxe.upbound.io/v1alpha1
+kind: VRF
+metadata:
+  annotations:
+    meta.upbound.io/example-id: routing/v1alpha1/vrf
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    name: VRF1
+    description: Managed by Crossplane
+    rd: "1:1"
+    addressFamilyIpv4: true
+  providerConfigRef:
+    name: default

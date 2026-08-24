@@ -1,0 +1,14 @@
+apiVersion: switching.iosxe.m.upbound.io/v1alpha1
+kind: VLANGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: switching/v1alpha1/vlangroup
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: GROUP1
+    vlanLists:
+    - 1

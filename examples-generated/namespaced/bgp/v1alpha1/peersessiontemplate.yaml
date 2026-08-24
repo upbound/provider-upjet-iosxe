@@ -1,0 +1,21 @@
+apiVersion: bgp.iosxe.m.upbound.io/v1alpha1
+kind: PeerSessionTemplate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bgp/v1alpha1/peersessiontemplate
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    asnSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: Peer Session Template Description
+    disableConnectedCheck: true
+    ebgpMultihop: true
+    ebgpMultihopMaxHop: 10
+    remoteAs: "65001"
+    templateName: PEER_SESSION_TEMPLATE_1
+    updateSourceInterfaceLoopback: 100

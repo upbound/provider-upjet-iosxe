@@ -1,0 +1,14 @@
+apiVersion: interface.iosxe.upbound.io/v1alpha1
+kind: MPLS
+metadata:
+  annotations:
+    meta.upbound.io/example-id: interface/v1alpha1/mpls
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    ip: true
+    mtu: "1200"
+    name: "1"
+    type: Loopback

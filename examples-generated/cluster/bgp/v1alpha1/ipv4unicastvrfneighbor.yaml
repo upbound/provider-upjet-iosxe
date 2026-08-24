@@ -1,0 +1,50 @@
+apiVersion: bgp.iosxe.upbound.io/v1alpha1
+kind: IPv4UnicastVRFNeighbor
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bgp/v1alpha1/ipv4unicastvrfneighbor
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    activate: true
+    advertisementInterval: 300
+    asnSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    defaultOriginate: true
+    defaultOriginateRouteMap: RM1
+    description: BGP Neighbor Description
+    fallOverBfd: true
+    fallOverBfdCheckControlPlaneFailure: true
+    fallOverBfdSingleHop: true
+    fallOverBfdStrictMode: true
+    fallOverDefaultRouteMap: RMAP
+    fallOverMaximumMetricRouteMap: ROUTEMAP
+    haModeGracefulRestart: true
+    ip: 3.3.3.3
+    logNeighborChangesDisable: true
+    nextHopSelf: true
+    nextHopSelfAll: true
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    passwordType: 1
+    remoteAs: "65000"
+    routeMaps:
+    - inOut: in
+      routeMapName: RM1
+    routeReflectorClient: false
+    sendCommunity: both
+    shutdown: false
+    softReconfiguration: inbound
+    timersHoldtime: 40
+    timersKeepaliveInterval: 30
+    timersMinimumNeighborHold: 30
+    updateSourceInterfaceLoopback: 100
+    version: 4
+    vrfSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

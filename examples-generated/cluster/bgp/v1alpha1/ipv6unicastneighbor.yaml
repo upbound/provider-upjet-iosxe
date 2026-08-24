@@ -1,0 +1,23 @@
+apiVersion: bgp.iosxe.upbound.io/v1alpha1
+kind: IPv6UnicastNeighbor
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bgp/v1alpha1/ipv6unicastneighbor
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    activate: true
+    asnSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    defaultOriginate: true
+    defaultOriginateRouteMap: RM1
+    ip: 3.3.3.3
+    routeMaps:
+    - inOut: in
+      routeMapName: RM1
+    routeReflectorClient: false
+    sendCommunity: both
+    softReconfiguration: inbound

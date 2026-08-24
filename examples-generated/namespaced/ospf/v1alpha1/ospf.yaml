@@ -1,0 +1,62 @@
+apiVersion: ospf.iosxe.m.upbound.io/v1alpha1
+kind: OSPF
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ospf/v1alpha1/ospf
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    areas:
+    - areaId: "5"
+      authenticationMessageDigest: true
+      nssa: true
+      nssaDefaultInformationOriginate: true
+      nssaDefaultInformationOriginateMetric: 100
+      nssaDefaultInformationOriginateMetricType: 1
+      nssaNoRedistribution: true
+      nssaNoSummary: true
+    autoCostReferenceBandwidth: 40000
+    bfdAllInterfaces: true
+    defaultInformationOriginate: true
+    defaultInformationOriginateAlways: true
+    defaultInformationOriginateMetric: 100
+    defaultInformationOriginateMetricType: 1
+    defaultMetric: 21
+    distance: 120
+    domainTag: 10
+    fastReroutePerPrefixEnablePrefixPriority: high
+    logAdjacencyChanges: true
+    maxMetricRouterLsa: true
+    maxMetricRouterLsaExternalLsaMetric: 16711680
+    maxMetricRouterLsaIncludeStub: true
+    maxMetricRouterLsaOnStartupTime: 60
+    maxMetricRouterLsaSummaryLsaMetric: 16711680
+    neighbors:
+    - cost: 100
+      ip: 2.2.2.2
+      priority: 10
+    networks:
+    - area: "0"
+      ip: 3.3.3.0
+      wildcard: 0.0.0.255
+    nsfIetf: true
+    nsfIetfRestartInterval: 120
+    passiveInterfaceDefault: true
+    priority: 100
+    processId: 1
+    redistributeConnectedMetric: 100
+    redistributeConnectedMetricType: "1"
+    redistributeConnectedSubnets: true
+    redistributeConnectedTag: 100
+    redistributeStaticMetric: 100
+    redistributeStaticMetricType: "1"
+    redistributeStaticSubnets: true
+    redistributeStaticTag: 100
+    routerId: 1.2.3.4
+    shutdown: false
+    summaryAddresses:
+    - ip: 3.3.3.0
+      mask: 255.255.255.0

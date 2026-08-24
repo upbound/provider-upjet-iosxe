@@ -1,0 +1,14 @@
+apiVersion: switching.iosxe.m.upbound.io/v1alpha1
+kind: VLANConfiguration
+metadata:
+  annotations:
+    meta.upbound.io/example-id: switching/v1alpha1/vlanconfiguration
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    evpnInstanceLegacy: 123
+    evpnInstanceVniLegacy: 10123
+    vlanId: "123"

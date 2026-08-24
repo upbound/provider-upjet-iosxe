@@ -1,0 +1,16 @@
+apiVersion: routing.iosxe.m.upbound.io/v1alpha1
+kind: CommunityListStandard
+metadata:
+  annotations:
+    meta.upbound.io/example-id: routing/v1alpha1/communityliststandard
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    denyEntries:
+    - 65000:500
+    name: CLS1
+    permitEntries:
+    - 65000:501

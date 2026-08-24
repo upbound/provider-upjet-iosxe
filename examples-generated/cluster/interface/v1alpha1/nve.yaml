@@ -1,0 +1,18 @@
+apiVersion: interface.iosxe.upbound.io/v1alpha1
+kind: NVE
+metadata:
+  annotations:
+    meta.upbound.io/example-id: interface/v1alpha1/nve
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: My Interface Description
+    hostReachabilityProtocolBgp: true
+    name: 1
+    shutdown: false
+    sourceInterfaceLoopback: 100
+    vnis:
+    - ipv4MulticastGroup: 225.1.1.1
+      vniRange: "10000"

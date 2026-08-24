@@ -1,0 +1,12 @@
+apiVersion: crypto.iosxe.m.upbound.io/v1alpha1
+kind: Crypto
+metadata:
+  annotations:
+    meta.upbound.io/example-id: crypto/v1alpha1/crypto
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    engineComplianceShieldDisable: true

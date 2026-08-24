@@ -1,0 +1,19 @@
+apiVersion: multicast.iosxe.m.upbound.io/v1alpha1
+kind: PIMIPv6
+metadata:
+  annotations:
+    meta.upbound.io/example-id: multicast/v1alpha1/pimipv6
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    rpAddress: 2001:db8::100
+    rpAddressAccessList: ipv6_acl_1
+    rpAddressBidir: false
+    vrfs:
+    - rpAddress: 2001:db8::100
+      rpAddressAccessList: ipv6_acl_2
+      rpAddressBidir: false
+      vrf: VRF1

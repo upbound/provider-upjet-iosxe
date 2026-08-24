@@ -1,0 +1,14 @@
+apiVersion: yang.iosxe.m.upbound.io/v1alpha1
+kind: Object
+metadata:
+  annotations:
+    meta.upbound.io/example-id: yang/v1alpha1/object
+  labels:
+    testing.upbound.io/example-name: simple
+  name: simple
+  namespace: crossplane-system
+spec:
+  forProvider:
+    attributes:
+      banner: My Banner
+    path: /Cisco-IOS-XE-native:native/banner/login

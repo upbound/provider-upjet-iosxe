@@ -1,0 +1,54 @@
+apiVersion: multicast.iosxe.upbound.io/v1alpha1
+kind: PIM
+metadata:
+  annotations:
+    meta.upbound.io/example-id: multicast/v1alpha1/pim
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    autorp: false
+    autorpListener: false
+    bsrCandidateLoopback: 100
+    bsrCandidateMask: 30
+    bsrCandidatePriority: 10
+    registerSourceInterfaceLoopback: 100
+    rpAddress: 9.9.9.9
+    rpAddressBidir: false
+    rpAddressOverride: false
+    rpAddresses:
+    - accessList: "10"
+      bidir: false
+      override: false
+      rpAddress: 10.10.10.10
+    rpCandidates:
+    - bidir: false
+      interface: Loopback100
+      interval: 100
+      priority: 10
+    ssmDefault: false
+    ssmRange: "10"
+    vrfs:
+    - autorp: false
+      autorpListener: false
+      bsrCandidateLoopback: 200
+      bsrCandidateMask: 30
+      bsrCandidatePriority: 10
+      registerSourceInterfaceLoopback: 200
+      rpAddress: 19.19.19.19
+      rpAddressBidir: false
+      rpAddressOverride: false
+      rpAddresses:
+      - accessList: "10"
+        bidir: false
+        override: false
+        rpAddress: 10.10.10.10
+      rpCandidates:
+      - bidir: false
+        interface: Loopback200
+        interval: 100
+        priority: 10
+      ssmDefault: false
+      ssmRange: "10"
+      vrf: VRF1

@@ -1,0 +1,12 @@
+apiVersion: security.iosxe.upbound.io/v1alpha1
+kind: Zone
+metadata:
+  annotations:
+    meta.upbound.io/example-id: security/v1alpha1/zone
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: Internal trusted network
+    name: INSIDE

@@ -1,0 +1,55 @@
+apiVersion: interface.iosxe.upbound.io/v1alpha1
+kind: Tunnel
+metadata:
+  annotations:
+    meta.upbound.io/example-id: interface/v1alpha1/tunnel
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    arpTimeout: 300
+    bandwidth: 1000000
+    bfdEnable: true
+    bfdLocalAddress: 1.2.3.4
+    bfdTemplate: bfd_template1
+    description: My Interface Description
+    helperAddresses:
+    - address: 10.10.10.10
+      global: false
+      vrf: VRF1
+    ipAccessGroupIn: "1"
+    ipAccessGroupInEnable: true
+    ipAccessGroupOut: "1"
+    ipAccessGroupOutEnable: true
+    ipDhcpRelaySourceInterface: Loopback100
+    ipIgmpVersion: 3
+    ipMtu: 1200
+    ipProxyArp: false
+    ipRedirects: false
+    ipTcpAdjustMss: 1400
+    ipUnreachables: false
+    ipv4Address: 10.2.1.1
+    ipv4AddressMask: 255.255.255.0
+    ipv6AddressDhcp: true
+    ipv6Addresses:
+    - eui64: true
+      prefix: 2005:DB8::/32
+    ipv6Enable: true
+    ipv6LinkLocalAddresses:
+    - address: fe80::9656:d028:8652:66ba
+      linkLocal: true
+    ipv6Mtu: 1300
+    ipv6NdRaSuppressAll: true
+    loadInterval: 30
+    loggingEventLinkStatusEnable: true
+    name: 90
+    shutdown: false
+    snmpTrapLinkStatus: false
+    tunnelBandwidthReceive: 1000
+    tunnelBandwidthTransmit: 1000
+    tunnelDestinationIpv4: 2.2.2.2
+    tunnelVrf: VRF1
+    vrfForwardingSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

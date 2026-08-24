@@ -1,0 +1,17 @@
+apiVersion: multicast.iosxe.m.upbound.io/v1alpha1
+kind: Multicast
+metadata:
+  annotations:
+    meta.upbound.io/example-id: multicast/v1alpha1/multicast
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    multipath: true
+    multipathSGHash: next-hop-based
+    vrfs:
+    - multipath: true
+      multipathSGHash: next-hop-based
+      vrf: VRF1

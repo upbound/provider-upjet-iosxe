@@ -1,0 +1,1849 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: eems.system.iosxe.upbound.io
+spec:
+  group: system.iosxe.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - iosxe
+    kind: EEM
+    listKind: EEMList
+    plural: eems
+    singular: eem
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: EEM is the Schema for the EEMs API. This resource can manage
+          the EEM configuration.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: EEMSpec defines the desired state of EEM
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  applets:
+                    description: (Attributes List) Register an Event Manager applet
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        actions:
+                          description: (Attributes List) Add or modify an action statement
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              appendValue:
+                                description: |-
+                                  (String) Value of the variable of append conditional
+                                  Value of the variable of append conditional
+                                type: string
+                              appendVarname:
+                                description: |-
+                                  (String) Name of the variable of append conditional
+                                  Name of the variable of append conditional
+                                type: string
+                              break:
+                                description: |-
+                                  (Boolean) break conditional
+                                  break conditional
+                                type: boolean
+                              cliCommand:
+                                description: |-
+                                  (String) CLI command
+                                  CLI command
+                                type: string
+                              contextRetrieveKey:
+                                description: |-
+                                  (String) key name
+                                  key name
+                                type: string
+                              contextRetrieveVariable:
+                                description: |-
+                                  (String) variable name pattern
+                                  variable name pattern
+                                type: string
+                              contextSaveKey:
+                                description: |-
+                                  (String) key name
+                                  key name
+                                type: string
+                              contextSaveVariable:
+                                description: |-
+                                  (String) variable name pattern
+                                  variable name pattern
+                                type: string
+                              continue:
+                                description: |-
+                                  (Boolean) continue conditional
+                                  continue conditional
+                                type: boolean
+                              counterName:
+                                description: |-
+                                  (String) Name of the counter
+                                  Name of the counter
+                                type: string
+                              counterOpDec:
+                                description: |-
+                                  (Boolean) Decrement the value of the counter by the given value
+                                  Decrement the value of the counter by the given value
+                                type: boolean
+                              counterOpInc:
+                                description: |-
+                                  (Boolean) Increment the value of the counter by the given value
+                                  Increment the value of the counter by the given value
+                                type: boolean
+                              counterOpNop:
+                                description: |-
+                                  (Boolean) Read the value of the counter
+                                  Read the value of the counter
+                                type: boolean
+                              counterOpSet:
+                                description: |-
+                                  (Boolean) Set the value of the counter by the given value
+                                  Set the value of the counter by the given value
+                                type: boolean
+                              counterValue:
+                                description: |-
+                                  (Number) Value used to modify the counter
+                                  Value used to modify the counter
+                                  - Range: `-2147483648`-`2147483647`
+                                type: number
+                              decrementValue:
+                                description: |-
+                                  (String) Value of the variable of decrement conditional
+                                  Value of the variable of decrement conditional
+                                type: string
+                              decrementVarname:
+                                description: |-
+                                  (String) Name of the variable of decrement conditional
+                                  Name of the variable of decrement conditional
+                                type: string
+                              divideOperand1:
+                                description: |-
+                                  (String) First operand of divide conditional
+                                  First operand of divide conditional
+                                type: string
+                              divideOperand2:
+                                description: |-
+                                  (String) Second operand of divide conditional
+                                  Second operand of divide conditional
+                                type: string
+                              else:
+                                description: |-
+                                  (Boolean) else conditional
+                                  else conditional
+                                type: boolean
+                              elseifOperand1:
+                                description: |-
+                                  (String) First operand of else if conditional
+                                  First operand of else if conditional
+                                type: string
+                              elseifOperand2:
+                                description: |-
+                                  (String) Second operand of else if conditional
+                                  Second operand of else if conditional
+                                type: string
+                              elseifOperation:
+                                description: |-
+                                  (String) Operation of else if conditional
+                                  Operation of else if conditional
+                                  - Choices: `eq`, `ge`, `gt`, `le`, `lt`, `ne`
+                                type: string
+                              end:
+                                description: |-
+                                  (Boolean) end conditional block
+                                  end conditional block
+                                type: boolean
+                              exit:
+                                description: |-
+                                  (Boolean) Exit from applet run
+                                  Exit from applet run
+                                type: boolean
+                              foreachDelimiter:
+                                description: |-
+                                  (String) Delimiter string of for each conditional
+                                  Delimiter string of for each conditional
+                                type: string
+                              foreachIterator:
+                                description: |-
+                                  (String) String to iterate over
+                                  String to iterate over
+                                type: string
+                              foreachLoopvar:
+                                description: |-
+                                  (String) Loop variable name of for each conditional
+                                  Loop variable name of for each conditional
+                                type: string
+                              gets:
+                                description: |-
+                                  (String) gets conditional
+                                  gets conditional
+                                type: string
+                              handleErrorType:
+                                description: |-
+                                  error conditional
+                                  Error handle type of handle-error conditional
+                                  - Choices: `exit`, `ignore`, `warn`
+                                type: string
+                              ifGoto:
+                                description: |-
+                                  (String) goto label
+                                  goto label
+                                type: string
+                              ifKeyword:
+                                description: |-
+                                  Choices: eq, ge, gt, le, lt, ne
+
+                                  - Choices: `eq`, `ge`, `gt`, `le`, `lt`, `ne`
+                                type: string
+                              ifStringOp1:
+                                description: (String)
+                                type: string
+                              ifStringOp2:
+                                description: (String)
+                                type: string
+                              incrementValue:
+                                description: |-
+                                  (String) value of the variable of increment conditional
+                                  value of the variable of increment conditional
+                                type: string
+                              incrementVarname:
+                                description: |-
+                                  (String) Name of the variable of increment conditional
+                                  Name of the variable of increment conditional
+                                type: string
+                              infoTypeSnmpTrapEnterpriseOid:
+                                description: |-
+                                  (String) Enterprise oid
+                                  Enterprise oid
+                                type: string
+                              infoTypeSnmpTrapGenericTrapnum:
+                                description: |-
+                                  (Number) Generic trap number
+                                  Generic trap number
+                                  - Range: `0`-`4294967295`
+                                type: number
+                              infoTypeSnmpTrapSpecificTrapnum:
+                                description: |-
+                                  (Number) Specific trap number
+                                  Specific trap number
+                                  - Range: `0`-`4294967295`
+                                type: number
+                              infoTypeSnmpTrapTrapOid:
+                                description: |-
+                                  (String) Trap oid
+                                  Trap oid
+                                type: string
+                              infoTypeSnmpTrapTrapVar:
+                                description: |-
+                                  (String) Trap variable
+                                  Trap variable
+                                type: string
+                              infoTypeSnmpVar:
+                                description: (String)
+                                type: string
+                              infoTypeSnmpVarOid:
+                                description: |-
+                                  (String) SNMP object id
+                                  SNMP object id
+                                type: string
+                              infoTypeSnmpVarOidType:
+                                description: |-
+                                  Choices: counter, gauge, int, ipv4, octet, string, uint
+
+                                  - Choices: `counter`, `gauge`, `int`, `ipv4`, `octet`, `string`, `uint`
+                                type: string
+                              infoTypeSnmpVarOidTypeValue:
+                                description: (String)
+                                type: string
+                              name:
+                                description: |-
+                                  (String) Name of the Event Manager applet
+                                  Label
+                                type: string
+                              puts:
+                                description: |-
+                                  (String) displays data to active tty
+                                  displays data to active tty
+                                type: string
+                              regexpStringInput:
+                                description: |-
+                                  (String) input string
+                                  input string
+                                type: string
+                              regexpStringMatch:
+                                description: |-
+                                  (String) match variable
+                                  match variable
+                                type: string
+                              regexpStringMatch1:
+                                description: |-
+                                  (String) subsequent match variable
+                                  subsequent match variable
+                                type: string
+                              regexpStringMatch2:
+                                description: |-
+                                  (String) subsequent match variable
+                                  subsequent match variable
+                                type: string
+                              regexpStringMatch3:
+                                description: |-
+                                  (String) subsequent match variable
+                                  subsequent match variable
+                                type: string
+                              regexpStringPattern:
+                                description: |-
+                                  (String) regular expression pattern
+                                  regular expression pattern
+                                type: string
+                              reload:
+                                description: |-
+                                  (Boolean) Reload system
+                                  Reload system
+                                type: boolean
+                              setValue:
+                                description: |-
+                                  (String) Value of the variable of set conditional
+                                  Value of the variable of set conditional
+                                type: string
+                              setVarname:
+                                description: |-
+                                  (String) Name of the variable of set conditional
+                                  Name of the variable of set conditional
+                                type: string
+                              snmpTrapIntdata1:
+                                description: |-
+                                  (Number) SNMP integer data1
+                                  SNMP integer data1
+                                  - Range: `-2147483648`-`2147483647`
+                                type: number
+                              snmpTrapIntdata2:
+                                description: |-
+                                  (Number) SNMP integer data2
+                                  SNMP integer data2
+                                  - Range: `-2147483648`-`2147483647`
+                                type: number
+                              snmpTrapStrdata:
+                                description: |-
+                                  (String) SNMP trap string
+                                  SNMP trap string
+                                type: string
+                              stringFirstStringOp1:
+                                description: (String)
+                                type: string
+                              stringFirstStringOp2:
+                                description: (String)
+                                type: string
+                              stringTrim:
+                                description: |-
+                                  (String) trim characters from both ends of string
+                                  trim characters from both ends of string
+                                type: string
+                              syslogFacility:
+                                description: |-
+                                  (String) Facility string
+                                  Facility string
+                                type: string
+                              syslogMsg:
+                                description: |-
+                                  (String) Syslog message
+                                  Syslog message
+                                type: string
+                              syslogPriority:
+                                description: |-
+                                  (String) Priority of syslog message
+                                  Priority of syslog message
+                                type: string
+                              wait:
+                                description: |-
+                                  (Number) Wait for a specified amount of time
+                                  Wait for a specified amount of time
+                                  - Range: `1`-`31536000`
+                                type: number
+                              whileOperand1:
+                                description: |-
+                                  (String) First operand of while conditional
+                                  First operand of while conditional
+                                type: string
+                              whileOperand2:
+                                description: |-
+                                  (String) Second operand of while conditional
+                                  Second operand of while conditional
+                                type: string
+                              whileOperation:
+                                description: |-
+                                  (String) Operation of while conditional
+                                  Operation of while conditional
+                                  - Choices: `eq`, `ge`, `gt`, `le`, `lt`, `ne`
+                                type: string
+                            type: object
+                          type: array
+                        authorization:
+                          description: |-
+                            (String) Specify an authorization type for the applet
+                            Specify an authorization type for the applet
+                            - Choices: `bypass`
+                          type: string
+                        class:
+                          description: |-
+                            (String) Specify a class for the applet
+                            Specify a class for the applet
+                          type: string
+                        description:
+                          description: |-
+                            (String) Add or modify an applet description
+                            Add or modify an applet description
+                          type: string
+                        eventCliPattern:
+                          description: |-
+                            (String) CLI command pattern match
+                            CLI command pattern match
+                          type: string
+                        eventCliSkip:
+                          description: |-
+                            (String) describes whether to skip CLI command execution
+                            describes whether to skip CLI command execution
+                            - Choices: `no`, `yes`
+                          type: string
+                        eventCliSync:
+                          description: |-
+                            (String) CLI and EEM policy execution sync or async
+                            CLI and EEM policy execution sync or async
+                            - Choices: `no`, `yes`
+                          type: string
+                        eventSyslogMaxrun:
+                          description: |-
+                            (Number) Maximum runtime of applet
+                            Maximum runtime of applet
+                            - Range: `0`-`3.1536000999e+10`
+                          type: number
+                        eventSyslogOccurs:
+                          description: |-
+                            (Number) Number of occurrences before raising event
+                            Number of occurrences before raising event
+                            - Range: `1`-`32`
+                          type: number
+                        eventSyslogPattern:
+                          description: |-
+                            (String) Pattern match string for the entire message
+                            Pattern match string for the entire message
+                          type: string
+                        eventSyslogPeriod:
+                          description: |-
+                            (Number) Occurrence period
+                            Occurrence period
+                            - Range: `0`-`4.294967295999e+12`
+                          type: number
+                        eventSyslogRatelimit:
+                          description: |-
+                            (Number) seconds[.milliseconds] value
+                            seconds[.milliseconds] value
+                            - Range: `0`-`3.1536000999e+10`
+                          type: number
+                        eventTimerCronEntry:
+                          description: |-
+                            (String) Cron entry for cron timer
+                            Cron entry for cron timer
+                          type: string
+                        eventTimerCronMaxrun:
+                          description: |-
+                            (Number) Maximum runtime of applet
+                            Maximum runtime of applet
+                            - Range: `0`-`3.1536000999e+10`
+                          type: number
+                        eventTimerCronName:
+                          description: |-
+                            (String) Timer name string
+                            Timer name string
+                          type: string
+                        eventTimerCronRatelimit:
+                          description: |-
+                            (Number) seconds[.milliseconds] value
+                            seconds[.milliseconds] value
+                            - Range: `0`-`3.1536000999e+10`
+                          type: number
+                        eventTimerWatchdogMaxrun:
+                          description: |-
+                            (Number) Maximum runtime of applet
+                            Maximum runtime of applet
+                            - Range: `0`-`3.1536000999e+10`
+                          type: number
+                        eventTimerWatchdogName:
+                          description: |-
+                            (String) Timer name string
+                            Timer name string
+                          type: string
+                        eventTimerWatchdogRatelimit:
+                          description: |-
+                            (Number) seconds[.milliseconds] value
+                            seconds[.milliseconds] value
+                            - Range: `0`-`3.1536000999e+10`
+                          type: number
+                        eventTimerWatchdogTime:
+                          description: |-
+                            (Number) Time period for watchdog / countdown / absolute timer
+                            Time period for watchdog / countdown / absolute timer
+                            - Range: `1000`-`2.085978494999e+12`
+                          type: number
+                        name:
+                          description: |-
+                            (String) Name of the Event Manager applet
+                            Name of the Event Manager applet
+                          type: string
+                      type: object
+                    type: array
+                  detectorRoutingBootupDelay:
+                    description: |-
+                      (Number) bootup delay in seconds
+                      bootup delay in seconds
+                    type: number
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  directoryUserPolicy:
+                    description: |-
+                      (String) Embedded Event Manager user policy directory
+                      Embedded Event Manager user policy directory
+                    type: string
+                  environmentVariables:
+                    description: (Attributes List) Set an Embedded Event Manager global
+                      environment variable (see below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String) Name of the Event Manager applet
+                          type: string
+                        value:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  historySizeEvents:
+                    description: |-
+                      (Number) Embedded Event Manager event history table size
+                      Embedded Event Manager event history table size
+                      - Range: `0`-`50`
+                    type: number
+                  historySizeTraps:
+                    description: |-
+                      (Number) Embedded Event Manager trap history table size
+                      Embedded Event Manager trap history table size
+                      - Range: `0`-`50`
+                    type: number
+                  schedulerAppletThreadClassDefault:
+                    description: |-
+                      (Boolean) default scheduler thread class
+                      default scheduler thread class
+                    type: boolean
+                  schedulerAppletThreadClassNumber:
+                    description: |-
+                      (Number) Number of concurrent execution threads
+                      Number of concurrent execution threads
+                      - Range: `1`-`65535`
+                    type: number
+                  sessionCliUsername:
+                    description: |-
+                      (String) username
+                      username
+                    type: string
+                  sessionCliUsernamePrivilege:
+                    description: |-
+                      (Number) Set user privilege level
+                      Set user privilege level
+                      - Range: `0`-`15`
+                    type: number
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  applets:
+                    description: (Attributes List) Register an Event Manager applet
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        actions:
+                          description: (Attributes List) Add or modify an action statement
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              appendValue:
+                                description: |-
+                                  (String) Value of the variable of append conditional
+                                  Value of the variable of append conditional
+                                type: string
+                              appendVarname:
+                                description: |-
+                                  (String) Name of the variable of append conditional
+                                  Name of the variable of append conditional
+                                type: string
+                              break:
+                                description: |-
+                                  (Boolean) break conditional
+                                  break conditional
+                                type: boolean
+                              cliCommand:
+                                description: |-
+                                  (String) CLI command
+                                  CLI command
+                                type: string
+                              contextRetrieveKey:
+                                description: |-
+                                  (String) key name
+                                  key name
+                                type: string
+                              contextRetrieveVariable:
+                                description: |-
+                                  (String) variable name pattern
+                                  variable name pattern
+                                type: string
+                              contextSaveKey:
+                                description: |-
+                                  (String) key name
+                                  key name
+                                type: string
+                              contextSaveVariable:
+                                description: |-
+                                  (String) variable name pattern
+                                  variable name pattern
+                                type: string
+                              continue:
+                                description: |-
+                                  (Boolean) continue conditional
+                                  continue conditional
+                                type: boolean
+                              counterName:
+                                description: |-
+                                  (String) Name of the counter
+                                  Name of the counter
+                                type: string
+                              counterOpDec:
+                                description: |-
+                                  (Boolean) Decrement the value of the counter by the given value
+                                  Decrement the value of the counter by the given value
+                                type: boolean
+                              counterOpInc:
+                                description: |-
+                                  (Boolean) Increment the value of the counter by the given value
+                                  Increment the value of the counter by the given value
+                                type: boolean
+                              counterOpNop:
+                                description: |-
+                                  (Boolean) Read the value of the counter
+                                  Read the value of the counter
+                                type: boolean
+                              counterOpSet:
+                                description: |-
+                                  (Boolean) Set the value of the counter by the given value
+                                  Set the value of the counter by the given value
+                                type: boolean
+                              counterValue:
+                                description: |-
+                                  (Number) Value used to modify the counter
+                                  Value used to modify the counter
+                                  - Range: `-2147483648`-`2147483647`
+                                type: number
+                              decrementValue:
+                                description: |-
+                                  (String) Value of the variable of decrement conditional
+                                  Value of the variable of decrement conditional
+                                type: string
+                              decrementVarname:
+                                description: |-
+                                  (String) Name of the variable of decrement conditional
+                                  Name of the variable of decrement conditional
+                                type: string
+                              divideOperand1:
+                                description: |-
+                                  (String) First operand of divide conditional
+                                  First operand of divide conditional
+                                type: string
+                              divideOperand2:
+                                description: |-
+                                  (String) Second operand of divide conditional
+                                  Second operand of divide conditional
+                                type: string
+                              else:
+                                description: |-
+                                  (Boolean) else conditional
+                                  else conditional
+                                type: boolean
+                              elseifOperand1:
+                                description: |-
+                                  (String) First operand of else if conditional
+                                  First operand of else if conditional
+                                type: string
+                              elseifOperand2:
+                                description: |-
+                                  (String) Second operand of else if conditional
+                                  Second operand of else if conditional
+                                type: string
+                              elseifOperation:
+                                description: |-
+                                  (String) Operation of else if conditional
+                                  Operation of else if conditional
+                                  - Choices: `eq`, `ge`, `gt`, `le`, `lt`, `ne`
+                                type: string
+                              end:
+                                description: |-
+                                  (Boolean) end conditional block
+                                  end conditional block
+                                type: boolean
+                              exit:
+                                description: |-
+                                  (Boolean) Exit from applet run
+                                  Exit from applet run
+                                type: boolean
+                              foreachDelimiter:
+                                description: |-
+                                  (String) Delimiter string of for each conditional
+                                  Delimiter string of for each conditional
+                                type: string
+                              foreachIterator:
+                                description: |-
+                                  (String) String to iterate over
+                                  String to iterate over
+                                type: string
+                              foreachLoopvar:
+                                description: |-
+                                  (String) Loop variable name of for each conditional
+                                  Loop variable name of for each conditional
+                                type: string
+                              gets:
+                                description: |-
+                                  (String) gets conditional
+                                  gets conditional
+                                type: string
+                              handleErrorType:
+                                description: |-
+                                  error conditional
+                                  Error handle type of handle-error conditional
+                                  - Choices: `exit`, `ignore`, `warn`
+                                type: string
+                              ifGoto:
+                                description: |-
+                                  (String) goto label
+                                  goto label
+                                type: string
+                              ifKeyword:
+                                description: |-
+                                  Choices: eq, ge, gt, le, lt, ne
+
+                                  - Choices: `eq`, `ge`, `gt`, `le`, `lt`, `ne`
+                                type: string
+                              ifStringOp1:
+                                description: (String)
+                                type: string
+                              ifStringOp2:
+                                description: (String)
+                                type: string
+                              incrementValue:
+                                description: |-
+                                  (String) value of the variable of increment conditional
+                                  value of the variable of increment conditional
+                                type: string
+                              incrementVarname:
+                                description: |-
+                                  (String) Name of the variable of increment conditional
+                                  Name of the variable of increment conditional
+                                type: string
+                              infoTypeSnmpTrapEnterpriseOid:
+                                description: |-
+                                  (String) Enterprise oid
+                                  Enterprise oid
+                                type: string
+                              infoTypeSnmpTrapGenericTrapnum:
+                                description: |-
+                                  (Number) Generic trap number
+                                  Generic trap number
+                                  - Range: `0`-`4294967295`
+                                type: number
+                              infoTypeSnmpTrapSpecificTrapnum:
+                                description: |-
+                                  (Number) Specific trap number
+                                  Specific trap number
+                                  - Range: `0`-`4294967295`
+                                type: number
+                              infoTypeSnmpTrapTrapOid:
+                                description: |-
+                                  (String) Trap oid
+                                  Trap oid
+                                type: string
+                              infoTypeSnmpTrapTrapVar:
+                                description: |-
+                                  (String) Trap variable
+                                  Trap variable
+                                type: string
+                              infoTypeSnmpVar:
+                                description: (String)
+                                type: string
+                              infoTypeSnmpVarOid:
+                                description: |-
+                                  (String) SNMP object id
+                                  SNMP object id
+                                type: string
+                              infoTypeSnmpVarOidType:
+                                description: |-
+                                  Choices: counter, gauge, int, ipv4, octet, string, uint
+
+                                  - Choices: `counter`, `gauge`, `int`, `ipv4`, `octet`, `string`, `uint`
+                                type: string
+                              infoTypeSnmpVarOidTypeValue:
+                                description: (String)
+                                type: string
+                              name:
+                                description: |-
+                                  (String) Name of the Event Manager applet
+                                  Label
+                                type: string
+                              puts:
+                                description: |-
+                                  (String) displays data to active tty
+                                  displays data to active tty
+                                type: string
+                              regexpStringInput:
+                                description: |-
+                                  (String) input string
+                                  input string
+                                type: string
+                              regexpStringMatch:
+                                description: |-
+                                  (String) match variable
+                                  match variable
+                                type: string
+                              regexpStringMatch1:
+                                description: |-
+                                  (String) subsequent match variable
+                                  subsequent match variable
+                                type: string
+                              regexpStringMatch2:
+                                description: |-
+                                  (String) subsequent match variable
+                                  subsequent match variable
+                                type: string
+                              regexpStringMatch3:
+                                description: |-
+                                  (String) subsequent match variable
+                                  subsequent match variable
+                                type: string
+                              regexpStringPattern:
+                                description: |-
+                                  (String) regular expression pattern
+                                  regular expression pattern
+                                type: string
+                              reload:
+                                description: |-
+                                  (Boolean) Reload system
+                                  Reload system
+                                type: boolean
+                              setValue:
+                                description: |-
+                                  (String) Value of the variable of set conditional
+                                  Value of the variable of set conditional
+                                type: string
+                              setVarname:
+                                description: |-
+                                  (String) Name of the variable of set conditional
+                                  Name of the variable of set conditional
+                                type: string
+                              snmpTrapIntdata1:
+                                description: |-
+                                  (Number) SNMP integer data1
+                                  SNMP integer data1
+                                  - Range: `-2147483648`-`2147483647`
+                                type: number
+                              snmpTrapIntdata2:
+                                description: |-
+                                  (Number) SNMP integer data2
+                                  SNMP integer data2
+                                  - Range: `-2147483648`-`2147483647`
+                                type: number
+                              snmpTrapStrdata:
+                                description: |-
+                                  (String) SNMP trap string
+                                  SNMP trap string
+                                type: string
+                              stringFirstStringOp1:
+                                description: (String)
+                                type: string
+                              stringFirstStringOp2:
+                                description: (String)
+                                type: string
+                              stringTrim:
+                                description: |-
+                                  (String) trim characters from both ends of string
+                                  trim characters from both ends of string
+                                type: string
+                              syslogFacility:
+                                description: |-
+                                  (String) Facility string
+                                  Facility string
+                                type: string
+                              syslogMsg:
+                                description: |-
+                                  (String) Syslog message
+                                  Syslog message
+                                type: string
+                              syslogPriority:
+                                description: |-
+                                  (String) Priority of syslog message
+                                  Priority of syslog message
+                                type: string
+                              wait:
+                                description: |-
+                                  (Number) Wait for a specified amount of time
+                                  Wait for a specified amount of time
+                                  - Range: `1`-`31536000`
+                                type: number
+                              whileOperand1:
+                                description: |-
+                                  (String) First operand of while conditional
+                                  First operand of while conditional
+                                type: string
+                              whileOperand2:
+                                description: |-
+                                  (String) Second operand of while conditional
+                                  Second operand of while conditional
+                                type: string
+                              whileOperation:
+                                description: |-
+                                  (String) Operation of while conditional
+                                  Operation of while conditional
+                                  - Choices: `eq`, `ge`, `gt`, `le`, `lt`, `ne`
+                                type: string
+                            type: object
+                          type: array
+                        authorization:
+                          description: |-
+                            (String) Specify an authorization type for the applet
+                            Specify an authorization type for the applet
+                            - Choices: `bypass`
+                          type: string
+                        class:
+                          description: |-
+                            (String) Specify a class for the applet
+                            Specify a class for the applet
+                          type: string
+                        description:
+                          description: |-
+                            (String) Add or modify an applet description
+                            Add or modify an applet description
+                          type: string
+                        eventCliPattern:
+                          description: |-
+                            (String) CLI command pattern match
+                            CLI command pattern match
+                          type: string
+                        eventCliSkip:
+                          description: |-
+                            (String) describes whether to skip CLI command execution
+                            describes whether to skip CLI command execution
+                            - Choices: `no`, `yes`
+                          type: string
+                        eventCliSync:
+                          description: |-
+                            (String) CLI and EEM policy execution sync or async
+                            CLI and EEM policy execution sync or async
+                            - Choices: `no`, `yes`
+                          type: string
+                        eventSyslogMaxrun:
+                          description: |-
+                            (Number) Maximum runtime of applet
+                            Maximum runtime of applet
+                            - Range: `0`-`3.1536000999e+10`
+                          type: number
+                        eventSyslogOccurs:
+                          description: |-
+                            (Number) Number of occurrences before raising event
+                            Number of occurrences before raising event
+                            - Range: `1`-`32`
+                          type: number
+                        eventSyslogPattern:
+                          description: |-
+                            (String) Pattern match string for the entire message
+                            Pattern match string for the entire message
+                          type: string
+                        eventSyslogPeriod:
+                          description: |-
+                            (Number) Occurrence period
+                            Occurrence period
+                            - Range: `0`-`4.294967295999e+12`
+                          type: number
+                        eventSyslogRatelimit:
+                          description: |-
+                            (Number) seconds[.milliseconds] value
+                            seconds[.milliseconds] value
+                            - Range: `0`-`3.1536000999e+10`
+                          type: number
+                        eventTimerCronEntry:
+                          description: |-
+                            (String) Cron entry for cron timer
+                            Cron entry for cron timer
+                          type: string
+                        eventTimerCronMaxrun:
+                          description: |-
+                            (Number) Maximum runtime of applet
+                            Maximum runtime of applet
+                            - Range: `0`-`3.1536000999e+10`
+                          type: number
+                        eventTimerCronName:
+                          description: |-
+                            (String) Timer name string
+                            Timer name string
+                          type: string
+                        eventTimerCronRatelimit:
+                          description: |-
+                            (Number) seconds[.milliseconds] value
+                            seconds[.milliseconds] value
+                            - Range: `0`-`3.1536000999e+10`
+                          type: number
+                        eventTimerWatchdogMaxrun:
+                          description: |-
+                            (Number) Maximum runtime of applet
+                            Maximum runtime of applet
+                            - Range: `0`-`3.1536000999e+10`
+                          type: number
+                        eventTimerWatchdogName:
+                          description: |-
+                            (String) Timer name string
+                            Timer name string
+                          type: string
+                        eventTimerWatchdogRatelimit:
+                          description: |-
+                            (Number) seconds[.milliseconds] value
+                            seconds[.milliseconds] value
+                            - Range: `0`-`3.1536000999e+10`
+                          type: number
+                        eventTimerWatchdogTime:
+                          description: |-
+                            (Number) Time period for watchdog / countdown / absolute timer
+                            Time period for watchdog / countdown / absolute timer
+                            - Range: `1000`-`2.085978494999e+12`
+                          type: number
+                        name:
+                          description: |-
+                            (String) Name of the Event Manager applet
+                            Name of the Event Manager applet
+                          type: string
+                      type: object
+                    type: array
+                  detectorRoutingBootupDelay:
+                    description: |-
+                      (Number) bootup delay in seconds
+                      bootup delay in seconds
+                    type: number
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  directoryUserPolicy:
+                    description: |-
+                      (String) Embedded Event Manager user policy directory
+                      Embedded Event Manager user policy directory
+                    type: string
+                  environmentVariables:
+                    description: (Attributes List) Set an Embedded Event Manager global
+                      environment variable (see below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String) Name of the Event Manager applet
+                          type: string
+                        value:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  historySizeEvents:
+                    description: |-
+                      (Number) Embedded Event Manager event history table size
+                      Embedded Event Manager event history table size
+                      - Range: `0`-`50`
+                    type: number
+                  historySizeTraps:
+                    description: |-
+                      (Number) Embedded Event Manager trap history table size
+                      Embedded Event Manager trap history table size
+                      - Range: `0`-`50`
+                    type: number
+                  schedulerAppletThreadClassDefault:
+                    description: |-
+                      (Boolean) default scheduler thread class
+                      default scheduler thread class
+                    type: boolean
+                  schedulerAppletThreadClassNumber:
+                    description: |-
+                      (Number) Number of concurrent execution threads
+                      Number of concurrent execution threads
+                      - Range: `1`-`65535`
+                    type: number
+                  sessionCliUsername:
+                    description: |-
+                      (String) username
+                      username
+                    type: string
+                  sessionCliUsernamePrivilege:
+                    description: |-
+                      (Number) Set user privilege level
+                      Set user privilege level
+                      - Range: `0`-`15`
+                    type: number
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: EEMStatus defines the observed state of EEM.
+            properties:
+              atProvider:
+                properties:
+                  applets:
+                    description: (Attributes List) Register an Event Manager applet
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        actions:
+                          description: (Attributes List) Add or modify an action statement
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              appendValue:
+                                description: |-
+                                  (String) Value of the variable of append conditional
+                                  Value of the variable of append conditional
+                                type: string
+                              appendVarname:
+                                description: |-
+                                  (String) Name of the variable of append conditional
+                                  Name of the variable of append conditional
+                                type: string
+                              break:
+                                description: |-
+                                  (Boolean) break conditional
+                                  break conditional
+                                type: boolean
+                              cliCommand:
+                                description: |-
+                                  (String) CLI command
+                                  CLI command
+                                type: string
+                              contextRetrieveKey:
+                                description: |-
+                                  (String) key name
+                                  key name
+                                type: string
+                              contextRetrieveVariable:
+                                description: |-
+                                  (String) variable name pattern
+                                  variable name pattern
+                                type: string
+                              contextSaveKey:
+                                description: |-
+                                  (String) key name
+                                  key name
+                                type: string
+                              contextSaveVariable:
+                                description: |-
+                                  (String) variable name pattern
+                                  variable name pattern
+                                type: string
+                              continue:
+                                description: |-
+                                  (Boolean) continue conditional
+                                  continue conditional
+                                type: boolean
+                              counterName:
+                                description: |-
+                                  (String) Name of the counter
+                                  Name of the counter
+                                type: string
+                              counterOpDec:
+                                description: |-
+                                  (Boolean) Decrement the value of the counter by the given value
+                                  Decrement the value of the counter by the given value
+                                type: boolean
+                              counterOpInc:
+                                description: |-
+                                  (Boolean) Increment the value of the counter by the given value
+                                  Increment the value of the counter by the given value
+                                type: boolean
+                              counterOpNop:
+                                description: |-
+                                  (Boolean) Read the value of the counter
+                                  Read the value of the counter
+                                type: boolean
+                              counterOpSet:
+                                description: |-
+                                  (Boolean) Set the value of the counter by the given value
+                                  Set the value of the counter by the given value
+                                type: boolean
+                              counterValue:
+                                description: |-
+                                  (Number) Value used to modify the counter
+                                  Value used to modify the counter
+                                  - Range: `-2147483648`-`2147483647`
+                                type: number
+                              decrementValue:
+                                description: |-
+                                  (String) Value of the variable of decrement conditional
+                                  Value of the variable of decrement conditional
+                                type: string
+                              decrementVarname:
+                                description: |-
+                                  (String) Name of the variable of decrement conditional
+                                  Name of the variable of decrement conditional
+                                type: string
+                              divideOperand1:
+                                description: |-
+                                  (String) First operand of divide conditional
+                                  First operand of divide conditional
+                                type: string
+                              divideOperand2:
+                                description: |-
+                                  (String) Second operand of divide conditional
+                                  Second operand of divide conditional
+                                type: string
+                              else:
+                                description: |-
+                                  (Boolean) else conditional
+                                  else conditional
+                                type: boolean
+                              elseifOperand1:
+                                description: |-
+                                  (String) First operand of else if conditional
+                                  First operand of else if conditional
+                                type: string
+                              elseifOperand2:
+                                description: |-
+                                  (String) Second operand of else if conditional
+                                  Second operand of else if conditional
+                                type: string
+                              elseifOperation:
+                                description: |-
+                                  (String) Operation of else if conditional
+                                  Operation of else if conditional
+                                  - Choices: `eq`, `ge`, `gt`, `le`, `lt`, `ne`
+                                type: string
+                              end:
+                                description: |-
+                                  (Boolean) end conditional block
+                                  end conditional block
+                                type: boolean
+                              exit:
+                                description: |-
+                                  (Boolean) Exit from applet run
+                                  Exit from applet run
+                                type: boolean
+                              foreachDelimiter:
+                                description: |-
+                                  (String) Delimiter string of for each conditional
+                                  Delimiter string of for each conditional
+                                type: string
+                              foreachIterator:
+                                description: |-
+                                  (String) String to iterate over
+                                  String to iterate over
+                                type: string
+                              foreachLoopvar:
+                                description: |-
+                                  (String) Loop variable name of for each conditional
+                                  Loop variable name of for each conditional
+                                type: string
+                              gets:
+                                description: |-
+                                  (String) gets conditional
+                                  gets conditional
+                                type: string
+                              handleErrorType:
+                                description: |-
+                                  error conditional
+                                  Error handle type of handle-error conditional
+                                  - Choices: `exit`, `ignore`, `warn`
+                                type: string
+                              ifGoto:
+                                description: |-
+                                  (String) goto label
+                                  goto label
+                                type: string
+                              ifKeyword:
+                                description: |-
+                                  Choices: eq, ge, gt, le, lt, ne
+
+                                  - Choices: `eq`, `ge`, `gt`, `le`, `lt`, `ne`
+                                type: string
+                              ifStringOp1:
+                                description: (String)
+                                type: string
+                              ifStringOp2:
+                                description: (String)
+                                type: string
+                              incrementValue:
+                                description: |-
+                                  (String) value of the variable of increment conditional
+                                  value of the variable of increment conditional
+                                type: string
+                              incrementVarname:
+                                description: |-
+                                  (String) Name of the variable of increment conditional
+                                  Name of the variable of increment conditional
+                                type: string
+                              infoTypeSnmpTrapEnterpriseOid:
+                                description: |-
+                                  (String) Enterprise oid
+                                  Enterprise oid
+                                type: string
+                              infoTypeSnmpTrapGenericTrapnum:
+                                description: |-
+                                  (Number) Generic trap number
+                                  Generic trap number
+                                  - Range: `0`-`4294967295`
+                                type: number
+                              infoTypeSnmpTrapSpecificTrapnum:
+                                description: |-
+                                  (Number) Specific trap number
+                                  Specific trap number
+                                  - Range: `0`-`4294967295`
+                                type: number
+                              infoTypeSnmpTrapTrapOid:
+                                description: |-
+                                  (String) Trap oid
+                                  Trap oid
+                                type: string
+                              infoTypeSnmpTrapTrapVar:
+                                description: |-
+                                  (String) Trap variable
+                                  Trap variable
+                                type: string
+                              infoTypeSnmpVar:
+                                description: (String)
+                                type: string
+                              infoTypeSnmpVarOid:
+                                description: |-
+                                  (String) SNMP object id
+                                  SNMP object id
+                                type: string
+                              infoTypeSnmpVarOidType:
+                                description: |-
+                                  Choices: counter, gauge, int, ipv4, octet, string, uint
+
+                                  - Choices: `counter`, `gauge`, `int`, `ipv4`, `octet`, `string`, `uint`
+                                type: string
+                              infoTypeSnmpVarOidTypeValue:
+                                description: (String)
+                                type: string
+                              name:
+                                description: |-
+                                  (String) Name of the Event Manager applet
+                                  Label
+                                type: string
+                              puts:
+                                description: |-
+                                  (String) displays data to active tty
+                                  displays data to active tty
+                                type: string
+                              regexpStringInput:
+                                description: |-
+                                  (String) input string
+                                  input string
+                                type: string
+                              regexpStringMatch:
+                                description: |-
+                                  (String) match variable
+                                  match variable
+                                type: string
+                              regexpStringMatch1:
+                                description: |-
+                                  (String) subsequent match variable
+                                  subsequent match variable
+                                type: string
+                              regexpStringMatch2:
+                                description: |-
+                                  (String) subsequent match variable
+                                  subsequent match variable
+                                type: string
+                              regexpStringMatch3:
+                                description: |-
+                                  (String) subsequent match variable
+                                  subsequent match variable
+                                type: string
+                              regexpStringPattern:
+                                description: |-
+                                  (String) regular expression pattern
+                                  regular expression pattern
+                                type: string
+                              reload:
+                                description: |-
+                                  (Boolean) Reload system
+                                  Reload system
+                                type: boolean
+                              setValue:
+                                description: |-
+                                  (String) Value of the variable of set conditional
+                                  Value of the variable of set conditional
+                                type: string
+                              setVarname:
+                                description: |-
+                                  (String) Name of the variable of set conditional
+                                  Name of the variable of set conditional
+                                type: string
+                              snmpTrapIntdata1:
+                                description: |-
+                                  (Number) SNMP integer data1
+                                  SNMP integer data1
+                                  - Range: `-2147483648`-`2147483647`
+                                type: number
+                              snmpTrapIntdata2:
+                                description: |-
+                                  (Number) SNMP integer data2
+                                  SNMP integer data2
+                                  - Range: `-2147483648`-`2147483647`
+                                type: number
+                              snmpTrapStrdata:
+                                description: |-
+                                  (String) SNMP trap string
+                                  SNMP trap string
+                                type: string
+                              stringFirstStringOp1:
+                                description: (String)
+                                type: string
+                              stringFirstStringOp2:
+                                description: (String)
+                                type: string
+                              stringTrim:
+                                description: |-
+                                  (String) trim characters from both ends of string
+                                  trim characters from both ends of string
+                                type: string
+                              syslogFacility:
+                                description: |-
+                                  (String) Facility string
+                                  Facility string
+                                type: string
+                              syslogMsg:
+                                description: |-
+                                  (String) Syslog message
+                                  Syslog message
+                                type: string
+                              syslogPriority:
+                                description: |-
+                                  (String) Priority of syslog message
+                                  Priority of syslog message
+                                type: string
+                              wait:
+                                description: |-
+                                  (Number) Wait for a specified amount of time
+                                  Wait for a specified amount of time
+                                  - Range: `1`-`31536000`
+                                type: number
+                              whileOperand1:
+                                description: |-
+                                  (String) First operand of while conditional
+                                  First operand of while conditional
+                                type: string
+                              whileOperand2:
+                                description: |-
+                                  (String) Second operand of while conditional
+                                  Second operand of while conditional
+                                type: string
+                              whileOperation:
+                                description: |-
+                                  (String) Operation of while conditional
+                                  Operation of while conditional
+                                  - Choices: `eq`, `ge`, `gt`, `le`, `lt`, `ne`
+                                type: string
+                            type: object
+                          type: array
+                        authorization:
+                          description: |-
+                            (String) Specify an authorization type for the applet
+                            Specify an authorization type for the applet
+                            - Choices: `bypass`
+                          type: string
+                        class:
+                          description: |-
+                            (String) Specify a class for the applet
+                            Specify a class for the applet
+                          type: string
+                        description:
+                          description: |-
+                            (String) Add or modify an applet description
+                            Add or modify an applet description
+                          type: string
+                        eventCliPattern:
+                          description: |-
+                            (String) CLI command pattern match
+                            CLI command pattern match
+                          type: string
+                        eventCliSkip:
+                          description: |-
+                            (String) describes whether to skip CLI command execution
+                            describes whether to skip CLI command execution
+                            - Choices: `no`, `yes`
+                          type: string
+                        eventCliSync:
+                          description: |-
+                            (String) CLI and EEM policy execution sync or async
+                            CLI and EEM policy execution sync or async
+                            - Choices: `no`, `yes`
+                          type: string
+                        eventSyslogMaxrun:
+                          description: |-
+                            (Number) Maximum runtime of applet
+                            Maximum runtime of applet
+                            - Range: `0`-`3.1536000999e+10`
+                          type: number
+                        eventSyslogOccurs:
+                          description: |-
+                            (Number) Number of occurrences before raising event
+                            Number of occurrences before raising event
+                            - Range: `1`-`32`
+                          type: number
+                        eventSyslogPattern:
+                          description: |-
+                            (String) Pattern match string for the entire message
+                            Pattern match string for the entire message
+                          type: string
+                        eventSyslogPeriod:
+                          description: |-
+                            (Number) Occurrence period
+                            Occurrence period
+                            - Range: `0`-`4.294967295999e+12`
+                          type: number
+                        eventSyslogRatelimit:
+                          description: |-
+                            (Number) seconds[.milliseconds] value
+                            seconds[.milliseconds] value
+                            - Range: `0`-`3.1536000999e+10`
+                          type: number
+                        eventTimerCronEntry:
+                          description: |-
+                            (String) Cron entry for cron timer
+                            Cron entry for cron timer
+                          type: string
+                        eventTimerCronMaxrun:
+                          description: |-
+                            (Number) Maximum runtime of applet
+                            Maximum runtime of applet
+                            - Range: `0`-`3.1536000999e+10`
+                          type: number
+                        eventTimerCronName:
+                          description: |-
+                            (String) Timer name string
+                            Timer name string
+                          type: string
+                        eventTimerCronRatelimit:
+                          description: |-
+                            (Number) seconds[.milliseconds] value
+                            seconds[.milliseconds] value
+                            - Range: `0`-`3.1536000999e+10`
+                          type: number
+                        eventTimerWatchdogMaxrun:
+                          description: |-
+                            (Number) Maximum runtime of applet
+                            Maximum runtime of applet
+                            - Range: `0`-`3.1536000999e+10`
+                          type: number
+                        eventTimerWatchdogName:
+                          description: |-
+                            (String) Timer name string
+                            Timer name string
+                          type: string
+                        eventTimerWatchdogRatelimit:
+                          description: |-
+                            (Number) seconds[.milliseconds] value
+                            seconds[.milliseconds] value
+                            - Range: `0`-`3.1536000999e+10`
+                          type: number
+                        eventTimerWatchdogTime:
+                          description: |-
+                            (Number) Time period for watchdog / countdown / absolute timer
+                            Time period for watchdog / countdown / absolute timer
+                            - Range: `1000`-`2.085978494999e+12`
+                          type: number
+                        name:
+                          description: |-
+                            (String) Name of the Event Manager applet
+                            Name of the Event Manager applet
+                          type: string
+                      type: object
+                    type: array
+                  detectorRoutingBootupDelay:
+                    description: |-
+                      (Number) bootup delay in seconds
+                      bootup delay in seconds
+                    type: number
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  directoryUserPolicy:
+                    description: |-
+                      (String) Embedded Event Manager user policy directory
+                      Embedded Event Manager user policy directory
+                    type: string
+                  environmentVariables:
+                    description: (Attributes List) Set an Embedded Event Manager global
+                      environment variable (see below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String) Name of the Event Manager applet
+                          type: string
+                        value:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  historySizeEvents:
+                    description: |-
+                      (Number) Embedded Event Manager event history table size
+                      Embedded Event Manager event history table size
+                      - Range: `0`-`50`
+                    type: number
+                  historySizeTraps:
+                    description: |-
+                      (Number) Embedded Event Manager trap history table size
+                      Embedded Event Manager trap history table size
+                      - Range: `0`-`50`
+                    type: number
+                  id:
+                    description: (String) The path of the object.
+                    type: string
+                  schedulerAppletThreadClassDefault:
+                    description: |-
+                      (Boolean) default scheduler thread class
+                      default scheduler thread class
+                    type: boolean
+                  schedulerAppletThreadClassNumber:
+                    description: |-
+                      (Number) Number of concurrent execution threads
+                      Number of concurrent execution threads
+                      - Range: `1`-`65535`
+                    type: number
+                  sessionCliUsername:
+                    description: |-
+                      (String) username
+                      username
+                    type: string
+                  sessionCliUsernamePrivilege:
+                    description: |-
+                      (Number) Set user privilege level
+                      Set user privilege level
+                      - Range: `0`-`15`
+                    type: number
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              lastHandledReconcileAt:
+                description: |-
+                  LastHandledReconcileAt holds the value of the most recent
+                  reconcile-requested-at annotation token that the controller has
+                  processed. Users can compare this to the annotation to determine
+                  whether a reconcile request has been handled.
+                type: string
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

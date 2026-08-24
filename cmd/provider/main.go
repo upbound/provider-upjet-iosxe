@@ -39,14 +39,14 @@ import (
 
 	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
 
-	apisCluster "github.com/crossplane/upjet-provider-template/apis/cluster"
-	apisNamespaced "github.com/crossplane/upjet-provider-template/apis/namespaced"
-	"github.com/crossplane/upjet-provider-template/config"
-	"github.com/crossplane/upjet-provider-template/internal/clients"
-	controllerCluster "github.com/crossplane/upjet-provider-template/internal/controller/cluster"
-	controllerNamespaced "github.com/crossplane/upjet-provider-template/internal/controller/namespaced"
-	"github.com/crossplane/upjet-provider-template/internal/features"
-	"github.com/crossplane/upjet-provider-template/internal/version"
+	apisCluster "github.com/upbound/provider-upjet-iosxe/apis/cluster"
+	apisNamespaced "github.com/upbound/provider-upjet-iosxe/apis/namespaced"
+	"github.com/upbound/provider-upjet-iosxe/config"
+	"github.com/upbound/provider-upjet-iosxe/internal/clients"
+	controllerCluster "github.com/upbound/provider-upjet-iosxe/internal/controller/cluster"
+	controllerNamespaced "github.com/upbound/provider-upjet-iosxe/internal/controller/namespaced"
+	"github.com/upbound/provider-upjet-iosxe/internal/features"
+	"github.com/upbound/provider-upjet-iosxe/internal/version"
 )
 
 const (
@@ -58,7 +58,7 @@ const (
 
 func main() {
 	var (
-		app                     = kingpin.New(filepath.Base(os.Args[0]), "Terraform based Crossplane provider for Template").DefaultEnvars()
+		app                     = kingpin.New(filepath.Base(os.Args[0]), "Crossplane provider for Cisco IOS-XE").DefaultEnvars()
 		debug                   = app.Flag("debug", "Run with debug logging.").Short('d').Bool()
 		syncPeriod              = app.Flag("sync", "Controller manager sync period such as 300ms, 1.5h, or 2h45m").Short('s').Default("1h").Duration()
 		pollInterval            = app.Flag("poll", "Poll interval controls how often an individual resource should be checked for drift.").Default("10m").Duration()
@@ -90,7 +90,7 @@ func main() {
 	kingpin.MustParse(app.Parse(os.Args[1:]))
 
 	zl := zap.New(zap.UseDevMode(*debug))
-	log := logging.NewLogrLogger(zl.WithName("upjet-provider-template"))
+	log := logging.NewLogrLogger(zl.WithName("provider-upjet-iosxe"))
 	if *debug {
 		// The controller-runtime runs with a no-op logger by default. It is
 		// *very* verbose even at info level, so we only provide it a real
@@ -139,14 +139,14 @@ func main() {
 
 	scheme := runtime.NewScheme()
 	kingpin.FatalIfError(clientgoscheme.AddToScheme(scheme), "Cannot add clientgo scheme")
-	kingpin.FatalIfError(apisCluster.AddToScheme(scheme), "Cannot add cluster-scoped Template APIs to scheme")
-	kingpin.FatalIfError(apisNamespaced.AddToScheme(scheme), "Cannot add namespace-scoped Template APIs to scheme")
+	kingpin.FatalIfError(apisCluster.AddToScheme(scheme), "Cannot add cluster-scoped IOSXE APIs to scheme")
+	kingpin.FatalIfError(apisNamespaced.AddToScheme(scheme), "Cannot add namespace-scoped IOSXE APIs to scheme")
 	kingpin.FatalIfError(apiextensionsv1.AddToScheme(scheme), "Cannot add CustomResourceDefinition to scheme")
 
 	mgr, err := ctrl.NewManager(cfg, ctrl.Options{
 		Scheme:           scheme,
 		LeaderElection:   *leaderElection,
-		LeaderElectionID: "crossplane-leader-election-upjet-provider-template",
+		LeaderElectionID: "crossplane-leader-election-provider-upjet-iosxe",
 		Cache: cache.Options{
 			SyncPeriod: syncPeriod,
 			ByObject: map[client.Object]cache.ByObject{
@@ -169,8 +169,8 @@ func main() {
 		RenewDeadline:              func() *time.Duration { d := 50 * time.Second; return &d }(),
 	})
 	kingpin.FatalIfError(err, "Cannot create controller manager")
-	kingpin.FatalIfError(apisCluster.AddToScheme(mgr.GetScheme()), "Cannot add cluster-scoped Template APIs to scheme")
-	kingpin.FatalIfError(apisNamespaced.AddToScheme(mgr.GetScheme()), "Cannot add namespaced Template APIs to scheme")
+	kingpin.FatalIfError(apisCluster.AddToScheme(mgr.GetScheme()), "Cannot add cluster-scoped IOSXE APIs to scheme")
+	kingpin.FatalIfError(apisNamespaced.AddToScheme(mgr.GetScheme()), "Cannot add namespaced IOSXE APIs to scheme")
 	kingpin.FatalIfError(apiextensionsv1.AddToScheme(mgr.GetScheme()), "Cannot add api-extensions APIs to scheme")
 	kingpin.FatalIfError(authv1.AddToScheme(mgr.GetScheme()), "Cannot add k8s authorization APIs to scheme")
 
@@ -239,7 +239,7 @@ func main() {
 		clo := xpcontroller.ChangeLogOptions{
 			ChangeLogger: managed.NewGRPCChangeLogger(
 				changelogsv1alpha1.NewChangeLogServiceClient(conn),
-				managed.WithProviderVersion(fmt.Sprintf("provider-upjet-aws:%s", version.Version))),
+				managed.WithProviderVersion(fmt.Sprintf("provider-upjet-iosxe:%s", version.Version))),
 		}
 		clusterOpts.ChangeLogOptions = &clo
 		namespacedOpts.ChangeLogOptions = &clo
@@ -256,12 +256,12 @@ func main() {
 			Gate:                    crdGate,
 			MaxConcurrentReconciles: 1,
 		}), "Cannot setup CRD gate")
-		kingpin.FatalIfError(controllerCluster.SetupGated(mgr, clusterOpts), "Cannot setup cluster-scoped Template controllers")
-		kingpin.FatalIfError(controllerNamespaced.SetupGated(mgr, namespacedOpts), "Cannot setup namespaced Template controllers")
+		kingpin.FatalIfError(controllerCluster.SetupGated(mgr, clusterOpts), "Cannot setup cluster-scoped IOSXE controllers")
+		kingpin.FatalIfError(controllerNamespaced.SetupGated(mgr, namespacedOpts), "Cannot setup namespaced IOSXE controllers")
 	} else {
 		log.Info("Provider has missing RBAC permissions for watching CRDs, controller SafeStart capability will be disabled")
-		kingpin.FatalIfError(controllerCluster.Setup(mgr, clusterOpts), "Cannot setup cluster-scoped Template controllers")
-		kingpin.FatalIfError(controllerNamespaced.Setup(mgr, namespacedOpts), "Cannot setup namespaced Template controllers")
+		kingpin.FatalIfError(controllerCluster.Setup(mgr, clusterOpts), "Cannot setup cluster-scoped IOSXE controllers")
+		kingpin.FatalIfError(controllerNamespaced.Setup(mgr, namespacedOpts), "Cannot setup namespaced IOSXE controllers")
 	}
 
 	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")

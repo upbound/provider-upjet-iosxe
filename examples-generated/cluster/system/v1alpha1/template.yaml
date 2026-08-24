@@ -1,0 +1,82 @@
+apiVersion: system.iosxe.upbound.io/v1alpha1
+kind: Template
+metadata:
+  annotations:
+    meta.upbound.io/example-id: system/v1alpha1/template
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    accessSessionClosed: true
+    accessSessionControlDirection: both
+    accessSessionHostMode: single-host
+    accessSessionInterfaceTemplateSticky: true
+    accessSessionInterfaceTemplateStickyTimer: 100
+    accessSessionMonitor: true
+    accessSessionPortControl: auto
+    authenticationPeriodic: true
+    authenticationTimerReauthenticateServer: true
+    ctsManual: true
+    ctsManualPolicyStaticSgt: 100
+    ctsManualPolicyStaticTrusted: false
+    ctsManualPropagateSgt: false
+    ctsRoleBasedEnforcement: false
+    deviceTracking: true
+    deviceTrackingVlanRange: 100-199
+    dot1xMaxReauthReq: 3
+    dot1xMaxReq: 3
+    dot1xPae: both
+    dot1xTimeoutQuietPeriod: 4
+    dot1xTimeoutRatelimitPeriod: 10
+    dot1xTimeoutServerTimeout: 30
+    dot1xTimeoutSuppTimeout: 10
+    dot1xTimeoutTxPeriod: 2
+    ipAccessGroup:
+    - accessList: ACL1
+      direction: in
+    ipDhcpSnoopingLimitRate: 10
+    ipDhcpSnoopingTrust: true
+    loadInterval: 30
+    mab: true
+    mabEap: true
+    servicePolicyInput: SP1
+    servicePolicyOutput: SP2
+    servicePolicyTypeControlSubscriber: dot1x_policy
+    spanningTreeBpduguardEnable: true
+    spanningTreePortfast: true
+    spanningTreePortfastDisable: false
+    spanningTreePortfastEdge: false
+    spanningTreePortfastNetwork: false
+    stormControlActionShutdown: true
+    stormControlActionTrap: true
+    stormControlBroadcastLevelBpsThreshold: 10
+    stormControlBroadcastLevelPpsThreshold: "10"
+    stormControlBroadcastLevelThreshold: 10
+    stormControlMulticastLevelBpsThreshold: 10000
+    stormControlMulticastLevelPpsThreshold: "10"
+    stormControlMulticastLevelThreshold: 10
+    subscriberAgingProbe: true
+    switchportAccessVlan: 200
+    switchportBlockUnicast: false
+    switchportModeAccess: false
+    switchportModeTrunk: true
+    switchportNonegotiate: false
+    switchportPortSecurity: true
+    switchportPortSecurityAgingStatic: false
+    switchportPortSecurityAgingTime: 100
+    switchportPortSecurityAgingType: true
+    switchportPortSecurityAgingTypeInactivity: true
+    switchportPortSecurityMaximumRange:
+    - range: 100
+      vlan: true
+      vlanAccess: true
+    switchportPortSecurityViolationProtect: false
+    switchportPortSecurityViolationRestrict: false
+    switchportPortSecurityViolationShutdown: false
+    switchportPrivateVlanHostAssociationPrimaryRange: 301
+    switchportPrivateVlanHostAssociationSecondaryRange: 302
+    switchportTrunkAllowedVlans: 500-599
+    switchportTrunkNativeVlanVlanId: 10
+    switchportVoiceVlan: 201
+    templateName: TEMP1

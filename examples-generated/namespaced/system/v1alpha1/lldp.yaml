@@ -1,0 +1,14 @@
+apiVersion: system.iosxe.m.upbound.io/v1alpha1
+kind: LLDP
+metadata:
+  annotations:
+    meta.upbound.io/example-id: system/v1alpha1/lldp
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    holdtime: 60
+    run: true
+    timer: 60

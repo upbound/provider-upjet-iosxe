@@ -1,0 +1,15 @@
+apiVersion: crypto.iosxe.upbound.io/v1alpha1
+kind: IPSecProfile
+metadata:
+  annotations:
+    meta.upbound.io/example-id: crypto/v1alpha1/ipsecprofile
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    name: vpn200
+    setIkev2Profile: vpn300
+    setPfsGroup: group20
+    setTransformSet:
+    - TS1

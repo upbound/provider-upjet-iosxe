@@ -1,0 +1,22 @@
+apiVersion: aaa.iosxe.upbound.io/v1alpha1
+kind: Authentication
+metadata:
+  annotations:
+    meta.upbound.io/example-id: aaa/v1alpha1/authentication
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    dot1x:
+    - a1Group: GROUP1
+      a2Cache: GROUP2
+      a3Radius: true
+      a4Local: true
+      name: test
+    dot1xDefaultA1Group: Radius-GROUP
+    dot1xDefaultA2Group: Radius-GROUP2
+    logins:
+    - a1Group: Radius-GROUP
+      a2None: true
+      name: test

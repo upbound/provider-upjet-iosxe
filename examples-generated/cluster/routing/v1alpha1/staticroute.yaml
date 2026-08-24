@@ -1,0 +1,19 @@
+apiVersion: routing.iosxe.upbound.io/v1alpha1
+kind: StaticRoute
+metadata:
+  annotations:
+    meta.upbound.io/example-id: routing/v1alpha1/staticroute
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    mask: 255.255.255.255
+    nextHops:
+    - distance: 10
+      global: false
+      name: Route1
+      nextHop: 6.6.6.6
+      permanent: true
+      tag: 100
+    prefix: 5.5.5.5

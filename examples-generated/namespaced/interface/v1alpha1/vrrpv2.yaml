@@ -1,0 +1,28 @@
+apiVersion: interface.iosxe.m.upbound.io/v1alpha1
+kind: VRRPv2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: interface/v1alpha1/vrrpv2
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    authenticationText: SECRET
+    description: VRRP-GROUP-1
+    groupId: 1
+    ipPrimaryAddress: 192.0.2.254
+    ipSecondaryAddresses:
+    - address: 192.0.2.253
+      secondary: true
+    name: "123"
+    preempt: true
+    preemptDelayMinimum: 30
+    priority: 110
+    shutdown: false
+    timersAdvertiseInterval: 3
+    tracks:
+    - decrement: 20
+      objectId: 1
+    type: Vlan

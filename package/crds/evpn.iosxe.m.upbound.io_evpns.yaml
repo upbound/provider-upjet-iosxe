@@ -1,0 +1,553 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: evpns.evpn.iosxe.m.upbound.io
+spec:
+  group: evpn.iosxe.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - iosxe
+    kind: EVPN
+    listKind: EVPNList
+    plural: evpns
+    singular: evpn
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: EVPN is the Schema for the EVPNs API. This resource can manage
+          the EVPN configuration.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: EVPNSpec defines the desired state of EVPN
+            properties:
+              forProvider:
+                properties:
+                  anycastGatewayMacAuto:
+                    description: |-
+                      (Boolean) Enable Auto Anycast Gateway MAC
+                      Enable Auto Anycast Gateway MAC
+                    type: boolean
+                  defaultGatewayAdvertise:
+                    description: |-
+                      (Boolean) Advertise Default Gateway MAC/IP routes
+                      Advertise Default Gateway MAC/IP routes
+                    type: boolean
+                  deleteMode:
+                    description: |-
+                      is. Default value is all.
+                      Configure behavior when deleting/destroying the resource. Either delete the entire object (YANG container) being managed, or only delete the individual resource attributes configured explicitly and leave everything else as-is. Default value is `all`.
+                      - Choices: `all`, `attributes`
+                    type: string
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  floodingSuppressionAddressResolutionDisable:
+                    description: |-
+                      (Boolean) Disable flooding suppression
+                      Disable flooding suppression
+                    type: boolean
+                  ipDuplicationLimit:
+                    description: |-
+                      (Number) Number of IP moves within specified time interval
+                      Number of IP moves within specified time interval
+                      - Range: `2`-`1000`
+                    type: number
+                  ipDuplicationTime:
+                    description: |-
+                      (Number) IP duplication timer
+                      IP duplication timer
+                      - Range: `10`-`36000`
+                    type: number
+                  loggingPeerState:
+                    description: |-
+                      (Boolean) Peer state transition logging
+                      Peer state transition logging
+                    type: boolean
+                  macDuplicationLimit:
+                    description: |-
+                      (Number) Number of MAC moves within specified time interval
+                      Number of MAC moves within specified time interval
+                      - Range: `2`-`1000`
+                    type: number
+                  macDuplicationTime:
+                    description: |-
+                      (Number) MAC duplication timer
+                      MAC duplication timer
+                      - Range: `10`-`36000`
+                    type: number
+                  multicastAdvertise:
+                    description: |-
+                      (Boolean) Enable and advertise L2 multicast capability
+                      Enable and advertise L2 multicast capability
+                    type: boolean
+                  profiles:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        eviBase:
+                          description: |-
+                            (Number) Evpn instance identifier base
+                            Evpn instance identifier base
+                            - Range: `0`-`65535`
+                          type: number
+                        l2vniBase:
+                          description: |-
+                            (Number) VxLAN Layer 2 VNI base
+                            VxLAN Layer 2 VNI base
+                            - Range: `4096`-`16777215`
+                          type: number
+                        name:
+                          description: |-
+                            (String) EVPN L2 profile name
+                            EVPN L2 profile name
+                          type: string
+                      type: object
+                    type: array
+                  replicationTypeIngress:
+                    description: |-
+                      (Boolean) Ingress replication
+                      Ingress replication
+                    type: boolean
+                  replicationTypeMp2Mp:
+                    description: |-
+                      (Boolean) mp2mp replication
+                      mp2mp replication
+                    type: boolean
+                  replicationTypeP2Mp:
+                    description: |-
+                      (Boolean) p2mp replication
+                      p2mp replication
+                    type: boolean
+                  replicationTypeStatic:
+                    description: |-
+                      (Boolean) Static replication
+                      Static replication
+                    type: boolean
+                  routeTargetAutoVni:
+                    description: |-
+                      based route-target
+                      Set vni-based route-target
+                    type: boolean
+                  routerIdLoopback:
+                    description: |-
+                      (Number) Loopback interface
+                      Loopback interface
+                      - Range: `0`-`2147483647`
+                    type: number
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  anycastGatewayMacAuto:
+                    description: |-
+                      (Boolean) Enable Auto Anycast Gateway MAC
+                      Enable Auto Anycast Gateway MAC
+                    type: boolean
+                  defaultGatewayAdvertise:
+                    description: |-
+                      (Boolean) Advertise Default Gateway MAC/IP routes
+                      Advertise Default Gateway MAC/IP routes
+                    type: boolean
+                  deleteMode:
+                    description: |-
+                      is. Default value is all.
+                      Configure behavior when deleting/destroying the resource. Either delete the entire object (YANG container) being managed, or only delete the individual resource attributes configured explicitly and leave everything else as-is. Default value is `all`.
+                      - Choices: `all`, `attributes`
+                    type: string
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  floodingSuppressionAddressResolutionDisable:
+                    description: |-
+                      (Boolean) Disable flooding suppression
+                      Disable flooding suppression
+                    type: boolean
+                  ipDuplicationLimit:
+                    description: |-
+                      (Number) Number of IP moves within specified time interval
+                      Number of IP moves within specified time interval
+                      - Range: `2`-`1000`
+                    type: number
+                  ipDuplicationTime:
+                    description: |-
+                      (Number) IP duplication timer
+                      IP duplication timer
+                      - Range: `10`-`36000`
+                    type: number
+                  loggingPeerState:
+                    description: |-
+                      (Boolean) Peer state transition logging
+                      Peer state transition logging
+                    type: boolean
+                  macDuplicationLimit:
+                    description: |-
+                      (Number) Number of MAC moves within specified time interval
+                      Number of MAC moves within specified time interval
+                      - Range: `2`-`1000`
+                    type: number
+                  macDuplicationTime:
+                    description: |-
+                      (Number) MAC duplication timer
+                      MAC duplication timer
+                      - Range: `10`-`36000`
+                    type: number
+                  multicastAdvertise:
+                    description: |-
+                      (Boolean) Enable and advertise L2 multicast capability
+                      Enable and advertise L2 multicast capability
+                    type: boolean
+                  profiles:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        eviBase:
+                          description: |-
+                            (Number) Evpn instance identifier base
+                            Evpn instance identifier base
+                            - Range: `0`-`65535`
+                          type: number
+                        l2vniBase:
+                          description: |-
+                            (Number) VxLAN Layer 2 VNI base
+                            VxLAN Layer 2 VNI base
+                            - Range: `4096`-`16777215`
+                          type: number
+                        name:
+                          description: |-
+                            (String) EVPN L2 profile name
+                            EVPN L2 profile name
+                          type: string
+                      type: object
+                    type: array
+                  replicationTypeIngress:
+                    description: |-
+                      (Boolean) Ingress replication
+                      Ingress replication
+                    type: boolean
+                  replicationTypeMp2Mp:
+                    description: |-
+                      (Boolean) mp2mp replication
+                      mp2mp replication
+                    type: boolean
+                  replicationTypeP2Mp:
+                    description: |-
+                      (Boolean) p2mp replication
+                      p2mp replication
+                    type: boolean
+                  replicationTypeStatic:
+                    description: |-
+                      (Boolean) Static replication
+                      Static replication
+                    type: boolean
+                  routeTargetAutoVni:
+                    description: |-
+                      based route-target
+                      Set vni-based route-target
+                    type: boolean
+                  routerIdLoopback:
+                    description: |-
+                      (Number) Loopback interface
+                      Loopback interface
+                      - Range: `0`-`2147483647`
+                    type: number
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: EVPNStatus defines the observed state of EVPN.
+            properties:
+              atProvider:
+                properties:
+                  anycastGatewayMacAuto:
+                    description: |-
+                      (Boolean) Enable Auto Anycast Gateway MAC
+                      Enable Auto Anycast Gateway MAC
+                    type: boolean
+                  defaultGatewayAdvertise:
+                    description: |-
+                      (Boolean) Advertise Default Gateway MAC/IP routes
+                      Advertise Default Gateway MAC/IP routes
+                    type: boolean
+                  deleteMode:
+                    description: |-
+                      is. Default value is all.
+                      Configure behavior when deleting/destroying the resource. Either delete the entire object (YANG container) being managed, or only delete the individual resource attributes configured explicitly and leave everything else as-is. Default value is `all`.
+                      - Choices: `all`, `attributes`
+                    type: string
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  floodingSuppressionAddressResolutionDisable:
+                    description: |-
+                      (Boolean) Disable flooding suppression
+                      Disable flooding suppression
+                    type: boolean
+                  id:
+                    description: (String) The path of the object.
+                    type: string
+                  ipDuplicationLimit:
+                    description: |-
+                      (Number) Number of IP moves within specified time interval
+                      Number of IP moves within specified time interval
+                      - Range: `2`-`1000`
+                    type: number
+                  ipDuplicationTime:
+                    description: |-
+                      (Number) IP duplication timer
+                      IP duplication timer
+                      - Range: `10`-`36000`
+                    type: number
+                  loggingPeerState:
+                    description: |-
+                      (Boolean) Peer state transition logging
+                      Peer state transition logging
+                    type: boolean
+                  macDuplicationLimit:
+                    description: |-
+                      (Number) Number of MAC moves within specified time interval
+                      Number of MAC moves within specified time interval
+                      - Range: `2`-`1000`
+                    type: number
+                  macDuplicationTime:
+                    description: |-
+                      (Number) MAC duplication timer
+                      MAC duplication timer
+                      - Range: `10`-`36000`
+                    type: number
+                  multicastAdvertise:
+                    description: |-
+                      (Boolean) Enable and advertise L2 multicast capability
+                      Enable and advertise L2 multicast capability
+                    type: boolean
+                  profiles:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        eviBase:
+                          description: |-
+                            (Number) Evpn instance identifier base
+                            Evpn instance identifier base
+                            - Range: `0`-`65535`
+                          type: number
+                        l2vniBase:
+                          description: |-
+                            (Number) VxLAN Layer 2 VNI base
+                            VxLAN Layer 2 VNI base
+                            - Range: `4096`-`16777215`
+                          type: number
+                        name:
+                          description: |-
+                            (String) EVPN L2 profile name
+                            EVPN L2 profile name
+                          type: string
+                      type: object
+                    type: array
+                  replicationTypeIngress:
+                    description: |-
+                      (Boolean) Ingress replication
+                      Ingress replication
+                    type: boolean
+                  replicationTypeMp2Mp:
+                    description: |-
+                      (Boolean) mp2mp replication
+                      mp2mp replication
+                    type: boolean
+                  replicationTypeP2Mp:
+                    description: |-
+                      (Boolean) p2mp replication
+                      p2mp replication
+                    type: boolean
+                  replicationTypeStatic:
+                    description: |-
+                      (Boolean) Static replication
+                      Static replication
+                    type: boolean
+                  routeTargetAutoVni:
+                    description: |-
+                      based route-target
+                      Set vni-based route-target
+                    type: boolean
+                  routerIdLoopback:
+                    description: |-
+                      (Number) Loopback interface
+                      Loopback interface
+                      - Range: `0`-`2147483647`
+                    type: number
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              lastHandledReconcileAt:
+                description: |-
+                  LastHandledReconcileAt holds the value of the most recent
+                  reconcile-requested-at annotation token that the controller has
+                  processed. Users can compare this to the annotation to determine
+                  whether a reconcile request has been handled.
+                type: string
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

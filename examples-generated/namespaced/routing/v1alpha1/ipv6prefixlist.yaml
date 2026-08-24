@@ -1,0 +1,21 @@
+apiVersion: routing.iosxe.m.upbound.io/v1alpha1
+kind: IPv6PrefixList
+metadata:
+  annotations:
+    meta.upbound.io/example-id: routing/v1alpha1/ipv6prefixlist
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    prefixListDescription:
+    - description: My IPv6 prefix list
+      name: PREFIX_LIST_1
+    prefixes:
+    - action: permit
+      ge: 48
+      ip: 2001:db8::/32
+      le: 128
+      name: PREFIX_LIST_1
+      seq: 10

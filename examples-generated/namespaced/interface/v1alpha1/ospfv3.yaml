@@ -1,0 +1,31 @@
+apiVersion: interface.iosxe.m.upbound.io/v1alpha1
+kind: OSPFv3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: interface/v1alpha1/ospfv3
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    bfd: true
+    cost: 1000
+    deadInterval: 30
+    helloInterval: 5
+    mtuIgnore: true
+    name: "1"
+    networkTypeBroadcast: false
+    networkTypeNonBroadcast: false
+    networkTypePointToMultipoint: false
+    networkTypePointToPoint: true
+    priority: 10
+    processIds:
+    - id: 1
+      ipv4Areas:
+      - id: "0"
+        instance: 64
+      ipv6Areas:
+      - id: "0"
+        instance: 0
+    type: Loopback

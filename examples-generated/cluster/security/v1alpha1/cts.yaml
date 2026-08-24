@@ -1,0 +1,47 @@
+apiVersion: security.iosxe.upbound.io/v1alpha1
+kind: CTS
+metadata:
+  annotations:
+    meta.upbound.io/example-id: security/v1alpha1/cts
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    authorizationList: Tacacs-GROUP
+    roleBasedEnforcement: true
+    roleBasedEnforcementLoggingInterval: 300
+    sgt: 200
+    sxpConnectionPeersIpv4:
+    - connectionMode: local
+      holdTime: 60
+      ip: 2.2.2.2
+      maxTime: 300
+      option: listener
+      passwordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      sourceIp: 3.3.3.3
+    sxpConnectionPeersIpv4Vrf:
+    - connectionMode: local
+      holdTime: 60
+      ip: 4.4.4.4
+      maxTime: 300
+      option: listener
+      passwordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      sourceIp: 5.5.5.5
+      vrf: VRF1
+    sxpDefaultPasswordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    sxpDefaultPasswordType: "0"
+    sxpEnable: true
+    sxpListenerHoldMaxTime: 300
+    sxpListenerHoldMinTime: 60
+    sxpRetryPeriod: 60
+    sxpSpeakerHoldTime: 300

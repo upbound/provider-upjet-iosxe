@@ -1,0 +1,29 @@
+apiVersion: aaa.iosxe.upbound.io/v1alpha1
+kind: Accounting
+metadata:
+  annotations:
+    meta.upbound.io/example-id: aaa/v1alpha1/accounting
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    identities:
+    - name: test
+      startStopBroadcast: false
+      startStopGroup1: GROUP1
+      startStopGroup2: GROUP2
+      startStopGroup3: GROUP3
+      startStopGroup4: GROUP4
+      startStopGroupBroadcast: false
+      startStopGroupLogger: false
+    identityDefaultStartStopGroup1: RADIUS-GROUP
+    identityDefaultStartStopGroup2: RADIUS-GROUP2
+    identityDefaultStartStopGroup3: RADIUS-GROUP3
+    identityDefaultStartStopGroup4: RADIUS-GROUP4
+    networks:
+    - id: network1
+      startStopGroup1: radius
+      startStopGroup2: tacacs+
+    systemGuaranteeFirst: false
+    updateNewinfoPeriodic: 2880

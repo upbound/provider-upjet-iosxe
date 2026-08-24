@@ -1,0 +1,11 @@
+apiVersion: bgp.iosxe.m.upbound.io/v1alpha1
+kind: IPv4MVPNNeighbor
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bgp/v1alpha1/ipv4mvpnneighbor
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider: {}

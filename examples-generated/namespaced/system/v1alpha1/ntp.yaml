@@ -1,0 +1,60 @@
+apiVersion: system.iosxe.m.upbound.io/v1alpha1
+kind: NTP
+metadata:
+  annotations:
+    meta.upbound.io/example-id: system/v1alpha1/ntp
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accessGroupPeerAcl: SACL1
+    accessGroupQueryOnlyAcl: SACL1
+    accessGroupServeAcl: SACL1
+    accessGroupServeOnlyAcl: SACL1
+    authenticate: true
+    authenticationKeys:
+    - encryptionType: 7
+      md5SecretRef:
+        key: example-key
+        name: example-secret
+      number: 1
+    logging: false
+    master: true
+    masterStratum: 5
+    passive: false
+    peerVrfs:
+    - name: VRF1
+      peers:
+      - ipAddress: 5.4.5.6
+        key: 1
+        prefer: true
+        version: 2
+    peers:
+    - ipAddress: 5.2.3.4
+      key: 1
+      prefer: true
+      source: Loopback1
+      version: 2
+    serverVrfs:
+    - name: VRF1
+      servers:
+      - burst: false
+        iburst: false
+        ipAddress: 3.4.5.6
+        key: 1
+        prefer: true
+        version: 2
+    servers:
+    - burst: false
+      iburst: false
+      ipAddress: 1.2.3.4
+      key: 1
+      prefer: true
+      source: Loopback1
+      version: 2
+    sourceLoopback: 1
+    trustedKeys:
+    - number: 1
+    updateCalendar: false

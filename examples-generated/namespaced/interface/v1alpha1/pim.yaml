@@ -1,0 +1,21 @@
+apiVersion: interface.iosxe.m.upbound.io/v1alpha1
+kind: PIM
+metadata:
+  annotations:
+    meta.upbound.io/example-id: interface/v1alpha1/pim
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    bfd: false
+    border: false
+    bsrBorder: false
+    denseMode: false
+    drPriority: 10
+    name: "100"
+    passive: false
+    sparseDenseMode: false
+    sparseMode: true
+    type: Loopback

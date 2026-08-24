@@ -1,0 +1,96 @@
+apiVersion: routing.iosxe.m.upbound.io/v1alpha1
+kind: RouteMap
+metadata:
+  annotations:
+    meta.upbound.io/example-id: routing/v1alpha1/routemap
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    entries:
+    - continue: false
+      descriptions:
+      - description: Entry 10
+      matchAsPaths:
+      - 10
+      matchCommunityLists:
+      - COMM1
+      matchExtcommunityLists:
+      - EXTCOMM1
+      matchInterfaces:
+      - Loopback1
+      matchIpAddressAccessLists:
+      - ACL1
+      matchIpNextHopAccessLists:
+      - ACL1
+      matchIpv6AddressAccessLists: ACL1
+      matchIpv6NextHopAccessLists: ACL1
+      matchLocalPreferences:
+      - 100
+      matchRouteTypeExternal: true
+      matchRouteTypeExternalType1: true
+      matchRouteTypeExternalType2: true
+      matchRouteTypeInternal: true
+      matchRouteTypeLevel1: true
+      matchRouteTypeLevel2: true
+      matchSourceProtocolBgp:
+      - "65000"
+      matchSourceProtocolConnected: true
+      matchSourceProtocolEigrp:
+      - "10"
+      matchSourceProtocolIsis: true
+      matchSourceProtocolLisp: true
+      matchSourceProtocolOspf:
+      - "10"
+      matchSourceProtocolOspfv3:
+      - "10"
+      matchSourceProtocolRip: true
+      matchSourceProtocolStatic: true
+      matchTags:
+      - 100
+      matchTrack: 1
+      operation: permit
+      seq: 10
+      setAsPathPrependAs: 65001 65001
+      setAsPathPrependLastAs: 5
+      setCommunities:
+      - no-export
+      setDefaultInterfaces:
+      - Loopback1
+      setExtcomunityRt:
+      - "10:10"
+      setExtcomunitySoo: "10:10"
+      setExtcomunityVpnDistinguisher: "10:10"
+      setGlobal: false
+      setInterfaces:
+      - Loopback1
+      setIpAddress: PFL1
+      setIpDefaultGlobalNextHopAddress:
+      - 1.2.3.4
+      setIpDefaultNextHopAddress:
+      - 1.2.3.4
+      setIpGlobalNextHopAddress:
+      - 1.2.3.4
+      setIpNextHopAddress:
+      - 1.2.3.4
+      setIpQosGroup: 1
+      setIpv6Address:
+      - PFL2
+      setIpv6DefaultGlobalNextHop: 2001::1
+      setIpv6DefaultNextHop:
+      - 2001::1
+      setIpv6NextHop:
+      - 2001::1
+      setLevel1: true
+      setLocalPreference: 110
+      setMetricDelay: "10"
+      setMetricLoading: 10
+      setMetricMtu: 1500
+      setMetricReliability: 90
+      setMetricType: external
+      setMetricValue: 110
+      setTag: 100
+      setWeight: 10000
+    name: RM1

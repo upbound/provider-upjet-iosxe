@@ -1,0 +1,16 @@
+apiVersion: isis.iosxe.upbound.io/v1alpha1
+kind: ISIS
+metadata:
+  annotations:
+    meta.upbound.io/example-id: isis/v1alpha1/isis
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    areaTag: TEST
+    logAdjacencyChanges: true
+    logAdjacencyChangesAll: true
+    metricStyleWide: true
+    nets:
+    - tag: 49.0001.1920.0000.2001.00

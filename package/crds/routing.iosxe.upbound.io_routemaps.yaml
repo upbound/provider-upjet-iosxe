@@ -1,0 +1,2010 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: routemaps.routing.iosxe.upbound.io
+spec:
+  group: routing.iosxe.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - iosxe
+    kind: RouteMap
+    listKind: RouteMapList
+    plural: routemaps
+    singular: routemap
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: RouteMap is the Schema for the RouteMaps API. This resource can
+          manage the Route Map configuration.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: RouteMapSpec defines the desired state of RouteMap
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  entries:
+                    description: map entry (see below for nested schema)
+                    items:
+                      properties:
+                        continue:
+                          description: |-
+                            map
+                            Continue on a different entry within the route-map
+                          type: boolean
+                        continueSequenceNumber:
+                          description: |-
+                            map entry sequence number
+                            Route-map entry sequence number
+                            - Range: `0`-`65535`
+                          type: number
+                        descriptionLegacy:
+                          description: |-
+                            map comment
+                            Route-map comment
+                          type: string
+                        descriptions:
+                          description: map comments (see below for nested schema)
+                          items:
+                            properties:
+                              description:
+                                description: |-
+                                  map comment
+                                  Route-map comment
+                                type: string
+                            type: object
+                          type: array
+                        matchAsPaths:
+                          description: |-
+                            list
+                            AS path access-list
+                          items:
+                            type: number
+                          type: array
+                        matchAsPathsLegacy:
+                          description: |-
+                            list (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            AS path access-list (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                          items:
+                            type: number
+                          type: array
+                        matchCommunityListExactMatch:
+                          description: |-
+                            (Boolean) Do exact matching of communities
+                            Do exact matching of communities
+                          type: boolean
+                        matchCommunityLists:
+                          description: |-
+                            (List of String) Named Access List
+                            Named Access List
+                          items:
+                            type: string
+                          type: array
+                        matchCommunityListsLegacy:
+                          description: |-
+                            please use community-list in Cisco-IOS-XE-bgp.yang)
+                            Named Access List (OBSOLETE- please use community-list in Cisco-IOS-XE-bgp.yang)
+                          items:
+                            type: string
+                          type: array
+                        matchExtcommunityLists:
+                          description: |-
+                            (List of String) Named Access List
+                            Named Access List
+                          items:
+                            type: string
+                          type: array
+                        matchExtcommunityListsLegacy:
+                          description: |-
+                            please use extcommunity-list in Cisco-IOS-XE-bgp.yang)
+                            Named Access List (OBSOLETE- please use extcommunity-list in Cisco-IOS-XE-bgp.yang)
+                          items:
+                            type: string
+                          type: array
+                        matchInterfaces:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        matchIpAddressAccessLists:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        matchIpAddressPrefixLists:
+                          description: |-
+                            lists
+                            Match entries of prefix-lists
+                          items:
+                            type: string
+                          type: array
+                        matchIpNextHopAccessLists:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        matchIpNextHopPrefixLists:
+                          description: |-
+                            lists
+                            Match entries of prefix-lists
+                          items:
+                            type: string
+                          type: array
+                        matchIpv6AddressAccessLists:
+                          description: |-
+                            list name
+                            IPv6 access-list name
+                          type: string
+                        matchIpv6AddressPrefixLists:
+                          description: |-
+                            list name
+                            IPv6 prefix-list name
+                          type: string
+                        matchIpv6NextHopAccessLists:
+                          description: |-
+                            list name
+                            IPv6 access-list name
+                          type: string
+                        matchIpv6NextHopPrefixLists:
+                          description: |-
+                            list name
+                            IPv6 prefix-list name
+                          type: string
+                        matchLocalPreferences:
+                          description: (List of Number)
+                          items:
+                            type: number
+                          type: array
+                        matchLocalPreferencesLegacy:
+                          description: (List of Number)
+                          items:
+                            type: number
+                          type: array
+                        matchRouteTypeExternal:
+                          description: |-
+                            (Boolean) external route (BGP, EIGRP and OSPF type 1/2)
+                            external route (BGP, EIGRP and OSPF type 1/2)
+                          type: boolean
+                        matchRouteTypeExternalType1:
+                          description: |-
+                            (Boolean) OSPF external type 1 route
+                            OSPF external type 1 route
+                          type: boolean
+                        matchRouteTypeExternalType2:
+                          description: |-
+                            (Boolean) OSPF external type 2 route
+                            OSPF external type 2 route
+                          type: boolean
+                        matchRouteTypeInternal:
+                          description: |-
+                            (Boolean) internal route (including OSPF intra/inter area)
+                            internal route (including OSPF intra/inter area)
+                          type: boolean
+                        matchRouteTypeLevel1:
+                          description: |-
+                            IS level-1 route
+                            IS-IS level-1 route
+                          type: boolean
+                        matchRouteTypeLevel2:
+                          description: |-
+                            IS level-2 route
+                            IS-IS level-2 route
+                          type: boolean
+                        matchRouteTypeLocal:
+                          description: |-
+                            (Boolean) locally generated route
+                            locally generated route
+                          type: boolean
+                        matchRouteTypeLocalLegacy:
+                          description: |-
+                            please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            locally generated route (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                          type: boolean
+                        matchSourceProtocolBgp:
+                          description: |-
+                            (List of String) Border Gateway Protocol (BGP)
+                            Border Gateway Protocol (BGP)
+                          items:
+                            type: string
+                          type: array
+                        matchSourceProtocolConnected:
+                          description: |-
+                            (Boolean) Connected
+                            Connected
+                          type: boolean
+                        matchSourceProtocolEigrp:
+                          description: |-
+                            (List of String) Border Gateway Protocol (BGP)
+                            Border Gateway Protocol (BGP)
+                          items:
+                            type: string
+                          type: array
+                        matchSourceProtocolIsis:
+                          description: |-
+                            IS
+                            ISO IS-IS
+                          type: boolean
+                        matchSourceProtocolLisp:
+                          description: |-
+                            (Boolean) Locator ID Separation Protocol (LISP)
+                            Locator ID Separation Protocol (LISP)
+                          type: boolean
+                        matchSourceProtocolOspf:
+                          description: |-
+                            (List of String) Open Shortest Path First (OSPF)
+                            Open Shortest Path First (OSPF)
+                          items:
+                            type: string
+                          type: array
+                        matchSourceProtocolOspfv3:
+                          description: |-
+                            (List of String) OSPFv3
+                            OSPFv3
+                          items:
+                            type: string
+                          type: array
+                        matchSourceProtocolRip:
+                          description: |-
+                            (Boolean) Routing Information Protocol (RIP)
+                            Routing Information Protocol (RIP)
+                          type: boolean
+                        matchSourceProtocolStatic:
+                          description: |-
+                            (Boolean) Static routes
+                            Static routes
+                          type: boolean
+                        matchTags:
+                          description: |-
+                            please use tag-val)
+                            Tag value (DEPRECATED - please use tag-val)
+                          items:
+                            type: number
+                          type: array
+                        matchTrack:
+                          description: |-
+                            (Number) tracking object
+                            tracking object
+                            - Range: `1`-`1000`
+                          type: number
+                        operation:
+                          description: |-
+                            (String) Route map permit/deny set operations
+                            Route map permit/deny set operations
+                            - Choices: `deny`, `permit`
+                          type: string
+                        seq:
+                          description: |-
+                            Range: 0-65535
+
+                            - Range: `0`-`65535`
+                          type: number
+                        setAsPathPrependAs:
+                          description: |-
+                            (String) BGP AS number
+                            BGP AS number
+                          type: string
+                        setAsPathPrependAsLegacy:
+                          description: |-
+                            65535>;;AS number (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            <1-65535>;;AS number (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                          type: string
+                        setAsPathPrependLastAs:
+                          description: |-
+                            Range: 1-10
+
+                            - Range: `1`-`10`
+                          type: number
+                        setAsPathPrependLastAsLegacy:
+                          description: |-
+                            Range: 1-10
+
+                            - Range: `1`-`10`
+                          type: number
+                        setAsPathReplaceAny:
+                          description: |-
+                            path with the local AS
+                            Replace each AS number in the AS-path with the local AS
+                          type: boolean
+                        setAsPathReplaceAs:
+                          description: (Attributes List) (see below for nested schema)
+                          items:
+                            properties:
+                              asNumber:
+                                description: |-
+                                  65535>;;AS number
+                                  <1-65535>;;AS number
+                                type: string
+                            type: object
+                          type: array
+                        setAsPathTag:
+                          description: |-
+                            path attribute
+                            Set the tag as an AS-path attribute
+                          type: boolean
+                        setAsPathTagLegacy:
+                          description: |-
+                            path attribute (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            Set the tag as an AS-path attribute (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                          type: boolean
+                        setCommunities:
+                          description: |-
+                            can be a number (AA:NN format) or well-known value (internet, local-AS, no-advertise, no-export, gshut)
+                            BGP community value - can be a number (AA:NN format) or well-known value (internet, local-AS, no-advertise, no-export, gshut)
+                          items:
+                            type: string
+                          type: array
+                        setCommunitiesAdditive:
+                          description: (Boolean)
+                          type: boolean
+                        setCommunitiesAdditiveLegacy:
+                          description: (Boolean)
+                          type: boolean
+                        setCommunitiesLegacy:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        setCommunityListDelete:
+                          description: |-
+                            (Boolean) Delete matching communities
+                            Delete matching communities
+                          type: boolean
+                        setCommunityListDeleteLegacy:
+                          description: |-
+                            please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            Delete matching communities (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                          type: boolean
+                        setCommunityListExpanded:
+                          description: |-
+                            Range: 100-500
+
+                            - Range: `100`-`500`
+                          type: number
+                        setCommunityListExpandedLegacy:
+                          description: |-
+                            Range: 100-500
+
+                            - Range: `100`-`500`
+                          type: number
+                        setCommunityListName:
+                          description: (String)
+                          type: string
+                        setCommunityListNameLegacy:
+                          description: (String)
+                          type: string
+                        setCommunityListStandard:
+                          description: |-
+                            Range: 1-99
+
+                            - Range: `1`-`99`
+                          type: number
+                        setCommunityListStandardLegacy:
+                          description: |-
+                            Range: 1-99
+
+                            - Range: `1`-`99`
+                          type: number
+                        setCommunityNone:
+                          description: |-
+                            (Boolean) No community attribute
+                            No community attribute
+                          type: boolean
+                        setCommunityNoneLegacy:
+                          description: |-
+                            please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            No community attribute (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                          type: boolean
+                        setDefaultInterfaces:
+                          description: |-
+                            (List of String) SPAN source interface
+                            SPAN source interface
+                          items:
+                            type: string
+                          type: array
+                        setExtcomunityRt:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        setExtcomunityRtLegacy:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        setExtcomunitySoo:
+                          description: (String)
+                          type: string
+                        setExtcomunitySooLegacy:
+                          description: (String)
+                          type: string
+                        setExtcomunityVpnDistinguisher:
+                          description: |-
+                            (String) VPN Distinguisher Extended Community
+                            VPN Distinguisher Extended Community
+                          type: string
+                        setExtcomunityVpnDistinguisherAdditive:
+                          description: (Boolean)
+                          type: boolean
+                        setExtcomunityVpnDistinguisherLegacy:
+                          description: (String)
+                          type: string
+                        setGlobal:
+                          description: (Boolean)
+                          type: boolean
+                        setInterfaces:
+                          description: |-
+                            (List of String) Interface specific information
+                            Interface specific information
+                          items:
+                            type: string
+                          type: array
+                        setIpAddress:
+                          description: |-
+                            list
+                            Specify prefix-list
+                          type: string
+                        setIpDefaultGlobalNextHopAddress:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        setIpDefaultNextHopAddress:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        setIpGlobalNextHopAddress:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        setIpNextHopAddress:
+                          description: |-
+                            (List of String) IP address of next hop
+                            IP address of next hop
+                          items:
+                            type: string
+                          type: array
+                        setIpNextHopSelf:
+                          description: |-
+                            (Boolean) Use self address (for BGP only)
+                            Use self address (for BGP only)
+                          type: boolean
+                        setIpNextHopUnchanged:
+                          description: |-
+                            (Boolean) Propagate next hop unchanged
+                            Propagate next hop unchanged
+                          type: boolean
+                        setIpQosGroup:
+                          description: |-
+                            Range: 0-99
+
+                            - Range: `0`-`99`
+                          type: number
+                        setIpv6Address:
+                          description: |-
+                            list
+                            IPv6 prefix-list
+                          items:
+                            type: string
+                          type: array
+                        setIpv6DefaultGlobalNextHop:
+                          description: |-
+                            (String) Next hop along path
+                            Next hop along path
+                          type: string
+                        setIpv6DefaultNextHop:
+                          description: |-
+                            (List of String) Default next hop IPv6 address
+                            Default next hop IPv6 address
+                          items:
+                            type: string
+                          type: array
+                        setIpv6NextHop:
+                          description: |-
+                            (List of String) Next hop IPv6 address
+                            Next hop IPv6 address
+                          items:
+                            type: string
+                          type: array
+                        setLevel1:
+                          description: |-
+                            1 area
+                            Import into a level-1 area
+                          type: boolean
+                        setLevel2:
+                          description: |-
+                            2 sub-domain
+                            Import into level-2 sub-domain
+                          type: boolean
+                        setLevel12:
+                          description: |-
+                            1 and level-2
+                            Import into level-1 and level-2
+                          type: boolean
+                        setLocalPreference:
+                          description: |-
+                            (Number) Preference value
+                            Preference value
+                            - Range: `0`-`4294967295`
+                          type: number
+                        setLocalPreferenceLegacy:
+                          description: |-
+                            please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            Preference value (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            - Range: `0`-`4294967295`
+                          type: number
+                        setMetricChange:
+                          description: ;;Add or subtract metric
+                          type: string
+                        setMetricDelay:
+                          description: |-
+                            (String) EIGRP delay metric, in 10 microsecond units
+                            EIGRP delay metric, in 10 microsecond units
+                          type: string
+                        setMetricLoading:
+                          description: |-
+                            (Number) EIGRP Effective bandwidth metric (Loading) where 255 is 100% loaded
+                            EIGRP Effective bandwidth metric (Loading) where 255 is 100% loaded
+                            - Range: `1`-`255`
+                          type: number
+                        setMetricMtu:
+                          description: |-
+                            (Number) EIGRP MTU of the path
+                            EIGRP MTU of the path
+                            - Range: `1`-`4294967295`
+                          type: number
+                        setMetricReliability:
+                          description: |-
+                            (Number) EIGRP reliability metric where 255 is 100% reliable
+                            EIGRP reliability metric where 255 is 100% reliable
+                            - Range: `0`-`255`
+                          type: number
+                        setMetricType:
+                          description: |-
+                            (String) Type of metric for destination routing protocol
+                            Type of metric for destination routing protocol
+                            - Choices: `external`, `internal`, `type-1`, `type-2`
+                          type: string
+                        setMetricValue:
+                          description: |-
+                            (Number) Metric value or Bandwidth in Kbits per second
+                            Metric value or Bandwidth in Kbits per second
+                            - Range: `0`-`4294967295`
+                          type: number
+                        setTag:
+                          description: |-
+                            please use tag-val)
+                            Tag value (DEPRECATED - please use tag-val)
+                            - Range: `0`-`4294967295`
+                          type: number
+                        setVrf:
+                          description: |-
+                            (String) VPN Routing/Forwarding instance name
+                            VPN Routing/Forwarding instance name
+                          type: string
+                        setWeight:
+                          description: |-
+                            (Number) BGP weight for routing table
+                            BGP weight for routing table
+                            - Range: `0`-`65535`
+                          type: number
+                        setWeightLegacy:
+                          description: |-
+                            please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            BGP weight for routing table (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            - Range: `0`-`65535`
+                          type: number
+                      type: object
+                    type: array
+                  name:
+                    description: |-
+                      (String) WORD;;Route map tag
+                      WORD;;Route map tag
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  entries:
+                    description: map entry (see below for nested schema)
+                    items:
+                      properties:
+                        continue:
+                          description: |-
+                            map
+                            Continue on a different entry within the route-map
+                          type: boolean
+                        continueSequenceNumber:
+                          description: |-
+                            map entry sequence number
+                            Route-map entry sequence number
+                            - Range: `0`-`65535`
+                          type: number
+                        descriptionLegacy:
+                          description: |-
+                            map comment
+                            Route-map comment
+                          type: string
+                        descriptions:
+                          description: map comments (see below for nested schema)
+                          items:
+                            properties:
+                              description:
+                                description: |-
+                                  map comment
+                                  Route-map comment
+                                type: string
+                            type: object
+                          type: array
+                        matchAsPaths:
+                          description: |-
+                            list
+                            AS path access-list
+                          items:
+                            type: number
+                          type: array
+                        matchAsPathsLegacy:
+                          description: |-
+                            list (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            AS path access-list (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                          items:
+                            type: number
+                          type: array
+                        matchCommunityListExactMatch:
+                          description: |-
+                            (Boolean) Do exact matching of communities
+                            Do exact matching of communities
+                          type: boolean
+                        matchCommunityLists:
+                          description: |-
+                            (List of String) Named Access List
+                            Named Access List
+                          items:
+                            type: string
+                          type: array
+                        matchCommunityListsLegacy:
+                          description: |-
+                            please use community-list in Cisco-IOS-XE-bgp.yang)
+                            Named Access List (OBSOLETE- please use community-list in Cisco-IOS-XE-bgp.yang)
+                          items:
+                            type: string
+                          type: array
+                        matchExtcommunityLists:
+                          description: |-
+                            (List of String) Named Access List
+                            Named Access List
+                          items:
+                            type: string
+                          type: array
+                        matchExtcommunityListsLegacy:
+                          description: |-
+                            please use extcommunity-list in Cisco-IOS-XE-bgp.yang)
+                            Named Access List (OBSOLETE- please use extcommunity-list in Cisco-IOS-XE-bgp.yang)
+                          items:
+                            type: string
+                          type: array
+                        matchInterfaces:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        matchIpAddressAccessLists:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        matchIpAddressPrefixLists:
+                          description: |-
+                            lists
+                            Match entries of prefix-lists
+                          items:
+                            type: string
+                          type: array
+                        matchIpNextHopAccessLists:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        matchIpNextHopPrefixLists:
+                          description: |-
+                            lists
+                            Match entries of prefix-lists
+                          items:
+                            type: string
+                          type: array
+                        matchIpv6AddressAccessLists:
+                          description: |-
+                            list name
+                            IPv6 access-list name
+                          type: string
+                        matchIpv6AddressPrefixLists:
+                          description: |-
+                            list name
+                            IPv6 prefix-list name
+                          type: string
+                        matchIpv6NextHopAccessLists:
+                          description: |-
+                            list name
+                            IPv6 access-list name
+                          type: string
+                        matchIpv6NextHopPrefixLists:
+                          description: |-
+                            list name
+                            IPv6 prefix-list name
+                          type: string
+                        matchLocalPreferences:
+                          description: (List of Number)
+                          items:
+                            type: number
+                          type: array
+                        matchLocalPreferencesLegacy:
+                          description: (List of Number)
+                          items:
+                            type: number
+                          type: array
+                        matchRouteTypeExternal:
+                          description: |-
+                            (Boolean) external route (BGP, EIGRP and OSPF type 1/2)
+                            external route (BGP, EIGRP and OSPF type 1/2)
+                          type: boolean
+                        matchRouteTypeExternalType1:
+                          description: |-
+                            (Boolean) OSPF external type 1 route
+                            OSPF external type 1 route
+                          type: boolean
+                        matchRouteTypeExternalType2:
+                          description: |-
+                            (Boolean) OSPF external type 2 route
+                            OSPF external type 2 route
+                          type: boolean
+                        matchRouteTypeInternal:
+                          description: |-
+                            (Boolean) internal route (including OSPF intra/inter area)
+                            internal route (including OSPF intra/inter area)
+                          type: boolean
+                        matchRouteTypeLevel1:
+                          description: |-
+                            IS level-1 route
+                            IS-IS level-1 route
+                          type: boolean
+                        matchRouteTypeLevel2:
+                          description: |-
+                            IS level-2 route
+                            IS-IS level-2 route
+                          type: boolean
+                        matchRouteTypeLocal:
+                          description: |-
+                            (Boolean) locally generated route
+                            locally generated route
+                          type: boolean
+                        matchRouteTypeLocalLegacy:
+                          description: |-
+                            please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            locally generated route (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                          type: boolean
+                        matchSourceProtocolBgp:
+                          description: |-
+                            (List of String) Border Gateway Protocol (BGP)
+                            Border Gateway Protocol (BGP)
+                          items:
+                            type: string
+                          type: array
+                        matchSourceProtocolConnected:
+                          description: |-
+                            (Boolean) Connected
+                            Connected
+                          type: boolean
+                        matchSourceProtocolEigrp:
+                          description: |-
+                            (List of String) Border Gateway Protocol (BGP)
+                            Border Gateway Protocol (BGP)
+                          items:
+                            type: string
+                          type: array
+                        matchSourceProtocolIsis:
+                          description: |-
+                            IS
+                            ISO IS-IS
+                          type: boolean
+                        matchSourceProtocolLisp:
+                          description: |-
+                            (Boolean) Locator ID Separation Protocol (LISP)
+                            Locator ID Separation Protocol (LISP)
+                          type: boolean
+                        matchSourceProtocolOspf:
+                          description: |-
+                            (List of String) Open Shortest Path First (OSPF)
+                            Open Shortest Path First (OSPF)
+                          items:
+                            type: string
+                          type: array
+                        matchSourceProtocolOspfv3:
+                          description: |-
+                            (List of String) OSPFv3
+                            OSPFv3
+                          items:
+                            type: string
+                          type: array
+                        matchSourceProtocolRip:
+                          description: |-
+                            (Boolean) Routing Information Protocol (RIP)
+                            Routing Information Protocol (RIP)
+                          type: boolean
+                        matchSourceProtocolStatic:
+                          description: |-
+                            (Boolean) Static routes
+                            Static routes
+                          type: boolean
+                        matchTags:
+                          description: |-
+                            please use tag-val)
+                            Tag value (DEPRECATED - please use tag-val)
+                          items:
+                            type: number
+                          type: array
+                        matchTrack:
+                          description: |-
+                            (Number) tracking object
+                            tracking object
+                            - Range: `1`-`1000`
+                          type: number
+                        operation:
+                          description: |-
+                            (String) Route map permit/deny set operations
+                            Route map permit/deny set operations
+                            - Choices: `deny`, `permit`
+                          type: string
+                        seq:
+                          description: |-
+                            Range: 0-65535
+
+                            - Range: `0`-`65535`
+                          type: number
+                        setAsPathPrependAs:
+                          description: |-
+                            (String) BGP AS number
+                            BGP AS number
+                          type: string
+                        setAsPathPrependAsLegacy:
+                          description: |-
+                            65535>;;AS number (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            <1-65535>;;AS number (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                          type: string
+                        setAsPathPrependLastAs:
+                          description: |-
+                            Range: 1-10
+
+                            - Range: `1`-`10`
+                          type: number
+                        setAsPathPrependLastAsLegacy:
+                          description: |-
+                            Range: 1-10
+
+                            - Range: `1`-`10`
+                          type: number
+                        setAsPathReplaceAny:
+                          description: |-
+                            path with the local AS
+                            Replace each AS number in the AS-path with the local AS
+                          type: boolean
+                        setAsPathReplaceAs:
+                          description: (Attributes List) (see below for nested schema)
+                          items:
+                            properties:
+                              asNumber:
+                                description: |-
+                                  65535>;;AS number
+                                  <1-65535>;;AS number
+                                type: string
+                            type: object
+                          type: array
+                        setAsPathTag:
+                          description: |-
+                            path attribute
+                            Set the tag as an AS-path attribute
+                          type: boolean
+                        setAsPathTagLegacy:
+                          description: |-
+                            path attribute (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            Set the tag as an AS-path attribute (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                          type: boolean
+                        setCommunities:
+                          description: |-
+                            can be a number (AA:NN format) or well-known value (internet, local-AS, no-advertise, no-export, gshut)
+                            BGP community value - can be a number (AA:NN format) or well-known value (internet, local-AS, no-advertise, no-export, gshut)
+                          items:
+                            type: string
+                          type: array
+                        setCommunitiesAdditive:
+                          description: (Boolean)
+                          type: boolean
+                        setCommunitiesAdditiveLegacy:
+                          description: (Boolean)
+                          type: boolean
+                        setCommunitiesLegacy:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        setCommunityListDelete:
+                          description: |-
+                            (Boolean) Delete matching communities
+                            Delete matching communities
+                          type: boolean
+                        setCommunityListDeleteLegacy:
+                          description: |-
+                            please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            Delete matching communities (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                          type: boolean
+                        setCommunityListExpanded:
+                          description: |-
+                            Range: 100-500
+
+                            - Range: `100`-`500`
+                          type: number
+                        setCommunityListExpandedLegacy:
+                          description: |-
+                            Range: 100-500
+
+                            - Range: `100`-`500`
+                          type: number
+                        setCommunityListName:
+                          description: (String)
+                          type: string
+                        setCommunityListNameLegacy:
+                          description: (String)
+                          type: string
+                        setCommunityListStandard:
+                          description: |-
+                            Range: 1-99
+
+                            - Range: `1`-`99`
+                          type: number
+                        setCommunityListStandardLegacy:
+                          description: |-
+                            Range: 1-99
+
+                            - Range: `1`-`99`
+                          type: number
+                        setCommunityNone:
+                          description: |-
+                            (Boolean) No community attribute
+                            No community attribute
+                          type: boolean
+                        setCommunityNoneLegacy:
+                          description: |-
+                            please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            No community attribute (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                          type: boolean
+                        setDefaultInterfaces:
+                          description: |-
+                            (List of String) SPAN source interface
+                            SPAN source interface
+                          items:
+                            type: string
+                          type: array
+                        setExtcomunityRt:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        setExtcomunityRtLegacy:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        setExtcomunitySoo:
+                          description: (String)
+                          type: string
+                        setExtcomunitySooLegacy:
+                          description: (String)
+                          type: string
+                        setExtcomunityVpnDistinguisher:
+                          description: |-
+                            (String) VPN Distinguisher Extended Community
+                            VPN Distinguisher Extended Community
+                          type: string
+                        setExtcomunityVpnDistinguisherAdditive:
+                          description: (Boolean)
+                          type: boolean
+                        setExtcomunityVpnDistinguisherLegacy:
+                          description: (String)
+                          type: string
+                        setGlobal:
+                          description: (Boolean)
+                          type: boolean
+                        setInterfaces:
+                          description: |-
+                            (List of String) Interface specific information
+                            Interface specific information
+                          items:
+                            type: string
+                          type: array
+                        setIpAddress:
+                          description: |-
+                            list
+                            Specify prefix-list
+                          type: string
+                        setIpDefaultGlobalNextHopAddress:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        setIpDefaultNextHopAddress:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        setIpGlobalNextHopAddress:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        setIpNextHopAddress:
+                          description: |-
+                            (List of String) IP address of next hop
+                            IP address of next hop
+                          items:
+                            type: string
+                          type: array
+                        setIpNextHopSelf:
+                          description: |-
+                            (Boolean) Use self address (for BGP only)
+                            Use self address (for BGP only)
+                          type: boolean
+                        setIpNextHopUnchanged:
+                          description: |-
+                            (Boolean) Propagate next hop unchanged
+                            Propagate next hop unchanged
+                          type: boolean
+                        setIpQosGroup:
+                          description: |-
+                            Range: 0-99
+
+                            - Range: `0`-`99`
+                          type: number
+                        setIpv6Address:
+                          description: |-
+                            list
+                            IPv6 prefix-list
+                          items:
+                            type: string
+                          type: array
+                        setIpv6DefaultGlobalNextHop:
+                          description: |-
+                            (String) Next hop along path
+                            Next hop along path
+                          type: string
+                        setIpv6DefaultNextHop:
+                          description: |-
+                            (List of String) Default next hop IPv6 address
+                            Default next hop IPv6 address
+                          items:
+                            type: string
+                          type: array
+                        setIpv6NextHop:
+                          description: |-
+                            (List of String) Next hop IPv6 address
+                            Next hop IPv6 address
+                          items:
+                            type: string
+                          type: array
+                        setLevel1:
+                          description: |-
+                            1 area
+                            Import into a level-1 area
+                          type: boolean
+                        setLevel2:
+                          description: |-
+                            2 sub-domain
+                            Import into level-2 sub-domain
+                          type: boolean
+                        setLevel12:
+                          description: |-
+                            1 and level-2
+                            Import into level-1 and level-2
+                          type: boolean
+                        setLocalPreference:
+                          description: |-
+                            (Number) Preference value
+                            Preference value
+                            - Range: `0`-`4294967295`
+                          type: number
+                        setLocalPreferenceLegacy:
+                          description: |-
+                            please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            Preference value (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            - Range: `0`-`4294967295`
+                          type: number
+                        setMetricChange:
+                          description: ;;Add or subtract metric
+                          type: string
+                        setMetricDelay:
+                          description: |-
+                            (String) EIGRP delay metric, in 10 microsecond units
+                            EIGRP delay metric, in 10 microsecond units
+                          type: string
+                        setMetricLoading:
+                          description: |-
+                            (Number) EIGRP Effective bandwidth metric (Loading) where 255 is 100% loaded
+                            EIGRP Effective bandwidth metric (Loading) where 255 is 100% loaded
+                            - Range: `1`-`255`
+                          type: number
+                        setMetricMtu:
+                          description: |-
+                            (Number) EIGRP MTU of the path
+                            EIGRP MTU of the path
+                            - Range: `1`-`4294967295`
+                          type: number
+                        setMetricReliability:
+                          description: |-
+                            (Number) EIGRP reliability metric where 255 is 100% reliable
+                            EIGRP reliability metric where 255 is 100% reliable
+                            - Range: `0`-`255`
+                          type: number
+                        setMetricType:
+                          description: |-
+                            (String) Type of metric for destination routing protocol
+                            Type of metric for destination routing protocol
+                            - Choices: `external`, `internal`, `type-1`, `type-2`
+                          type: string
+                        setMetricValue:
+                          description: |-
+                            (Number) Metric value or Bandwidth in Kbits per second
+                            Metric value or Bandwidth in Kbits per second
+                            - Range: `0`-`4294967295`
+                          type: number
+                        setTag:
+                          description: |-
+                            please use tag-val)
+                            Tag value (DEPRECATED - please use tag-val)
+                            - Range: `0`-`4294967295`
+                          type: number
+                        setVrf:
+                          description: |-
+                            (String) VPN Routing/Forwarding instance name
+                            VPN Routing/Forwarding instance name
+                          type: string
+                        setWeight:
+                          description: |-
+                            (Number) BGP weight for routing table
+                            BGP weight for routing table
+                            - Range: `0`-`65535`
+                          type: number
+                        setWeightLegacy:
+                          description: |-
+                            please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            BGP weight for routing table (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            - Range: `0`-`65535`
+                          type: number
+                      type: object
+                    type: array
+                  name:
+                    description: |-
+                      (String) WORD;;Route map tag
+                      WORD;;Route map tag
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+          status:
+            description: RouteMapStatus defines the observed state of RouteMap.
+            properties:
+              atProvider:
+                properties:
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  entries:
+                    description: map entry (see below for nested schema)
+                    items:
+                      properties:
+                        continue:
+                          description: |-
+                            map
+                            Continue on a different entry within the route-map
+                          type: boolean
+                        continueSequenceNumber:
+                          description: |-
+                            map entry sequence number
+                            Route-map entry sequence number
+                            - Range: `0`-`65535`
+                          type: number
+                        descriptionLegacy:
+                          description: |-
+                            map comment
+                            Route-map comment
+                          type: string
+                        descriptions:
+                          description: map comments (see below for nested schema)
+                          items:
+                            properties:
+                              description:
+                                description: |-
+                                  map comment
+                                  Route-map comment
+                                type: string
+                            type: object
+                          type: array
+                        matchAsPaths:
+                          description: |-
+                            list
+                            AS path access-list
+                          items:
+                            type: number
+                          type: array
+                        matchAsPathsLegacy:
+                          description: |-
+                            list (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            AS path access-list (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                          items:
+                            type: number
+                          type: array
+                        matchCommunityListExactMatch:
+                          description: |-
+                            (Boolean) Do exact matching of communities
+                            Do exact matching of communities
+                          type: boolean
+                        matchCommunityLists:
+                          description: |-
+                            (List of String) Named Access List
+                            Named Access List
+                          items:
+                            type: string
+                          type: array
+                        matchCommunityListsLegacy:
+                          description: |-
+                            please use community-list in Cisco-IOS-XE-bgp.yang)
+                            Named Access List (OBSOLETE- please use community-list in Cisco-IOS-XE-bgp.yang)
+                          items:
+                            type: string
+                          type: array
+                        matchExtcommunityLists:
+                          description: |-
+                            (List of String) Named Access List
+                            Named Access List
+                          items:
+                            type: string
+                          type: array
+                        matchExtcommunityListsLegacy:
+                          description: |-
+                            please use extcommunity-list in Cisco-IOS-XE-bgp.yang)
+                            Named Access List (OBSOLETE- please use extcommunity-list in Cisco-IOS-XE-bgp.yang)
+                          items:
+                            type: string
+                          type: array
+                        matchInterfaces:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        matchIpAddressAccessLists:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        matchIpAddressPrefixLists:
+                          description: |-
+                            lists
+                            Match entries of prefix-lists
+                          items:
+                            type: string
+                          type: array
+                        matchIpNextHopAccessLists:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        matchIpNextHopPrefixLists:
+                          description: |-
+                            lists
+                            Match entries of prefix-lists
+                          items:
+                            type: string
+                          type: array
+                        matchIpv6AddressAccessLists:
+                          description: |-
+                            list name
+                            IPv6 access-list name
+                          type: string
+                        matchIpv6AddressPrefixLists:
+                          description: |-
+                            list name
+                            IPv6 prefix-list name
+                          type: string
+                        matchIpv6NextHopAccessLists:
+                          description: |-
+                            list name
+                            IPv6 access-list name
+                          type: string
+                        matchIpv6NextHopPrefixLists:
+                          description: |-
+                            list name
+                            IPv6 prefix-list name
+                          type: string
+                        matchLocalPreferences:
+                          description: (List of Number)
+                          items:
+                            type: number
+                          type: array
+                        matchLocalPreferencesLegacy:
+                          description: (List of Number)
+                          items:
+                            type: number
+                          type: array
+                        matchRouteTypeExternal:
+                          description: |-
+                            (Boolean) external route (BGP, EIGRP and OSPF type 1/2)
+                            external route (BGP, EIGRP and OSPF type 1/2)
+                          type: boolean
+                        matchRouteTypeExternalType1:
+                          description: |-
+                            (Boolean) OSPF external type 1 route
+                            OSPF external type 1 route
+                          type: boolean
+                        matchRouteTypeExternalType2:
+                          description: |-
+                            (Boolean) OSPF external type 2 route
+                            OSPF external type 2 route
+                          type: boolean
+                        matchRouteTypeInternal:
+                          description: |-
+                            (Boolean) internal route (including OSPF intra/inter area)
+                            internal route (including OSPF intra/inter area)
+                          type: boolean
+                        matchRouteTypeLevel1:
+                          description: |-
+                            IS level-1 route
+                            IS-IS level-1 route
+                          type: boolean
+                        matchRouteTypeLevel2:
+                          description: |-
+                            IS level-2 route
+                            IS-IS level-2 route
+                          type: boolean
+                        matchRouteTypeLocal:
+                          description: |-
+                            (Boolean) locally generated route
+                            locally generated route
+                          type: boolean
+                        matchRouteTypeLocalLegacy:
+                          description: |-
+                            please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            locally generated route (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                          type: boolean
+                        matchSourceProtocolBgp:
+                          description: |-
+                            (List of String) Border Gateway Protocol (BGP)
+                            Border Gateway Protocol (BGP)
+                          items:
+                            type: string
+                          type: array
+                        matchSourceProtocolConnected:
+                          description: |-
+                            (Boolean) Connected
+                            Connected
+                          type: boolean
+                        matchSourceProtocolEigrp:
+                          description: |-
+                            (List of String) Border Gateway Protocol (BGP)
+                            Border Gateway Protocol (BGP)
+                          items:
+                            type: string
+                          type: array
+                        matchSourceProtocolIsis:
+                          description: |-
+                            IS
+                            ISO IS-IS
+                          type: boolean
+                        matchSourceProtocolLisp:
+                          description: |-
+                            (Boolean) Locator ID Separation Protocol (LISP)
+                            Locator ID Separation Protocol (LISP)
+                          type: boolean
+                        matchSourceProtocolOspf:
+                          description: |-
+                            (List of String) Open Shortest Path First (OSPF)
+                            Open Shortest Path First (OSPF)
+                          items:
+                            type: string
+                          type: array
+                        matchSourceProtocolOspfv3:
+                          description: |-
+                            (List of String) OSPFv3
+                            OSPFv3
+                          items:
+                            type: string
+                          type: array
+                        matchSourceProtocolRip:
+                          description: |-
+                            (Boolean) Routing Information Protocol (RIP)
+                            Routing Information Protocol (RIP)
+                          type: boolean
+                        matchSourceProtocolStatic:
+                          description: |-
+                            (Boolean) Static routes
+                            Static routes
+                          type: boolean
+                        matchTags:
+                          description: |-
+                            please use tag-val)
+                            Tag value (DEPRECATED - please use tag-val)
+                          items:
+                            type: number
+                          type: array
+                        matchTrack:
+                          description: |-
+                            (Number) tracking object
+                            tracking object
+                            - Range: `1`-`1000`
+                          type: number
+                        operation:
+                          description: |-
+                            (String) Route map permit/deny set operations
+                            Route map permit/deny set operations
+                            - Choices: `deny`, `permit`
+                          type: string
+                        seq:
+                          description: |-
+                            Range: 0-65535
+
+                            - Range: `0`-`65535`
+                          type: number
+                        setAsPathPrependAs:
+                          description: |-
+                            (String) BGP AS number
+                            BGP AS number
+                          type: string
+                        setAsPathPrependAsLegacy:
+                          description: |-
+                            65535>;;AS number (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            <1-65535>;;AS number (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                          type: string
+                        setAsPathPrependLastAs:
+                          description: |-
+                            Range: 1-10
+
+                            - Range: `1`-`10`
+                          type: number
+                        setAsPathPrependLastAsLegacy:
+                          description: |-
+                            Range: 1-10
+
+                            - Range: `1`-`10`
+                          type: number
+                        setAsPathReplaceAny:
+                          description: |-
+                            path with the local AS
+                            Replace each AS number in the AS-path with the local AS
+                          type: boolean
+                        setAsPathReplaceAs:
+                          description: (Attributes List) (see below for nested schema)
+                          items:
+                            properties:
+                              asNumber:
+                                description: |-
+                                  65535>;;AS number
+                                  <1-65535>;;AS number
+                                type: string
+                            type: object
+                          type: array
+                        setAsPathTag:
+                          description: |-
+                            path attribute
+                            Set the tag as an AS-path attribute
+                          type: boolean
+                        setAsPathTagLegacy:
+                          description: |-
+                            path attribute (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            Set the tag as an AS-path attribute (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                          type: boolean
+                        setCommunities:
+                          description: |-
+                            can be a number (AA:NN format) or well-known value (internet, local-AS, no-advertise, no-export, gshut)
+                            BGP community value - can be a number (AA:NN format) or well-known value (internet, local-AS, no-advertise, no-export, gshut)
+                          items:
+                            type: string
+                          type: array
+                        setCommunitiesAdditive:
+                          description: (Boolean)
+                          type: boolean
+                        setCommunitiesAdditiveLegacy:
+                          description: (Boolean)
+                          type: boolean
+                        setCommunitiesLegacy:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        setCommunityListDelete:
+                          description: |-
+                            (Boolean) Delete matching communities
+                            Delete matching communities
+                          type: boolean
+                        setCommunityListDeleteLegacy:
+                          description: |-
+                            please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            Delete matching communities (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                          type: boolean
+                        setCommunityListExpanded:
+                          description: |-
+                            Range: 100-500
+
+                            - Range: `100`-`500`
+                          type: number
+                        setCommunityListExpandedLegacy:
+                          description: |-
+                            Range: 100-500
+
+                            - Range: `100`-`500`
+                          type: number
+                        setCommunityListName:
+                          description: (String)
+                          type: string
+                        setCommunityListNameLegacy:
+                          description: (String)
+                          type: string
+                        setCommunityListStandard:
+                          description: |-
+                            Range: 1-99
+
+                            - Range: `1`-`99`
+                          type: number
+                        setCommunityListStandardLegacy:
+                          description: |-
+                            Range: 1-99
+
+                            - Range: `1`-`99`
+                          type: number
+                        setCommunityNone:
+                          description: |-
+                            (Boolean) No community attribute
+                            No community attribute
+                          type: boolean
+                        setCommunityNoneLegacy:
+                          description: |-
+                            please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            No community attribute (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                          type: boolean
+                        setDefaultInterfaces:
+                          description: |-
+                            (List of String) SPAN source interface
+                            SPAN source interface
+                          items:
+                            type: string
+                          type: array
+                        setExtcomunityRt:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        setExtcomunityRtLegacy:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        setExtcomunitySoo:
+                          description: (String)
+                          type: string
+                        setExtcomunitySooLegacy:
+                          description: (String)
+                          type: string
+                        setExtcomunityVpnDistinguisher:
+                          description: |-
+                            (String) VPN Distinguisher Extended Community
+                            VPN Distinguisher Extended Community
+                          type: string
+                        setExtcomunityVpnDistinguisherAdditive:
+                          description: (Boolean)
+                          type: boolean
+                        setExtcomunityVpnDistinguisherLegacy:
+                          description: (String)
+                          type: string
+                        setGlobal:
+                          description: (Boolean)
+                          type: boolean
+                        setInterfaces:
+                          description: |-
+                            (List of String) Interface specific information
+                            Interface specific information
+                          items:
+                            type: string
+                          type: array
+                        setIpAddress:
+                          description: |-
+                            list
+                            Specify prefix-list
+                          type: string
+                        setIpDefaultGlobalNextHopAddress:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        setIpDefaultNextHopAddress:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        setIpGlobalNextHopAddress:
+                          description: (List of String)
+                          items:
+                            type: string
+                          type: array
+                        setIpNextHopAddress:
+                          description: |-
+                            (List of String) IP address of next hop
+                            IP address of next hop
+                          items:
+                            type: string
+                          type: array
+                        setIpNextHopSelf:
+                          description: |-
+                            (Boolean) Use self address (for BGP only)
+                            Use self address (for BGP only)
+                          type: boolean
+                        setIpNextHopUnchanged:
+                          description: |-
+                            (Boolean) Propagate next hop unchanged
+                            Propagate next hop unchanged
+                          type: boolean
+                        setIpQosGroup:
+                          description: |-
+                            Range: 0-99
+
+                            - Range: `0`-`99`
+                          type: number
+                        setIpv6Address:
+                          description: |-
+                            list
+                            IPv6 prefix-list
+                          items:
+                            type: string
+                          type: array
+                        setIpv6DefaultGlobalNextHop:
+                          description: |-
+                            (String) Next hop along path
+                            Next hop along path
+                          type: string
+                        setIpv6DefaultNextHop:
+                          description: |-
+                            (List of String) Default next hop IPv6 address
+                            Default next hop IPv6 address
+                          items:
+                            type: string
+                          type: array
+                        setIpv6NextHop:
+                          description: |-
+                            (List of String) Next hop IPv6 address
+                            Next hop IPv6 address
+                          items:
+                            type: string
+                          type: array
+                        setLevel1:
+                          description: |-
+                            1 area
+                            Import into a level-1 area
+                          type: boolean
+                        setLevel2:
+                          description: |-
+                            2 sub-domain
+                            Import into level-2 sub-domain
+                          type: boolean
+                        setLevel12:
+                          description: |-
+                            1 and level-2
+                            Import into level-1 and level-2
+                          type: boolean
+                        setLocalPreference:
+                          description: |-
+                            (Number) Preference value
+                            Preference value
+                            - Range: `0`-`4294967295`
+                          type: number
+                        setLocalPreferenceLegacy:
+                          description: |-
+                            please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            Preference value (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            - Range: `0`-`4294967295`
+                          type: number
+                        setMetricChange:
+                          description: ;;Add or subtract metric
+                          type: string
+                        setMetricDelay:
+                          description: |-
+                            (String) EIGRP delay metric, in 10 microsecond units
+                            EIGRP delay metric, in 10 microsecond units
+                          type: string
+                        setMetricLoading:
+                          description: |-
+                            (Number) EIGRP Effective bandwidth metric (Loading) where 255 is 100% loaded
+                            EIGRP Effective bandwidth metric (Loading) where 255 is 100% loaded
+                            - Range: `1`-`255`
+                          type: number
+                        setMetricMtu:
+                          description: |-
+                            (Number) EIGRP MTU of the path
+                            EIGRP MTU of the path
+                            - Range: `1`-`4294967295`
+                          type: number
+                        setMetricReliability:
+                          description: |-
+                            (Number) EIGRP reliability metric where 255 is 100% reliable
+                            EIGRP reliability metric where 255 is 100% reliable
+                            - Range: `0`-`255`
+                          type: number
+                        setMetricType:
+                          description: |-
+                            (String) Type of metric for destination routing protocol
+                            Type of metric for destination routing protocol
+                            - Choices: `external`, `internal`, `type-1`, `type-2`
+                          type: string
+                        setMetricValue:
+                          description: |-
+                            (Number) Metric value or Bandwidth in Kbits per second
+                            Metric value or Bandwidth in Kbits per second
+                            - Range: `0`-`4294967295`
+                          type: number
+                        setTag:
+                          description: |-
+                            please use tag-val)
+                            Tag value (DEPRECATED - please use tag-val)
+                            - Range: `0`-`4294967295`
+                          type: number
+                        setVrf:
+                          description: |-
+                            (String) VPN Routing/Forwarding instance name
+                            VPN Routing/Forwarding instance name
+                          type: string
+                        setWeight:
+                          description: |-
+                            (Number) BGP weight for routing table
+                            BGP weight for routing table
+                            - Range: `0`-`65535`
+                          type: number
+                        setWeightLegacy:
+                          description: |-
+                            please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            BGP weight for routing table (OBSOLETE - please use route-map configuration in Cisco-IOS-XE-bgp.yang)
+                            - Range: `0`-`65535`
+                          type: number
+                      type: object
+                    type: array
+                  id:
+                    description: (String) The path of the object.
+                    type: string
+                  name:
+                    description: |-
+                      (String) WORD;;Route map tag
+                      WORD;;Route map tag
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              lastHandledReconcileAt:
+                description: |-
+                  LastHandledReconcileAt holds the value of the most recent
+                  reconcile-requested-at annotation token that the controller has
+                  processed. Users can compare this to the annotation to determine
+                  whether a reconcile request has been handled.
+                type: string
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

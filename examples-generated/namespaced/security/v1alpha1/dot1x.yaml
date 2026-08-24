@@ -1,0 +1,28 @@
+apiVersion: security.iosxe.m.upbound.io/v1alpha1
+kind: Dot1x
+metadata:
+  annotations:
+    meta.upbound.io/example-id: security/v1alpha1/dot1x
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    authFailEapol: true
+    credentials:
+    - anonymousId: "1"
+      description: credential_profile_name
+      passwordSecretRef:
+        key: example-key
+        name: example-secret
+      passwordType: "0"
+      pkiTrustpoint: trustpoint1
+      profileName: profile1
+      username: username1
+    criticalEapolConfigBlock: true
+    loggingVerbose: true
+    supplicantControlledTransient: true
+    supplicantForceMulticast: true
+    systemAuthControl: true
+    testTimeout: 1000

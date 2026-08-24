@@ -1,0 +1,50 @@
+apiVersion: system.iosxe.m.upbound.io/v1alpha1
+kind: System
+metadata:
+  annotations:
+    meta.upbound.io/example-id: system/v1alpha1/system
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    callHomeCiscoTac1DestinationTransportMethod: email
+    callHomeCiscoTac1ProfileActive: true
+    callHomeContactEmail: email@test.com
+    diagnosticBootupLevel: minimal
+    hostname: ROUTER-1
+    igmpSnoopingQuerier: true
+    igmpSnoopingQuerierMaxResponseTime: 10
+    igmpSnoopingQuerierTimerExpiry: 120
+    igmpSnoopingQuerierVersion: 2
+    ipBgpCommunityNewFormat: true
+    ipDomainListVrf: VRF1
+    ipDomainListVrfDomain: example.com
+    ipDomainLookup: true
+    ipDomainLookupNsap: true
+    ipDomainLookupRecursive: true
+    ipDomainName: test.com
+    ipMulticastRouteLimit: 200000
+    ipNameServers:
+    - 1.2.3.4
+    ipNameServersVrf:
+    - servers:
+      - 2.3.4.5
+      vrf: VRF1
+    ipNbarClassificationDnsClassifyByDomain: true
+    ipSourceRoute: false
+    ipSshAuthenticationRetries: 3
+    ipSshTimeOut: 120
+    ipTcpMss: 1460
+    ipTcpPathMtuDiscovery: true
+    ipTcpWindowSize: 65536
+    ipv6MulticastRouting: true
+    ipv6UnicastRouting: true
+    loginDelay: 10
+    loginOnFailure: true
+    loginOnFailureLog: true
+    loginOnSuccess: true
+    loginOnSuccessLog: true
+    macAddressTableAgingTime: 14400
+    memoryFreeLowWatermarkProcessor: 203038

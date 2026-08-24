@@ -1,0 +1,35 @@
+apiVersion: security.iosxe.upbound.io/v1alpha1
+kind: ServiceTemplate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: security/v1alpha1/servicetemplate
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    absoluteTimer: 45
+    accessGroups:
+    - name: ag1
+    description: service_template_desc
+    dnsAclPreauth: dns_acl_name
+    inactivityTimer: 25
+    inactivityTimerProbe: false
+    interfaceTemplates:
+    - name: template1
+    linksecPolicy: must-secure
+    name: MY_TEMPLATE
+    redirectAppendClientMac: "00:01:00:01:00:01"
+    redirectAppendSwitchMac: "00:01:00:01:00:02"
+    redirectUrl: valid_url
+    redirectUrlMatchAcl: acl_name
+    redirectUrlMatchAction: redirect-on-no-match
+    servicePolicyQosInput: input_qos
+    servicePolicyQosOutput: output_qos
+    sgt: 57
+    tags:
+    - name: tag_name
+    tunnelCapwapName: TUN1
+    vlan: 27
+    vnid: "12345"
+    voiceVlan: false

@@ -1,0 +1,14 @@
+apiVersion: bgp.iosxe.upbound.io/v1alpha1
+kind: AddressFamilyVPNv4
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bgp/v1alpha1/addressfamilyvpnv4
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    afName: unicast
+    asnSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

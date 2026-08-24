@@ -1,0 +1,960 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: policymaps.qos.iosxe.m.upbound.io
+spec:
+  group: qos.iosxe.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - iosxe
+    kind: PolicyMap
+    listKind: PolicyMapList
+    plural: policymaps
+    singular: policymap
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: PolicyMap is the Schema for the PolicyMaps API. This resource
+          can manage the Policy Map configuration.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: PolicyMapSpec defines the desired state of PolicyMap
+            properties:
+              forProvider:
+                properties:
+                  classes:
+                    description: (Attributes List) policy criteria (see below for
+                      nested schema)
+                    items:
+                      properties:
+                        actions:
+                          description: (Attributes List) (see below for nested schema)
+                          items:
+                            properties:
+                              bandwidthBits:
+                                description: |-
+                                  Range: 1-100000000
+
+                                  - Range: `1`-`100000000`
+                                type: number
+                              bandwidthPercent:
+                                description: |-
+                                  (Number) % of total Bandwidth
+                                  % of total Bandwidth
+                                  - Range: `1`-`100`
+                                type: number
+                              bandwidthRemainingOption:
+                                description: |-
+                                  Choices: percent, ratio
+
+                                  - Choices: `percent`, `ratio`
+                                type: string
+                              bandwidthRemainingPercent:
+                                description: |-
+                                  (Number) % of the remaining bandwidth
+                                  % of the remaining bandwidth
+                                  - Range: `1`-`100`
+                                type: number
+                              bandwidthRemainingRatio:
+                                description: |-
+                                  (Number) ratio for sharing excess bandwidth
+                                  ratio for sharing excess bandwidth
+                                  - Range: `1`-`65536`
+                                type: number
+                              policeBc:
+                                description: |-
+                                  (Number) Conform burst
+                                  Conform burst
+                                  - Range: `1000`-`512000000`
+                                type: number
+                              policeBe:
+                                description: |-
+                                  (Number) Excess burst
+                                  Excess burst
+                                  - Range: `1000`-`512000000`
+                                type: number
+                              policeCir:
+                                description: |-
+                                  (Number) Committed information rate
+                                  Committed information rate
+                                  - Range: `8000`-`100000000000`
+                                type: number
+                              policeCirConformTransmit:
+                                description: |-
+                                  (Boolean) transmit packet
+                                  transmit packet
+                                type: boolean
+                              policeCirExceedDrop:
+                                description: |-
+                                  (Boolean) drop packet
+                                  drop packet
+                                type: boolean
+                              policePir:
+                                description: |-
+                                  (Number) Peak Information Rate
+                                  Peak Information Rate
+                                  - Range: `8000`-`64000000000`
+                                type: number
+                              policePirBe:
+                                description: |-
+                                  (Number) Excess burst
+                                  Excess burst
+                                  - Range: `1000`-`512000000`
+                                type: number
+                              policeRatePercent:
+                                description: |-
+                                  Range: 0-100
+
+                                  - Range: `0`-`100`
+                                type: number
+                              policeTargetBitrate:
+                                description: |-
+                                  (Number) Target bit rate (bits per second) (postfix k, m, g optional),decimal point allowed
+                                  Target bit rate (bits per second) (postfix k, m, g optional),decimal point allowed
+                                  - Range: `8000`-`100000000000`
+                                type: number
+                              policeTargetBitrateConformBurstByte:
+                                description: |-
+                                  (Number) Burst Byte
+                                  Burst Byte
+                                  - Range: `100`-`512000000`
+                                type: number
+                              policeTargetBitrateConformTransmit:
+                                description: |-
+                                  (Boolean) transmit packet
+                                  transmit packet
+                                type: boolean
+                              policeTargetBitrateExceedDrop:
+                                description: |-
+                                  (Boolean) drop packet
+                                  drop packet
+                                type: boolean
+                              policeTargetBitrateExceedTransmit:
+                                description: |-
+                                  (Boolean) transmit packet
+                                  transmit packet
+                                type: boolean
+                              policeTargetBitrateExcessBurstByte:
+                                description: |-
+                                  (Number) Burst Byte
+                                  Burst Byte
+                                  - Range: `100`-`512000000`
+                                type: number
+                              priorityBurst:
+                                description: |-
+                                  Range: 32-2000000
+
+                                  - Range: `32`-`2000000`
+                                type: number
+                              priorityLevel:
+                                description: |-
+                                  Level Priority Queue
+                                  Multi-Level Priority Queue
+                                  - Range: `1`-`2`
+                                type: number
+                              queueBuffersRatio:
+                                description: |-
+                                  (Number) Relative buffer size for queue
+                                  Relative buffer size for queue
+                                  - Range: `0`-`100`
+                                type: number
+                              queueLimit:
+                                description: |-
+                                  Range: 1-64000000
+
+                                  - Range: `1`-`64000000`
+                                type: number
+                              queueLimitType:
+                                description: |-
+                                  Choices: bytes, ms, packets, us
+
+                                  - Choices: `bytes`, `ms`, `packets`, `us`
+                                type: string
+                              servicePolicy:
+                                description: (String)
+                                type: string
+                              setDscp:
+                                description: (String)
+                                type: string
+                              shapeAverageBitRate:
+                                description: |-
+                                  (Number) Target Bit Rate (bits/sec)
+                                  Target Bit Rate (bits/sec)
+                                  - Range: `1000`-`100000000000`
+                                type: number
+                              shapeAverageBitsPerIntervalExcess:
+                                description: |-
+                                  (Number) bits per interval, excess.
+                                  bits per interval, excess.
+                                  - Range: `0`-`154400000`
+                                type: number
+                              shapeAverageBitsPerIntervalSustained:
+                                description: |-
+                                  (Number) bits per interval, sustained. Recommend not to configure, algo finds the best value
+                                  bits per interval, sustained. Recommend not to configure, algo finds the best value
+                                  - Range: `32`-`800000000`
+                                type: number
+                              shapeAverageBurstSizeSustained:
+                                description: |-
+                                  (Number) sustained burst in milliseconds. Recommend not to configure it, the algorithm will find out the best value
+                                  sustained burst in milliseconds. Recommend not to configure it, the algorithm will find out the best value
+                                  - Range: `10`-`2000`
+                                type: number
+                              shapeAverageMs:
+                                description: |-
+                                  (Boolean) milliseconds
+                                  milliseconds
+                                type: boolean
+                              shapeAveragePercent:
+                                description: |-
+                                  (Number) % of interface bandwidth for Committed information rate
+                                  % of interface bandwidth for Committed information rate
+                                  - Range: `0`-`100`
+                                type: number
+                              type:
+                                description: |-
+                                  map
+
+                                  - Choices: `bandwidth`, `compression`, `dbl`, `drop`, `estimate`, `fair-queue`, `forward`, `netflow-sampler`, `police`, `priority`, `queue-buffers`, `queue-limit`, `random-detect`, `service-policy`, `set`, `shape`, `trust`
+                                type: string
+                            type: object
+                          type: array
+                        classType:
+                          description: |-
+                            map
+                            type of the class-map
+                            - Choices: `inspect`
+                          type: string
+                        name:
+                          description: (String) Name of the policy map
+                          type: string
+                        policyAction:
+                          description: |-
+                            Choices: cxsc, drop, inspect, pass
+
+                            - Choices: `cxsc`, `drop`, `inspect`, `pass`
+                          type: string
+                        policyLog:
+                          description: |-
+                            (Boolean) Send logging message for drop or pass
+                            Send logging message for drop or pass
+                          type: boolean
+                        policyParameterMap:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  description:
+                    description: |-
+                      Map description
+                      Policy-Map description
+                    type: string
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  name:
+                    description: |-
+                      (String) Name of the policy map
+                      Name of the policy map
+                    type: string
+                  subscriber:
+                    description: |-
+                      (Boolean) Domain name of the policy map
+                      Domain name of the policy map
+                    type: boolean
+                  type:
+                    description: |-
+                      map
+                      type of the policy-map
+                      - Choices: `access-control`, `appnav`, `control`, `epbr`, `inspect`, `ngsw-qos`, `packet-service`, `performance-monitor`, `queueing`, `service`, `service-chain`, `umbrella`
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  classes:
+                    description: (Attributes List) policy criteria (see below for
+                      nested schema)
+                    items:
+                      properties:
+                        actions:
+                          description: (Attributes List) (see below for nested schema)
+                          items:
+                            properties:
+                              bandwidthBits:
+                                description: |-
+                                  Range: 1-100000000
+
+                                  - Range: `1`-`100000000`
+                                type: number
+                              bandwidthPercent:
+                                description: |-
+                                  (Number) % of total Bandwidth
+                                  % of total Bandwidth
+                                  - Range: `1`-`100`
+                                type: number
+                              bandwidthRemainingOption:
+                                description: |-
+                                  Choices: percent, ratio
+
+                                  - Choices: `percent`, `ratio`
+                                type: string
+                              bandwidthRemainingPercent:
+                                description: |-
+                                  (Number) % of the remaining bandwidth
+                                  % of the remaining bandwidth
+                                  - Range: `1`-`100`
+                                type: number
+                              bandwidthRemainingRatio:
+                                description: |-
+                                  (Number) ratio for sharing excess bandwidth
+                                  ratio for sharing excess bandwidth
+                                  - Range: `1`-`65536`
+                                type: number
+                              policeBc:
+                                description: |-
+                                  (Number) Conform burst
+                                  Conform burst
+                                  - Range: `1000`-`512000000`
+                                type: number
+                              policeBe:
+                                description: |-
+                                  (Number) Excess burst
+                                  Excess burst
+                                  - Range: `1000`-`512000000`
+                                type: number
+                              policeCir:
+                                description: |-
+                                  (Number) Committed information rate
+                                  Committed information rate
+                                  - Range: `8000`-`100000000000`
+                                type: number
+                              policeCirConformTransmit:
+                                description: |-
+                                  (Boolean) transmit packet
+                                  transmit packet
+                                type: boolean
+                              policeCirExceedDrop:
+                                description: |-
+                                  (Boolean) drop packet
+                                  drop packet
+                                type: boolean
+                              policePir:
+                                description: |-
+                                  (Number) Peak Information Rate
+                                  Peak Information Rate
+                                  - Range: `8000`-`64000000000`
+                                type: number
+                              policePirBe:
+                                description: |-
+                                  (Number) Excess burst
+                                  Excess burst
+                                  - Range: `1000`-`512000000`
+                                type: number
+                              policeRatePercent:
+                                description: |-
+                                  Range: 0-100
+
+                                  - Range: `0`-`100`
+                                type: number
+                              policeTargetBitrate:
+                                description: |-
+                                  (Number) Target bit rate (bits per second) (postfix k, m, g optional),decimal point allowed
+                                  Target bit rate (bits per second) (postfix k, m, g optional),decimal point allowed
+                                  - Range: `8000`-`100000000000`
+                                type: number
+                              policeTargetBitrateConformBurstByte:
+                                description: |-
+                                  (Number) Burst Byte
+                                  Burst Byte
+                                  - Range: `100`-`512000000`
+                                type: number
+                              policeTargetBitrateConformTransmit:
+                                description: |-
+                                  (Boolean) transmit packet
+                                  transmit packet
+                                type: boolean
+                              policeTargetBitrateExceedDrop:
+                                description: |-
+                                  (Boolean) drop packet
+                                  drop packet
+                                type: boolean
+                              policeTargetBitrateExceedTransmit:
+                                description: |-
+                                  (Boolean) transmit packet
+                                  transmit packet
+                                type: boolean
+                              policeTargetBitrateExcessBurstByte:
+                                description: |-
+                                  (Number) Burst Byte
+                                  Burst Byte
+                                  - Range: `100`-`512000000`
+                                type: number
+                              priorityBurst:
+                                description: |-
+                                  Range: 32-2000000
+
+                                  - Range: `32`-`2000000`
+                                type: number
+                              priorityLevel:
+                                description: |-
+                                  Level Priority Queue
+                                  Multi-Level Priority Queue
+                                  - Range: `1`-`2`
+                                type: number
+                              queueBuffersRatio:
+                                description: |-
+                                  (Number) Relative buffer size for queue
+                                  Relative buffer size for queue
+                                  - Range: `0`-`100`
+                                type: number
+                              queueLimit:
+                                description: |-
+                                  Range: 1-64000000
+
+                                  - Range: `1`-`64000000`
+                                type: number
+                              queueLimitType:
+                                description: |-
+                                  Choices: bytes, ms, packets, us
+
+                                  - Choices: `bytes`, `ms`, `packets`, `us`
+                                type: string
+                              servicePolicy:
+                                description: (String)
+                                type: string
+                              setDscp:
+                                description: (String)
+                                type: string
+                              shapeAverageBitRate:
+                                description: |-
+                                  (Number) Target Bit Rate (bits/sec)
+                                  Target Bit Rate (bits/sec)
+                                  - Range: `1000`-`100000000000`
+                                type: number
+                              shapeAverageBitsPerIntervalExcess:
+                                description: |-
+                                  (Number) bits per interval, excess.
+                                  bits per interval, excess.
+                                  - Range: `0`-`154400000`
+                                type: number
+                              shapeAverageBitsPerIntervalSustained:
+                                description: |-
+                                  (Number) bits per interval, sustained. Recommend not to configure, algo finds the best value
+                                  bits per interval, sustained. Recommend not to configure, algo finds the best value
+                                  - Range: `32`-`800000000`
+                                type: number
+                              shapeAverageBurstSizeSustained:
+                                description: |-
+                                  (Number) sustained burst in milliseconds. Recommend not to configure it, the algorithm will find out the best value
+                                  sustained burst in milliseconds. Recommend not to configure it, the algorithm will find out the best value
+                                  - Range: `10`-`2000`
+                                type: number
+                              shapeAverageMs:
+                                description: |-
+                                  (Boolean) milliseconds
+                                  milliseconds
+                                type: boolean
+                              shapeAveragePercent:
+                                description: |-
+                                  (Number) % of interface bandwidth for Committed information rate
+                                  % of interface bandwidth for Committed information rate
+                                  - Range: `0`-`100`
+                                type: number
+                              type:
+                                description: |-
+                                  map
+
+                                  - Choices: `bandwidth`, `compression`, `dbl`, `drop`, `estimate`, `fair-queue`, `forward`, `netflow-sampler`, `police`, `priority`, `queue-buffers`, `queue-limit`, `random-detect`, `service-policy`, `set`, `shape`, `trust`
+                                type: string
+                            type: object
+                          type: array
+                        classType:
+                          description: |-
+                            map
+                            type of the class-map
+                            - Choices: `inspect`
+                          type: string
+                        name:
+                          description: (String) Name of the policy map
+                          type: string
+                        policyAction:
+                          description: |-
+                            Choices: cxsc, drop, inspect, pass
+
+                            - Choices: `cxsc`, `drop`, `inspect`, `pass`
+                          type: string
+                        policyLog:
+                          description: |-
+                            (Boolean) Send logging message for drop or pass
+                            Send logging message for drop or pass
+                          type: boolean
+                        policyParameterMap:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  description:
+                    description: |-
+                      Map description
+                      Policy-Map description
+                    type: string
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  name:
+                    description: |-
+                      (String) Name of the policy map
+                      Name of the policy map
+                    type: string
+                  subscriber:
+                    description: |-
+                      (Boolean) Domain name of the policy map
+                      Domain name of the policy map
+                    type: boolean
+                  type:
+                    description: |-
+                      map
+                      type of the policy-map
+                      - Choices: `access-control`, `appnav`, `control`, `epbr`, `inspect`, `ngsw-qos`, `packet-service`, `performance-monitor`, `queueing`, `service`, `service-chain`, `umbrella`
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+          status:
+            description: PolicyMapStatus defines the observed state of PolicyMap.
+            properties:
+              atProvider:
+                properties:
+                  classes:
+                    description: (Attributes List) policy criteria (see below for
+                      nested schema)
+                    items:
+                      properties:
+                        actions:
+                          description: (Attributes List) (see below for nested schema)
+                          items:
+                            properties:
+                              bandwidthBits:
+                                description: |-
+                                  Range: 1-100000000
+
+                                  - Range: `1`-`100000000`
+                                type: number
+                              bandwidthPercent:
+                                description: |-
+                                  (Number) % of total Bandwidth
+                                  % of total Bandwidth
+                                  - Range: `1`-`100`
+                                type: number
+                              bandwidthRemainingOption:
+                                description: |-
+                                  Choices: percent, ratio
+
+                                  - Choices: `percent`, `ratio`
+                                type: string
+                              bandwidthRemainingPercent:
+                                description: |-
+                                  (Number) % of the remaining bandwidth
+                                  % of the remaining bandwidth
+                                  - Range: `1`-`100`
+                                type: number
+                              bandwidthRemainingRatio:
+                                description: |-
+                                  (Number) ratio for sharing excess bandwidth
+                                  ratio for sharing excess bandwidth
+                                  - Range: `1`-`65536`
+                                type: number
+                              policeBc:
+                                description: |-
+                                  (Number) Conform burst
+                                  Conform burst
+                                  - Range: `1000`-`512000000`
+                                type: number
+                              policeBe:
+                                description: |-
+                                  (Number) Excess burst
+                                  Excess burst
+                                  - Range: `1000`-`512000000`
+                                type: number
+                              policeCir:
+                                description: |-
+                                  (Number) Committed information rate
+                                  Committed information rate
+                                  - Range: `8000`-`100000000000`
+                                type: number
+                              policeCirConformTransmit:
+                                description: |-
+                                  (Boolean) transmit packet
+                                  transmit packet
+                                type: boolean
+                              policeCirExceedDrop:
+                                description: |-
+                                  (Boolean) drop packet
+                                  drop packet
+                                type: boolean
+                              policePir:
+                                description: |-
+                                  (Number) Peak Information Rate
+                                  Peak Information Rate
+                                  - Range: `8000`-`64000000000`
+                                type: number
+                              policePirBe:
+                                description: |-
+                                  (Number) Excess burst
+                                  Excess burst
+                                  - Range: `1000`-`512000000`
+                                type: number
+                              policeRatePercent:
+                                description: |-
+                                  Range: 0-100
+
+                                  - Range: `0`-`100`
+                                type: number
+                              policeTargetBitrate:
+                                description: |-
+                                  (Number) Target bit rate (bits per second) (postfix k, m, g optional),decimal point allowed
+                                  Target bit rate (bits per second) (postfix k, m, g optional),decimal point allowed
+                                  - Range: `8000`-`100000000000`
+                                type: number
+                              policeTargetBitrateConformBurstByte:
+                                description: |-
+                                  (Number) Burst Byte
+                                  Burst Byte
+                                  - Range: `100`-`512000000`
+                                type: number
+                              policeTargetBitrateConformTransmit:
+                                description: |-
+                                  (Boolean) transmit packet
+                                  transmit packet
+                                type: boolean
+                              policeTargetBitrateExceedDrop:
+                                description: |-
+                                  (Boolean) drop packet
+                                  drop packet
+                                type: boolean
+                              policeTargetBitrateExceedTransmit:
+                                description: |-
+                                  (Boolean) transmit packet
+                                  transmit packet
+                                type: boolean
+                              policeTargetBitrateExcessBurstByte:
+                                description: |-
+                                  (Number) Burst Byte
+                                  Burst Byte
+                                  - Range: `100`-`512000000`
+                                type: number
+                              priorityBurst:
+                                description: |-
+                                  Range: 32-2000000
+
+                                  - Range: `32`-`2000000`
+                                type: number
+                              priorityLevel:
+                                description: |-
+                                  Level Priority Queue
+                                  Multi-Level Priority Queue
+                                  - Range: `1`-`2`
+                                type: number
+                              queueBuffersRatio:
+                                description: |-
+                                  (Number) Relative buffer size for queue
+                                  Relative buffer size for queue
+                                  - Range: `0`-`100`
+                                type: number
+                              queueLimit:
+                                description: |-
+                                  Range: 1-64000000
+
+                                  - Range: `1`-`64000000`
+                                type: number
+                              queueLimitType:
+                                description: |-
+                                  Choices: bytes, ms, packets, us
+
+                                  - Choices: `bytes`, `ms`, `packets`, `us`
+                                type: string
+                              servicePolicy:
+                                description: (String)
+                                type: string
+                              setDscp:
+                                description: (String)
+                                type: string
+                              shapeAverageBitRate:
+                                description: |-
+                                  (Number) Target Bit Rate (bits/sec)
+                                  Target Bit Rate (bits/sec)
+                                  - Range: `1000`-`100000000000`
+                                type: number
+                              shapeAverageBitsPerIntervalExcess:
+                                description: |-
+                                  (Number) bits per interval, excess.
+                                  bits per interval, excess.
+                                  - Range: `0`-`154400000`
+                                type: number
+                              shapeAverageBitsPerIntervalSustained:
+                                description: |-
+                                  (Number) bits per interval, sustained. Recommend not to configure, algo finds the best value
+                                  bits per interval, sustained. Recommend not to configure, algo finds the best value
+                                  - Range: `32`-`800000000`
+                                type: number
+                              shapeAverageBurstSizeSustained:
+                                description: |-
+                                  (Number) sustained burst in milliseconds. Recommend not to configure it, the algorithm will find out the best value
+                                  sustained burst in milliseconds. Recommend not to configure it, the algorithm will find out the best value
+                                  - Range: `10`-`2000`
+                                type: number
+                              shapeAverageMs:
+                                description: |-
+                                  (Boolean) milliseconds
+                                  milliseconds
+                                type: boolean
+                              shapeAveragePercent:
+                                description: |-
+                                  (Number) % of interface bandwidth for Committed information rate
+                                  % of interface bandwidth for Committed information rate
+                                  - Range: `0`-`100`
+                                type: number
+                              type:
+                                description: |-
+                                  map
+
+                                  - Choices: `bandwidth`, `compression`, `dbl`, `drop`, `estimate`, `fair-queue`, `forward`, `netflow-sampler`, `police`, `priority`, `queue-buffers`, `queue-limit`, `random-detect`, `service-policy`, `set`, `shape`, `trust`
+                                type: string
+                            type: object
+                          type: array
+                        classType:
+                          description: |-
+                            map
+                            type of the class-map
+                            - Choices: `inspect`
+                          type: string
+                        name:
+                          description: (String) Name of the policy map
+                          type: string
+                        policyAction:
+                          description: |-
+                            Choices: cxsc, drop, inspect, pass
+
+                            - Choices: `cxsc`, `drop`, `inspect`, `pass`
+                          type: string
+                        policyLog:
+                          description: |-
+                            (Boolean) Send logging message for drop or pass
+                            Send logging message for drop or pass
+                          type: boolean
+                        policyParameterMap:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  description:
+                    description: |-
+                      Map description
+                      Policy-Map description
+                    type: string
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  id:
+                    description: (String) The path of the object.
+                    type: string
+                  name:
+                    description: |-
+                      (String) Name of the policy map
+                      Name of the policy map
+                    type: string
+                  subscriber:
+                    description: |-
+                      (Boolean) Domain name of the policy map
+                      Domain name of the policy map
+                    type: boolean
+                  type:
+                    description: |-
+                      map
+                      type of the policy-map
+                      - Choices: `access-control`, `appnav`, `control`, `epbr`, `inspect`, `ngsw-qos`, `packet-service`, `performance-monitor`, `queueing`, `service`, `service-chain`, `umbrella`
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              lastHandledReconcileAt:
+                description: |-
+                  LastHandledReconcileAt holds the value of the most recent
+                  reconcile-requested-at annotation token that the controller has
+                  processed. Users can compare this to the annotation to determine
+                  whether a reconcile request has been handled.
+                type: string
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

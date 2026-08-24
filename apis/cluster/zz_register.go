@@ -10,17 +10,55 @@ package cluster
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	v1alpha1 "github.com/crossplane/upjet-provider-template/apis/cluster/null/v1alpha1"
-	v1alpha1cluster "github.com/crossplane/upjet-provider-template/apis/cluster/v1alpha1"
-	v1beta1 "github.com/crossplane/upjet-provider-template/apis/cluster/v1beta1"
+	v1alpha1 "github.com/upbound/provider-upjet-iosxe/apis/cluster/aaa/v1alpha1"
+	v1alpha1acl "github.com/upbound/provider-upjet-iosxe/apis/cluster/acl/v1alpha1"
+	v1alpha1bfd "github.com/upbound/provider-upjet-iosxe/apis/cluster/bfd/v1alpha1"
+	v1alpha1bgp "github.com/upbound/provider-upjet-iosxe/apis/cluster/bgp/v1alpha1"
+	v1alpha1crypto "github.com/upbound/provider-upjet-iosxe/apis/cluster/crypto/v1alpha1"
+	v1alpha1eigrp "github.com/upbound/provider-upjet-iosxe/apis/cluster/eigrp/v1alpha1"
+	v1alpha1evpn "github.com/upbound/provider-upjet-iosxe/apis/cluster/evpn/v1alpha1"
+	v1alpha1flow "github.com/upbound/provider-upjet-iosxe/apis/cluster/flow/v1alpha1"
+	v1alpha1interface "github.com/upbound/provider-upjet-iosxe/apis/cluster/interface/v1alpha1"
+	v1alpha1isis "github.com/upbound/provider-upjet-iosxe/apis/cluster/isis/v1alpha1"
+	v1alpha1mpls "github.com/upbound/provider-upjet-iosxe/apis/cluster/mpls/v1alpha1"
+	v1alpha1multicast "github.com/upbound/provider-upjet-iosxe/apis/cluster/multicast/v1alpha1"
+	v1alpha1nat "github.com/upbound/provider-upjet-iosxe/apis/cluster/nat/v1alpha1"
+	v1alpha1ospf "github.com/upbound/provider-upjet-iosxe/apis/cluster/ospf/v1alpha1"
+	v1alpha1qos "github.com/upbound/provider-upjet-iosxe/apis/cluster/qos/v1alpha1"
+	v1alpha1routing "github.com/upbound/provider-upjet-iosxe/apis/cluster/routing/v1alpha1"
+	v1alpha1security "github.com/upbound/provider-upjet-iosxe/apis/cluster/security/v1alpha1"
+	v1alpha1switching "github.com/upbound/provider-upjet-iosxe/apis/cluster/switching/v1alpha1"
+	v1alpha1system "github.com/upbound/provider-upjet-iosxe/apis/cluster/system/v1alpha1"
+	v1alpha1cluster "github.com/upbound/provider-upjet-iosxe/apis/cluster/v1alpha1"
+	v1beta1 "github.com/upbound/provider-upjet-iosxe/apis/cluster/v1beta1"
+	v1alpha1yang "github.com/upbound/provider-upjet-iosxe/apis/cluster/yang/v1alpha1"
 )
 
 func init() {
 	// Register the types with the Scheme so the components can map objects to GroupVersionKinds and back
 	AddToSchemes = append(AddToSchemes,
 		v1alpha1.SchemeBuilder.AddToScheme,
+		v1alpha1acl.SchemeBuilder.AddToScheme,
+		v1alpha1bfd.SchemeBuilder.AddToScheme,
+		v1alpha1bgp.SchemeBuilder.AddToScheme,
+		v1alpha1crypto.SchemeBuilder.AddToScheme,
+		v1alpha1eigrp.SchemeBuilder.AddToScheme,
+		v1alpha1evpn.SchemeBuilder.AddToScheme,
+		v1alpha1flow.SchemeBuilder.AddToScheme,
+		v1alpha1interface.SchemeBuilder.AddToScheme,
+		v1alpha1isis.SchemeBuilder.AddToScheme,
+		v1alpha1mpls.SchemeBuilder.AddToScheme,
+		v1alpha1multicast.SchemeBuilder.AddToScheme,
+		v1alpha1nat.SchemeBuilder.AddToScheme,
+		v1alpha1ospf.SchemeBuilder.AddToScheme,
+		v1alpha1qos.SchemeBuilder.AddToScheme,
+		v1alpha1routing.SchemeBuilder.AddToScheme,
+		v1alpha1security.SchemeBuilder.AddToScheme,
+		v1alpha1switching.SchemeBuilder.AddToScheme,
+		v1alpha1system.SchemeBuilder.AddToScheme,
 		v1alpha1cluster.SchemeBuilder.AddToScheme,
 		v1beta1.SchemeBuilder.AddToScheme,
+		v1alpha1yang.SchemeBuilder.AddToScheme,
 	)
 }
 

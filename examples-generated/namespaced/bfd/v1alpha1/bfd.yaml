@@ -1,0 +1,52 @@
+apiVersion: bfd.iosxe.m.upbound.io/v1alpha1
+kind: BFD
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bfd/v1alpha1/bfd
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    ipv4BothVrfs:
+    - destIp: 1.2.3.4/4
+      dstVrf: dest_vrf1
+      srcIp: 11.22.33.44/12
+      srcVrf: src_vrf1
+      templateName: template1
+    ipv4WithDstVrfs:
+    - destIp: 1.2.3.4/4
+      dstVrf: dest_vrf1
+      srcIp: 11.22.33.44/12
+      templateName: template1
+    ipv4WithSrcVrfs:
+    - destIp: 1.2.3.4/4
+      srcIp: 11.22.33.44/12
+      srcVrf: src_vrf1
+      templateName: template1
+    ipv4WithoutVrfs:
+    - destIp: 1.2.3.4/4
+      srcIp: 11.22.33.44/12
+      templateName: template1
+    ipv6WithBothVrfs:
+    - destIpv6: 2001:DB8:0:1::/64
+      dstVrf: dst_vrf1
+      srcIpv6: 2001:DB8:0:2::/64
+      srcVrf: src_vrf1
+      templateName: template1
+    ipv6WithDstVrfs:
+    - destIpv6: 2001:DB8:0:1::/64
+      dstVrf: dst_vrf1
+      srcIpv6: 2001:DB8:0:2::/64
+      templateName: template1
+    ipv6WithSrcVrfs:
+    - destIpv6: 2001:DB8:0:1::/64
+      srcIpv6: 2001:DB8:0:2::/64
+      srcVrf: src_vrf1
+      templateName: template1
+    ipv6WithoutVrfs:
+    - destIpv6: 2001:DB8:0:1::/64
+      srcIpv6: 2001:DB8:0:2::/64
+      templateName: template1
+    slowTimers: 1000

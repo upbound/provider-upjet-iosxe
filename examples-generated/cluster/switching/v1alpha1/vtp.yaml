@@ -1,0 +1,20 @@
+apiVersion: switching.iosxe.upbound.io/v1alpha1
+kind: VTP
+metadata:
+  annotations:
+    meta.upbound.io/example-id: switching/v1alpha1/vtp
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    domain: TESTDOMAIN
+    file: TEST
+    interface: GigabitEthernet1/0/1
+    modeTransparent: true
+    passwordHidden: false
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    version: 3

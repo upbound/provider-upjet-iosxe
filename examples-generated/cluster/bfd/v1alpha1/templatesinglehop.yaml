@@ -1,0 +1,20 @@
+apiVersion: bfd.iosxe.upbound.io/v1alpha1
+kind: TemplateSingleHop
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bfd/v1alpha1/templatesinglehop
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    authenticationMd5Keychain: KEYC1
+    dampeningHalfTime: 30
+    dampeningMaxSuppressingTime: 60
+    dampeningSuppressTime: 100
+    dampeningUnsuppressTime: 30
+    echo: true
+    intervalMillisecondsMinRx: 200
+    intervalMillisecondsMinTx: 200
+    intervalMillisecondsMultiplier: 4
+    name: SH-TEMPLATE-1

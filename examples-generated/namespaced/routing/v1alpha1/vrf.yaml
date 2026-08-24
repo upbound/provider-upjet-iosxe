@@ -1,0 +1,41 @@
+apiVersion: routing.iosxe.m.upbound.io/v1alpha1
+kind: VRF
+metadata:
+  annotations:
+    meta.upbound.io/example-id: routing/v1alpha1/vrf
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    addressFamilyIpv4: true
+    addressFamilyIpv6: true
+    description: VRF22 description
+    ipv4ExportMap: EXPORT-MAP-1
+    ipv4ImportMap: IMPORT-MAP-1
+    ipv4RouteReplicate:
+    - name: VRF1
+      unicastAll: true
+      unicastAllRouteMap: RM1
+    ipv4RouteTargetExport:
+    - value: "22:22"
+    ipv4RouteTargetExportStitching:
+    - value: "22:22"
+    ipv4RouteTargetImport:
+    - value: "22:22"
+    ipv4RouteTargetImportStitching:
+    - value: "22:22"
+    ipv6ExportMap: EXPORT-MAP-1
+    ipv6ImportMap: IMPORT-MAP-1
+    ipv6RouteTargetExport:
+    - value: "22:22"
+    ipv6RouteTargetExportStitching:
+    - value: "22:22"
+    ipv6RouteTargetImport:
+    - value: "22:22"
+    ipv6RouteTargetImportStitching:
+    - value: "22:22"
+    name: VRF22
+    rd: "22:22"
+    vpnId: "22:22"

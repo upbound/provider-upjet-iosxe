@@ -1,0 +1,16 @@
+apiVersion: security.iosxe.m.upbound.io/v1alpha1
+kind: ZonePair
+metadata:
+  annotations:
+    meta.upbound.io/example-id: security/v1alpha1/zonepair
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    description: Inside to outside traffic policy
+    destination: OUTSIDE
+    name: ZP_IN_OUT
+    servicePolicyTypeInspect: PM_IN_TO_OUT
+    source: INSIDE

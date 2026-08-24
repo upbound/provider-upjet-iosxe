@@ -1,0 +1,18 @@
+apiVersion: evpn.iosxe.m.upbound.io/v1alpha1
+kind: EthernetSegment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: evpn/v1alpha1/ethernetsegment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    dfElectionWaitTime: 3
+    esValue: 1
+    identifierTypes:
+    - systemMac: 0011.2233.4455
+      type: 3
+    redundancyAllActive: false
+    redundancySingleActive: true

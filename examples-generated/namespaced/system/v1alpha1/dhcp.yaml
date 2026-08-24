@@ -1,0 +1,34 @@
+apiVersion: system.iosxe.m.upbound.io/v1alpha1
+kind: DHCP
+metadata:
+  annotations:
+    meta.upbound.io/example-id: system/v1alpha1/dhcp
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    pools:
+    - bootfile: boot.cfg
+      defaultRouters:
+      - 10.1.1.1
+      dnsServers:
+      - 10.1.1.1
+      domainName: example.com
+      leaseDays: 1
+      leaseHours: 12
+      leaseMinutes: 30
+      name: POOL1
+      networkMask: 255.255.255.0
+      networkNumber: 10.1.1.0
+      options:
+      - ascii: 10.1.1.1
+        optionCode: 150
+    relayBootpIgnore: true
+    relayInformationOptionDefault: false
+    relayInformationOptionVpn: true
+    relayInformationTrustAll: false
+    snooping: true
+    snoopingInformationOption: true
+    snoopingInformationOptionAllowUntrusted: true

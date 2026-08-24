@@ -1,0 +1,12 @@
+apiVersion: switching.iosxe.upbound.io/v1alpha1
+kind: SwitchProvision
+metadata:
+  annotations:
+    meta.upbound.io/example-id: switching/v1alpha1/switchprovision
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    number: 2
+    provision: c9300-24p

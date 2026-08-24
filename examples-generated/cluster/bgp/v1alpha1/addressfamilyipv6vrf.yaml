@@ -1,0 +1,39 @@
+apiVersion: bgp.iosxe.upbound.io/v1alpha1
+kind: AddressFamilyIPv6VRF
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bgp/v1alpha1/addressfamilyipv6vrf
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    afName: unicast
+    asnSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    vrfs:
+    - ipv6UnicastAdminDistances:
+      - distance: 200
+        sourceIpv6Address: 2001:DB8::/48
+      ipv6UnicastAdvertiseL2VpnEvpn: true
+      ipv6UnicastAggregateAddresses:
+      - ipv6Address: 2001:DB8::/32
+      ipv6UnicastDistanceBgpExternal: 20
+      ipv6UnicastDistanceBgpInternal: 200
+      ipv6UnicastDistanceBgpLocal: 200
+      ipv6UnicastMaximumPathsEbgp: 2
+      ipv6UnicastMaximumPathsIbgp: 2
+      ipv6UnicastNetworks:
+      - backdoor: true
+        evpn: false
+        network: 2001:1234::/64
+        routeMap: RM1
+      ipv6UnicastRedistributeConnected: true
+      ipv6UnicastRedistributeConnectedMetric: 100
+      ipv6UnicastRedistributeConnectedRouteMap: RM_BGP6_CONNECTED
+      ipv6UnicastRedistributeStatic: true
+      ipv6UnicastRedistributeStaticMetric: 200
+      ipv6UnicastRedistributeStaticRouteMap: RM_BGP6_STATIC
+      ipv6UnicastRouterIdLoopback: 101
+      name: VRF1

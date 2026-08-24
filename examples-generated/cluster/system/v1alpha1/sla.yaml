@@ -1,0 +1,19 @@
+apiVersion: system.iosxe.upbound.io/v1alpha1
+kind: SLA
+metadata:
+  annotations:
+    meta.upbound.io/example-id: system/v1alpha1/sla
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    entries:
+    - icmpEchoDestination: 192.168.10.10
+      icmpEchoFrequency: 10
+      icmpEchoSourceIp: 192.168.1.1
+      number: 20
+    schedules:
+    - entryNumber: 20
+      life: 4000
+      startTimeNow: true

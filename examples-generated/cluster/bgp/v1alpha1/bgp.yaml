@@ -1,0 +1,15 @@
+apiVersion: bgp.iosxe.upbound.io/v1alpha1
+kind: BGP
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bgp/v1alpha1/bgp
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    asn: "65000"
+    bgpGracefulRestart: true
+    bgpUpdateDelay: 200
+    defaultIpv4Unicast: false
+    logNeighborChanges: true

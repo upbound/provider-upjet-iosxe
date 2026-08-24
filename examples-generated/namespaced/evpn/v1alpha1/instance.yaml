@@ -1,0 +1,23 @@
+apiVersion: evpn.iosxe.m.upbound.io/v1alpha1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: evpn/v1alpha1/instance
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    evpnInstanceNum: 10
+    vlanBasedDefaultGatewayAdvertise: enable
+    vlanBasedEncapsulation: vxlan
+    vlanBasedIpLocalLearningDisable: false
+    vlanBasedIpLocalLearningEnable: true
+    vlanBasedMulticastAdvertise: enable
+    vlanBasedRd: "10:10"
+    vlanBasedReOriginateRouteType5: true
+    vlanBasedReplicationTypeIngress: false
+    vlanBasedReplicationTypeMp2Mp: false
+    vlanBasedReplicationTypeP2Mp: false
+    vlanBasedReplicationTypeStatic: true

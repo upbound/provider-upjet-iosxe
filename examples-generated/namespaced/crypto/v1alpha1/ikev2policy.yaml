@@ -1,0 +1,17 @@
+apiVersion: crypto.iosxe.m.upbound.io/v1alpha1
+kind: IKEv2Policy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: crypto/v1alpha1/ikev2policy
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    matchAddressLocalIp:
+    - 1.2.3.4
+    matchFvrfAny: true
+    name: policy1
+    proposals:
+    - proposals: proposal123

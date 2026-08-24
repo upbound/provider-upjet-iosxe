@@ -1,0 +1,1312 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: authentications.aaa.iosxe.m.upbound.io
+spec:
+  group: aaa.iosxe.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - iosxe
+    kind: Authentication
+    listKind: AuthenticationList
+    plural: authentications
+    singular: authentication
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Authentication is the Schema for the Authentications API. This
+          resource can manage the AAA Authentication configuration.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: AuthenticationSpec defines the desired state of Authentication
+            properties:
+              forProvider:
+                properties:
+                  deleteMode:
+                    description: |-
+                      is. Default value is all.
+                      Configure behavior when deleting/destroying the resource. Either delete the entire object (YANG container) being managed, or only delete the individual resource attributes configured explicitly and leave everything else as-is. Default value is `all`.
+                      - Choices: `all`, `attributes`
+                    type: string
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  dot1x:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        a1Cache:
+                          description: |-
+                            group
+                            Use Cached-group
+                          type: string
+                        a1Group:
+                          description: |-
+                            group
+                            Use Server-group
+                          type: string
+                        a1Local:
+                          description: |-
+                            (Boolean) Use local username authentication
+                            Use local username authentication
+                          type: boolean
+                        a1Radius:
+                          description: |-
+                            (Boolean) Use list of all Radius hosts
+                            Use list of all Radius hosts
+                          type: boolean
+                        a2Cache:
+                          description: |-
+                            group
+                            Use Cached-group
+                          type: string
+                        a2Group:
+                          description: |-
+                            group
+                            Use Server-group
+                          type: string
+                        a2Local:
+                          description: |-
+                            (Boolean) Use local username authentication
+                            Use local username authentication
+                          type: boolean
+                        a2Radius:
+                          description: |-
+                            (Boolean) Use list of all Radius hosts
+                            Use list of all Radius hosts
+                          type: boolean
+                        a3Cache:
+                          description: |-
+                            group
+                            Use Cached-group
+                          type: string
+                        a3Group:
+                          description: |-
+                            group
+                            Use Server-group
+                          type: string
+                        a3Local:
+                          description: |-
+                            (Boolean) Use local username authentication
+                            Use local username authentication
+                          type: boolean
+                        a3Radius:
+                          description: |-
+                            (Boolean) Use list of all Radius hosts
+                            Use list of all Radius hosts
+                          type: boolean
+                        a4Cache:
+                          description: |-
+                            group
+                            Use Cached-group
+                          type: string
+                        a4Group:
+                          description: |-
+                            group
+                            Use Server-group
+                          type: string
+                        a4Local:
+                          description: |-
+                            (Boolean) Use local username authentication
+                            Use local username authentication
+                          type: boolean
+                        a4Radius:
+                          description: |-
+                            (Boolean) Use list of all Radius hosts
+                            Use list of all Radius hosts
+                          type: boolean
+                        name:
+                          description: |-
+                            (String) Named authentication method list for dot1x service.
+                            Named authentication method list for dot1x service.
+                          type: string
+                      type: object
+                    type: array
+                  dot1xDefaultA1Group:
+                    description: |-
+                      group
+                      Use Server-group
+                    type: string
+                  dot1xDefaultA1Local:
+                    description: |-
+                      (Boolean) Use local username authentication
+                      Use local username authentication
+                    type: boolean
+                  dot1xDefaultA2Group:
+                    description: |-
+                      group
+                      Use Server-group
+                    type: string
+                  dot1xDefaultA2Local:
+                    description: |-
+                      (Boolean) Use local username authentication
+                      Use local username authentication
+                    type: boolean
+                  dot1xDefaultA3Group:
+                    description: |-
+                      group
+                      Use Server-group
+                    type: string
+                  dot1xDefaultA3Local:
+                    description: |-
+                      (Boolean) Use local username authentication
+                      Use local username authentication
+                    type: boolean
+                  dot1xDefaultA4Group:
+                    description: |-
+                      group
+                      Use Server-group
+                    type: string
+                  dot1xDefaultA4Local:
+                    description: |-
+                      (Boolean) Use local username authentication
+                      Use local username authentication
+                    type: boolean
+                  enableDefaultEnableLegacy:
+                    description: |-
+                      (Boolean) Use enable password for authentication.
+                      Use enable password for authentication.
+                    type: boolean
+                  enableDefaultGroup1Cache:
+                    description: |-
+                      (String) Privileged command level(enable) authentication using cached group
+                      Privileged command level(enable) authentication using cached group
+                    type: string
+                  enableDefaultGroup1Enable:
+                    description: |-
+                      (Boolean) Privileged command level(enable) authentication using enable password
+                      Privileged command level(enable) authentication using enable password
+                    type: boolean
+                  enableDefaultGroup1Group:
+                    description: |-
+                      (String) Privileged command level(enable) authentication using radius/tacacs+/ldap server(s)
+                      Privileged command level(enable) authentication using radius/tacacs+/ldap server(s)
+                    type: string
+                  enableDefaultGroup1Line:
+                    description: |-
+                      (Boolean) Privileged command level(enable) authentication using line password
+                      Privileged command level(enable) authentication using line password
+                    type: boolean
+                  enableDefaultGroup1None:
+                    description: |-
+                      (Boolean) No authentication for Privileged command level(enable)
+                      No authentication for Privileged command level(enable)
+                    type: boolean
+                  enableDefaultGroup2Cache:
+                    description: |-
+                      (String) Privileged command level(enable) authentication using cached group
+                      Privileged command level(enable) authentication using cached group
+                    type: string
+                  enableDefaultGroup2Enable:
+                    description: |-
+                      (Boolean) Privileged command level(enable) authentication using enable password
+                      Privileged command level(enable) authentication using enable password
+                    type: boolean
+                  enableDefaultGroup2Group:
+                    description: |-
+                      (String) Privileged command level(enable) authentication using radius/tacacs+/ldap server(s)
+                      Privileged command level(enable) authentication using radius/tacacs+/ldap server(s)
+                    type: string
+                  enableDefaultGroup2Line:
+                    description: |-
+                      (Boolean) Privileged command level(enable) authentication using line password
+                      Privileged command level(enable) authentication using line password
+                    type: boolean
+                  enableDefaultGroup2None:
+                    description: |-
+                      (Boolean) No authentication for Privileged command level(enable)
+                      No authentication for Privileged command level(enable)
+                    type: boolean
+                  enableDefaultGroup3Cache:
+                    description: |-
+                      (String) Privileged command level(enable) authentication using cached group
+                      Privileged command level(enable) authentication using cached group
+                    type: string
+                  enableDefaultGroup3Enable:
+                    description: |-
+                      (Boolean) Privileged command level(enable) authentication using enable password
+                      Privileged command level(enable) authentication using enable password
+                    type: boolean
+                  enableDefaultGroup3Group:
+                    description: |-
+                      (String) Privileged command level(enable) authentication using radius/tacacs+/ldap server(s)
+                      Privileged command level(enable) authentication using radius/tacacs+/ldap server(s)
+                    type: string
+                  enableDefaultGroup3Line:
+                    description: |-
+                      (Boolean) Privileged command level(enable) authentication using line password
+                      Privileged command level(enable) authentication using line password
+                    type: boolean
+                  enableDefaultGroup3None:
+                    description: |-
+                      (Boolean) No authentication for Privileged command level(enable)
+                      No authentication for Privileged command level(enable)
+                    type: boolean
+                  enableDefaultGroup4Cache:
+                    description: |-
+                      (String) Privileged command level(enable) authentication using cached group
+                      Privileged command level(enable) authentication using cached group
+                    type: string
+                  enableDefaultGroup4Enable:
+                    description: |-
+                      (Boolean) Privileged command level(enable) authentication using enable password
+                      Privileged command level(enable) authentication using enable password
+                    type: boolean
+                  enableDefaultGroup4Group:
+                    description: |-
+                      (String) Privileged command level(enable) authentication using radius/tacacs+/ldap server(s)
+                      Privileged command level(enable) authentication using radius/tacacs+/ldap server(s)
+                    type: string
+                  enableDefaultGroup4Line:
+                    description: |-
+                      (Boolean) Privileged command level(enable) authentication using line password
+                      Privileged command level(enable) authentication using line password
+                    type: boolean
+                  enableDefaultGroup4None:
+                    description: |-
+                      (Boolean) No authentication for Privileged command level(enable)
+                      No authentication for Privileged command level(enable)
+                    type: boolean
+                  enableDefaultGroupLegacy:
+                    description: |-
+                      group
+                      Use Server-group
+                    type: string
+                  enableDefaultLineLegacy:
+                    description: |-
+                      (Boolean) Use line password for authentication.
+                      Use line password for authentication.
+                    type: boolean
+                  enableDefaultNoneLegacy:
+                    description: |-
+                      (Boolean) No authentication.
+                      No authentication.
+                    type: boolean
+                  logins:
+                    description: (Attributes List) Set authentication lists for logins.
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        a1Enable:
+                          description: |-
+                            (Boolean) Use enable password for authentication.
+                            Use enable password for authentication.
+                          type: boolean
+                        a1Group:
+                          description: |-
+                            group
+                            Use Server-group
+                          type: string
+                        a1Line:
+                          description: |-
+                            (Boolean) Use line password for authentication.
+                            Use line password for authentication.
+                          type: boolean
+                        a1Local:
+                          description: |-
+                            (Boolean) Use local username authentication
+                            Use local username authentication.
+                          type: boolean
+                        a1None:
+                          description: |-
+                            (Boolean) NO authentication.
+                            NO authentication.
+                          type: boolean
+                        a2Enable:
+                          description: |-
+                            (Boolean) Use enable password for authentication.
+                            Use enable password for authentication.
+                          type: boolean
+                        a2Group:
+                          description: |-
+                            group
+                            Use Server-group
+                          type: string
+                        a2Line:
+                          description: |-
+                            (Boolean) Use line password for authentication.
+                            Use line password for authentication.
+                          type: boolean
+                        a2Local:
+                          description: (Boolean) Use local username authentication
+                          type: boolean
+                        a2None:
+                          description: |-
+                            (Boolean) NO authentication.
+                            NO authentication.
+                          type: boolean
+                        a3Enable:
+                          description: |-
+                            (Boolean) Use enable password for authentication.
+                            Use enable password for authentication.
+                          type: boolean
+                        a3Group:
+                          description: |-
+                            group
+                            Use Server-group
+                          type: string
+                        a3Line:
+                          description: |-
+                            (Boolean) Use line password for authentication.
+                            Use line password for authentication.
+                          type: boolean
+                        a3Local:
+                          description: (Boolean) Use local username authentication
+                          type: boolean
+                        a3None:
+                          description: |-
+                            (Boolean) NO authentication.
+                            NO authentication.
+                          type: boolean
+                        a4Enable:
+                          description: |-
+                            (Boolean) Use enable password for authentication.
+                            Use enable password for authentication.
+                          type: boolean
+                        a4Group:
+                          description: |-
+                            group
+                            Use Server-group
+                          type: string
+                        a4Line:
+                          description: |-
+                            (Boolean) Use line password for authentication.
+                            Use line password for authentication.
+                          type: boolean
+                        a4Local:
+                          description: (Boolean) Use local username authentication
+                          type: boolean
+                        a4None:
+                          description: |-
+                            (Boolean) NO authentication.
+                            NO authentication.
+                          type: boolean
+                        name:
+                          description: (String) Named authentication method list for
+                            dot1x service.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  deleteMode:
+                    description: |-
+                      is. Default value is all.
+                      Configure behavior when deleting/destroying the resource. Either delete the entire object (YANG container) being managed, or only delete the individual resource attributes configured explicitly and leave everything else as-is. Default value is `all`.
+                      - Choices: `all`, `attributes`
+                    type: string
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  dot1x:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        a1Cache:
+                          description: |-
+                            group
+                            Use Cached-group
+                          type: string
+                        a1Group:
+                          description: |-
+                            group
+                            Use Server-group
+                          type: string
+                        a1Local:
+                          description: |-
+                            (Boolean) Use local username authentication
+                            Use local username authentication
+                          type: boolean
+                        a1Radius:
+                          description: |-
+                            (Boolean) Use list of all Radius hosts
+                            Use list of all Radius hosts
+                          type: boolean
+                        a2Cache:
+                          description: |-
+                            group
+                            Use Cached-group
+                          type: string
+                        a2Group:
+                          description: |-
+                            group
+                            Use Server-group
+                          type: string
+                        a2Local:
+                          description: |-
+                            (Boolean) Use local username authentication
+                            Use local username authentication
+                          type: boolean
+                        a2Radius:
+                          description: |-
+                            (Boolean) Use list of all Radius hosts
+                            Use list of all Radius hosts
+                          type: boolean
+                        a3Cache:
+                          description: |-
+                            group
+                            Use Cached-group
+                          type: string
+                        a3Group:
+                          description: |-
+                            group
+                            Use Server-group
+                          type: string
+                        a3Local:
+                          description: |-
+                            (Boolean) Use local username authentication
+                            Use local username authentication
+                          type: boolean
+                        a3Radius:
+                          description: |-
+                            (Boolean) Use list of all Radius hosts
+                            Use list of all Radius hosts
+                          type: boolean
+                        a4Cache:
+                          description: |-
+                            group
+                            Use Cached-group
+                          type: string
+                        a4Group:
+                          description: |-
+                            group
+                            Use Server-group
+                          type: string
+                        a4Local:
+                          description: |-
+                            (Boolean) Use local username authentication
+                            Use local username authentication
+                          type: boolean
+                        a4Radius:
+                          description: |-
+                            (Boolean) Use list of all Radius hosts
+                            Use list of all Radius hosts
+                          type: boolean
+                        name:
+                          description: |-
+                            (String) Named authentication method list for dot1x service.
+                            Named authentication method list for dot1x service.
+                          type: string
+                      type: object
+                    type: array
+                  dot1xDefaultA1Group:
+                    description: |-
+                      group
+                      Use Server-group
+                    type: string
+                  dot1xDefaultA1Local:
+                    description: |-
+                      (Boolean) Use local username authentication
+                      Use local username authentication
+                    type: boolean
+                  dot1xDefaultA2Group:
+                    description: |-
+                      group
+                      Use Server-group
+                    type: string
+                  dot1xDefaultA2Local:
+                    description: |-
+                      (Boolean) Use local username authentication
+                      Use local username authentication
+                    type: boolean
+                  dot1xDefaultA3Group:
+                    description: |-
+                      group
+                      Use Server-group
+                    type: string
+                  dot1xDefaultA3Local:
+                    description: |-
+                      (Boolean) Use local username authentication
+                      Use local username authentication
+                    type: boolean
+                  dot1xDefaultA4Group:
+                    description: |-
+                      group
+                      Use Server-group
+                    type: string
+                  dot1xDefaultA4Local:
+                    description: |-
+                      (Boolean) Use local username authentication
+                      Use local username authentication
+                    type: boolean
+                  enableDefaultEnableLegacy:
+                    description: |-
+                      (Boolean) Use enable password for authentication.
+                      Use enable password for authentication.
+                    type: boolean
+                  enableDefaultGroup1Cache:
+                    description: |-
+                      (String) Privileged command level(enable) authentication using cached group
+                      Privileged command level(enable) authentication using cached group
+                    type: string
+                  enableDefaultGroup1Enable:
+                    description: |-
+                      (Boolean) Privileged command level(enable) authentication using enable password
+                      Privileged command level(enable) authentication using enable password
+                    type: boolean
+                  enableDefaultGroup1Group:
+                    description: |-
+                      (String) Privileged command level(enable) authentication using radius/tacacs+/ldap server(s)
+                      Privileged command level(enable) authentication using radius/tacacs+/ldap server(s)
+                    type: string
+                  enableDefaultGroup1Line:
+                    description: |-
+                      (Boolean) Privileged command level(enable) authentication using line password
+                      Privileged command level(enable) authentication using line password
+                    type: boolean
+                  enableDefaultGroup1None:
+                    description: |-
+                      (Boolean) No authentication for Privileged command level(enable)
+                      No authentication for Privileged command level(enable)
+                    type: boolean
+                  enableDefaultGroup2Cache:
+                    description: |-
+                      (String) Privileged command level(enable) authentication using cached group
+                      Privileged command level(enable) authentication using cached group
+                    type: string
+                  enableDefaultGroup2Enable:
+                    description: |-
+                      (Boolean) Privileged command level(enable) authentication using enable password
+                      Privileged command level(enable) authentication using enable password
+                    type: boolean
+                  enableDefaultGroup2Group:
+                    description: |-
+                      (String) Privileged command level(enable) authentication using radius/tacacs+/ldap server(s)
+                      Privileged command level(enable) authentication using radius/tacacs+/ldap server(s)
+                    type: string
+                  enableDefaultGroup2Line:
+                    description: |-
+                      (Boolean) Privileged command level(enable) authentication using line password
+                      Privileged command level(enable) authentication using line password
+                    type: boolean
+                  enableDefaultGroup2None:
+                    description: |-
+                      (Boolean) No authentication for Privileged command level(enable)
+                      No authentication for Privileged command level(enable)
+                    type: boolean
+                  enableDefaultGroup3Cache:
+                    description: |-
+                      (String) Privileged command level(enable) authentication using cached group
+                      Privileged command level(enable) authentication using cached group
+                    type: string
+                  enableDefaultGroup3Enable:
+                    description: |-
+                      (Boolean) Privileged command level(enable) authentication using enable password
+                      Privileged command level(enable) authentication using enable password
+                    type: boolean
+                  enableDefaultGroup3Group:
+                    description: |-
+                      (String) Privileged command level(enable) authentication using radius/tacacs+/ldap server(s)
+                      Privileged command level(enable) authentication using radius/tacacs+/ldap server(s)
+                    type: string
+                  enableDefaultGroup3Line:
+                    description: |-
+                      (Boolean) Privileged command level(enable) authentication using line password
+                      Privileged command level(enable) authentication using line password
+                    type: boolean
+                  enableDefaultGroup3None:
+                    description: |-
+                      (Boolean) No authentication for Privileged command level(enable)
+                      No authentication for Privileged command level(enable)
+                    type: boolean
+                  enableDefaultGroup4Cache:
+                    description: |-
+                      (String) Privileged command level(enable) authentication using cached group
+                      Privileged command level(enable) authentication using cached group
+                    type: string
+                  enableDefaultGroup4Enable:
+                    description: |-
+                      (Boolean) Privileged command level(enable) authentication using enable password
+                      Privileged command level(enable) authentication using enable password
+                    type: boolean
+                  enableDefaultGroup4Group:
+                    description: |-
+                      (String) Privileged command level(enable) authentication using radius/tacacs+/ldap server(s)
+                      Privileged command level(enable) authentication using radius/tacacs+/ldap server(s)
+                    type: string
+                  enableDefaultGroup4Line:
+                    description: |-
+                      (Boolean) Privileged command level(enable) authentication using line password
+                      Privileged command level(enable) authentication using line password
+                    type: boolean
+                  enableDefaultGroup4None:
+                    description: |-
+                      (Boolean) No authentication for Privileged command level(enable)
+                      No authentication for Privileged command level(enable)
+                    type: boolean
+                  enableDefaultGroupLegacy:
+                    description: |-
+                      group
+                      Use Server-group
+                    type: string
+                  enableDefaultLineLegacy:
+                    description: |-
+                      (Boolean) Use line password for authentication.
+                      Use line password for authentication.
+                    type: boolean
+                  enableDefaultNoneLegacy:
+                    description: |-
+                      (Boolean) No authentication.
+                      No authentication.
+                    type: boolean
+                  logins:
+                    description: (Attributes List) Set authentication lists for logins.
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        a1Enable:
+                          description: |-
+                            (Boolean) Use enable password for authentication.
+                            Use enable password for authentication.
+                          type: boolean
+                        a1Group:
+                          description: |-
+                            group
+                            Use Server-group
+                          type: string
+                        a1Line:
+                          description: |-
+                            (Boolean) Use line password for authentication.
+                            Use line password for authentication.
+                          type: boolean
+                        a1Local:
+                          description: |-
+                            (Boolean) Use local username authentication
+                            Use local username authentication.
+                          type: boolean
+                        a1None:
+                          description: |-
+                            (Boolean) NO authentication.
+                            NO authentication.
+                          type: boolean
+                        a2Enable:
+                          description: |-
+                            (Boolean) Use enable password for authentication.
+                            Use enable password for authentication.
+                          type: boolean
+                        a2Group:
+                          description: |-
+                            group
+                            Use Server-group
+                          type: string
+                        a2Line:
+                          description: |-
+                            (Boolean) Use line password for authentication.
+                            Use line password for authentication.
+                          type: boolean
+                        a2Local:
+                          description: (Boolean) Use local username authentication
+                          type: boolean
+                        a2None:
+                          description: |-
+                            (Boolean) NO authentication.
+                            NO authentication.
+                          type: boolean
+                        a3Enable:
+                          description: |-
+                            (Boolean) Use enable password for authentication.
+                            Use enable password for authentication.
+                          type: boolean
+                        a3Group:
+                          description: |-
+                            group
+                            Use Server-group
+                          type: string
+                        a3Line:
+                          description: |-
+                            (Boolean) Use line password for authentication.
+                            Use line password for authentication.
+                          type: boolean
+                        a3Local:
+                          description: (Boolean) Use local username authentication
+                          type: boolean
+                        a3None:
+                          description: |-
+                            (Boolean) NO authentication.
+                            NO authentication.
+                          type: boolean
+                        a4Enable:
+                          description: |-
+                            (Boolean) Use enable password for authentication.
+                            Use enable password for authentication.
+                          type: boolean
+                        a4Group:
+                          description: |-
+                            group
+                            Use Server-group
+                          type: string
+                        a4Line:
+                          description: |-
+                            (Boolean) Use line password for authentication.
+                            Use line password for authentication.
+                          type: boolean
+                        a4Local:
+                          description: (Boolean) Use local username authentication
+                          type: boolean
+                        a4None:
+                          description: |-
+                            (Boolean) NO authentication.
+                            NO authentication.
+                          type: boolean
+                        name:
+                          description: (String) Named authentication method list for
+                            dot1x service.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: AuthenticationStatus defines the observed state of Authentication.
+            properties:
+              atProvider:
+                properties:
+                  deleteMode:
+                    description: |-
+                      is. Default value is all.
+                      Configure behavior when deleting/destroying the resource. Either delete the entire object (YANG container) being managed, or only delete the individual resource attributes configured explicitly and leave everything else as-is. Default value is `all`.
+                      - Choices: `all`, `attributes`
+                    type: string
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  dot1x:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        a1Cache:
+                          description: |-
+                            group
+                            Use Cached-group
+                          type: string
+                        a1Group:
+                          description: |-
+                            group
+                            Use Server-group
+                          type: string
+                        a1Local:
+                          description: |-
+                            (Boolean) Use local username authentication
+                            Use local username authentication
+                          type: boolean
+                        a1Radius:
+                          description: |-
+                            (Boolean) Use list of all Radius hosts
+                            Use list of all Radius hosts
+                          type: boolean
+                        a2Cache:
+                          description: |-
+                            group
+                            Use Cached-group
+                          type: string
+                        a2Group:
+                          description: |-
+                            group
+                            Use Server-group
+                          type: string
+                        a2Local:
+                          description: |-
+                            (Boolean) Use local username authentication
+                            Use local username authentication
+                          type: boolean
+                        a2Radius:
+                          description: |-
+                            (Boolean) Use list of all Radius hosts
+                            Use list of all Radius hosts
+                          type: boolean
+                        a3Cache:
+                          description: |-
+                            group
+                            Use Cached-group
+                          type: string
+                        a3Group:
+                          description: |-
+                            group
+                            Use Server-group
+                          type: string
+                        a3Local:
+                          description: |-
+                            (Boolean) Use local username authentication
+                            Use local username authentication
+                          type: boolean
+                        a3Radius:
+                          description: |-
+                            (Boolean) Use list of all Radius hosts
+                            Use list of all Radius hosts
+                          type: boolean
+                        a4Cache:
+                          description: |-
+                            group
+                            Use Cached-group
+                          type: string
+                        a4Group:
+                          description: |-
+                            group
+                            Use Server-group
+                          type: string
+                        a4Local:
+                          description: |-
+                            (Boolean) Use local username authentication
+                            Use local username authentication
+                          type: boolean
+                        a4Radius:
+                          description: |-
+                            (Boolean) Use list of all Radius hosts
+                            Use list of all Radius hosts
+                          type: boolean
+                        name:
+                          description: |-
+                            (String) Named authentication method list for dot1x service.
+                            Named authentication method list for dot1x service.
+                          type: string
+                      type: object
+                    type: array
+                  dot1xDefaultA1Group:
+                    description: |-
+                      group
+                      Use Server-group
+                    type: string
+                  dot1xDefaultA1Local:
+                    description: |-
+                      (Boolean) Use local username authentication
+                      Use local username authentication
+                    type: boolean
+                  dot1xDefaultA2Group:
+                    description: |-
+                      group
+                      Use Server-group
+                    type: string
+                  dot1xDefaultA2Local:
+                    description: |-
+                      (Boolean) Use local username authentication
+                      Use local username authentication
+                    type: boolean
+                  dot1xDefaultA3Group:
+                    description: |-
+                      group
+                      Use Server-group
+                    type: string
+                  dot1xDefaultA3Local:
+                    description: |-
+                      (Boolean) Use local username authentication
+                      Use local username authentication
+                    type: boolean
+                  dot1xDefaultA4Group:
+                    description: |-
+                      group
+                      Use Server-group
+                    type: string
+                  dot1xDefaultA4Local:
+                    description: |-
+                      (Boolean) Use local username authentication
+                      Use local username authentication
+                    type: boolean
+                  enableDefaultEnableLegacy:
+                    description: |-
+                      (Boolean) Use enable password for authentication.
+                      Use enable password for authentication.
+                    type: boolean
+                  enableDefaultGroup1Cache:
+                    description: |-
+                      (String) Privileged command level(enable) authentication using cached group
+                      Privileged command level(enable) authentication using cached group
+                    type: string
+                  enableDefaultGroup1Enable:
+                    description: |-
+                      (Boolean) Privileged command level(enable) authentication using enable password
+                      Privileged command level(enable) authentication using enable password
+                    type: boolean
+                  enableDefaultGroup1Group:
+                    description: |-
+                      (String) Privileged command level(enable) authentication using radius/tacacs+/ldap server(s)
+                      Privileged command level(enable) authentication using radius/tacacs+/ldap server(s)
+                    type: string
+                  enableDefaultGroup1Line:
+                    description: |-
+                      (Boolean) Privileged command level(enable) authentication using line password
+                      Privileged command level(enable) authentication using line password
+                    type: boolean
+                  enableDefaultGroup1None:
+                    description: |-
+                      (Boolean) No authentication for Privileged command level(enable)
+                      No authentication for Privileged command level(enable)
+                    type: boolean
+                  enableDefaultGroup2Cache:
+                    description: |-
+                      (String) Privileged command level(enable) authentication using cached group
+                      Privileged command level(enable) authentication using cached group
+                    type: string
+                  enableDefaultGroup2Enable:
+                    description: |-
+                      (Boolean) Privileged command level(enable) authentication using enable password
+                      Privileged command level(enable) authentication using enable password
+                    type: boolean
+                  enableDefaultGroup2Group:
+                    description: |-
+                      (String) Privileged command level(enable) authentication using radius/tacacs+/ldap server(s)
+                      Privileged command level(enable) authentication using radius/tacacs+/ldap server(s)
+                    type: string
+                  enableDefaultGroup2Line:
+                    description: |-
+                      (Boolean) Privileged command level(enable) authentication using line password
+                      Privileged command level(enable) authentication using line password
+                    type: boolean
+                  enableDefaultGroup2None:
+                    description: |-
+                      (Boolean) No authentication for Privileged command level(enable)
+                      No authentication for Privileged command level(enable)
+                    type: boolean
+                  enableDefaultGroup3Cache:
+                    description: |-
+                      (String) Privileged command level(enable) authentication using cached group
+                      Privileged command level(enable) authentication using cached group
+                    type: string
+                  enableDefaultGroup3Enable:
+                    description: |-
+                      (Boolean) Privileged command level(enable) authentication using enable password
+                      Privileged command level(enable) authentication using enable password
+                    type: boolean
+                  enableDefaultGroup3Group:
+                    description: |-
+                      (String) Privileged command level(enable) authentication using radius/tacacs+/ldap server(s)
+                      Privileged command level(enable) authentication using radius/tacacs+/ldap server(s)
+                    type: string
+                  enableDefaultGroup3Line:
+                    description: |-
+                      (Boolean) Privileged command level(enable) authentication using line password
+                      Privileged command level(enable) authentication using line password
+                    type: boolean
+                  enableDefaultGroup3None:
+                    description: |-
+                      (Boolean) No authentication for Privileged command level(enable)
+                      No authentication for Privileged command level(enable)
+                    type: boolean
+                  enableDefaultGroup4Cache:
+                    description: |-
+                      (String) Privileged command level(enable) authentication using cached group
+                      Privileged command level(enable) authentication using cached group
+                    type: string
+                  enableDefaultGroup4Enable:
+                    description: |-
+                      (Boolean) Privileged command level(enable) authentication using enable password
+                      Privileged command level(enable) authentication using enable password
+                    type: boolean
+                  enableDefaultGroup4Group:
+                    description: |-
+                      (String) Privileged command level(enable) authentication using radius/tacacs+/ldap server(s)
+                      Privileged command level(enable) authentication using radius/tacacs+/ldap server(s)
+                    type: string
+                  enableDefaultGroup4Line:
+                    description: |-
+                      (Boolean) Privileged command level(enable) authentication using line password
+                      Privileged command level(enable) authentication using line password
+                    type: boolean
+                  enableDefaultGroup4None:
+                    description: |-
+                      (Boolean) No authentication for Privileged command level(enable)
+                      No authentication for Privileged command level(enable)
+                    type: boolean
+                  enableDefaultGroupLegacy:
+                    description: |-
+                      group
+                      Use Server-group
+                    type: string
+                  enableDefaultLineLegacy:
+                    description: |-
+                      (Boolean) Use line password for authentication.
+                      Use line password for authentication.
+                    type: boolean
+                  enableDefaultNoneLegacy:
+                    description: |-
+                      (Boolean) No authentication.
+                      No authentication.
+                    type: boolean
+                  id:
+                    description: (String) The path of the object.
+                    type: string
+                  logins:
+                    description: (Attributes List) Set authentication lists for logins.
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        a1Enable:
+                          description: |-
+                            (Boolean) Use enable password for authentication.
+                            Use enable password for authentication.
+                          type: boolean
+                        a1Group:
+                          description: |-
+                            group
+                            Use Server-group
+                          type: string
+                        a1Line:
+                          description: |-
+                            (Boolean) Use line password for authentication.
+                            Use line password for authentication.
+                          type: boolean
+                        a1Local:
+                          description: |-
+                            (Boolean) Use local username authentication
+                            Use local username authentication.
+                          type: boolean
+                        a1None:
+                          description: |-
+                            (Boolean) NO authentication.
+                            NO authentication.
+                          type: boolean
+                        a2Enable:
+                          description: |-
+                            (Boolean) Use enable password for authentication.
+                            Use enable password for authentication.
+                          type: boolean
+                        a2Group:
+                          description: |-
+                            group
+                            Use Server-group
+                          type: string
+                        a2Line:
+                          description: |-
+                            (Boolean) Use line password for authentication.
+                            Use line password for authentication.
+                          type: boolean
+                        a2Local:
+                          description: (Boolean) Use local username authentication
+                          type: boolean
+                        a2None:
+                          description: |-
+                            (Boolean) NO authentication.
+                            NO authentication.
+                          type: boolean
+                        a3Enable:
+                          description: |-
+                            (Boolean) Use enable password for authentication.
+                            Use enable password for authentication.
+                          type: boolean
+                        a3Group:
+                          description: |-
+                            group
+                            Use Server-group
+                          type: string
+                        a3Line:
+                          description: |-
+                            (Boolean) Use line password for authentication.
+                            Use line password for authentication.
+                          type: boolean
+                        a3Local:
+                          description: (Boolean) Use local username authentication
+                          type: boolean
+                        a3None:
+                          description: |-
+                            (Boolean) NO authentication.
+                            NO authentication.
+                          type: boolean
+                        a4Enable:
+                          description: |-
+                            (Boolean) Use enable password for authentication.
+                            Use enable password for authentication.
+                          type: boolean
+                        a4Group:
+                          description: |-
+                            group
+                            Use Server-group
+                          type: string
+                        a4Line:
+                          description: |-
+                            (Boolean) Use line password for authentication.
+                            Use line password for authentication.
+                          type: boolean
+                        a4Local:
+                          description: (Boolean) Use local username authentication
+                          type: boolean
+                        a4None:
+                          description: |-
+                            (Boolean) NO authentication.
+                            NO authentication.
+                          type: boolean
+                        name:
+                          description: (String) Named authentication method list for
+                            dot1x service.
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              lastHandledReconcileAt:
+                description: |-
+                  LastHandledReconcileAt holds the value of the most recent
+                  reconcile-requested-at annotation token that the controller has
+                  processed. Users can compare this to the annotation to determine
+                  whether a reconcile request has been handled.
+                type: string
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

@@ -1,0 +1,14 @@
+apiVersion: switching.iosxe.m.upbound.io/v1alpha1
+kind: VLANFilter
+metadata:
+  annotations:
+    meta.upbound.io/example-id: switching/v1alpha1/vlanfilter
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    vlanLists:
+    - 1
+    word: VAM1

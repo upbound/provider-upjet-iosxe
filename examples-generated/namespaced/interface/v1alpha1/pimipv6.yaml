@@ -1,0 +1,17 @@
+apiVersion: interface.iosxe.m.upbound.io/v1alpha1
+kind: PIMIPv6
+metadata:
+  annotations:
+    meta.upbound.io/example-id: interface/v1alpha1/pimipv6
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    bfd: false
+    bsrBorder: false
+    drPriority: 10
+    name: "100"
+    pim: true
+    type: Loopback

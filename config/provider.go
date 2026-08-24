@@ -6,13 +6,12 @@ import (
 
 	ujconfig "github.com/crossplane/upjet/v2/pkg/config"
 
-	nullCluster "github.com/crossplane/upjet-provider-template/config/cluster/null"
-	nullNamespaced "github.com/crossplane/upjet-provider-template/config/namespaced/null"
+	"github.com/upbound/provider-upjet-iosxe/config/resources"
 )
 
 const (
-	resourcePrefix = "template"
-	modulePath     = "github.com/crossplane/upjet-provider-template"
+	resourcePrefix = "iosxe"
+	modulePath     = "github.com/upbound/provider-upjet-iosxe"
 )
 
 //go:embed schema.json
@@ -21,46 +20,47 @@ var providerSchema string
 //go:embed provider-metadata.yaml
 var providerMetadata string
 
-// GetProvider returns provider configuration
+// GetProvider returns the cluster-scoped provider configuration.
 func GetProvider() *ujconfig.Provider {
 	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
-		ujconfig.WithRootGroup("template.crossplane.io"),
-		ujconfig.WithIncludeList(ExternalNameConfigured()),
+		ujconfig.WithRootGroup("iosxe.upbound.io"),
+		// This is a no-fork provider: every resource is reconciled in-process
+		// via the Terraform Plugin Framework, so the CLI-based include list is
+		// empty and all resources are registered in the Plugin Framework
+		// include list. Note that upjet's default CLI include list matches all
+		// resources, hence the explicit empty list here.
+		ujconfig.WithIncludeList([]string{}),
+		ujconfig.WithTerraformPluginFrameworkIncludeList(resources.IncludeList()),
+		ujconfig.WithTerraformPluginFrameworkProvider(FrameworkProvider()),
 		ujconfig.WithFeaturesPackage("internal/features"),
 		ujconfig.WithDefaultResourceOptions(
 			ExternalNameConfigurations(),
+			resources.SanitizeSensitiveFields(),
 		))
 
-	for _, configure := range []func(provider *ujconfig.Provider){
-		// add custom config functions
-		nullCluster.Configure,
-	} {
-		configure(pc)
-	}
+	resources.Configure(pc)
 
 	pc.ConfigureResources()
 	return pc
 }
 
-// GetProviderNamespaced returns the namespaced provider configuration
+// GetProviderNamespaced returns the namespaced provider configuration.
 func GetProviderNamespaced() *ujconfig.Provider {
 	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
-		ujconfig.WithRootGroup("template.m.crossplane.io"),
-		ujconfig.WithIncludeList(ExternalNameConfigured()),
+		ujconfig.WithRootGroup("iosxe.m.upbound.io"),
+		ujconfig.WithIncludeList([]string{}),
+		ujconfig.WithTerraformPluginFrameworkIncludeList(resources.IncludeList()),
+		ujconfig.WithTerraformPluginFrameworkProvider(FrameworkProvider()),
 		ujconfig.WithFeaturesPackage("internal/features"),
 		ujconfig.WithDefaultResourceOptions(
 			ExternalNameConfigurations(),
+			resources.SanitizeSensitiveFields(),
 		),
 		ujconfig.WithExampleManifestConfiguration(ujconfig.ExampleManifestConfiguration{
 			ManagedResourceNamespace: "crossplane-system",
 		}))
 
-	for _, configure := range []func(provider *ujconfig.Provider){
-		// add custom config functions
-		nullNamespaced.Configure,
-	} {
-		configure(pc)
-	}
+	resources.Configure(pc)
 
 	pc.ConfigureResources()
 	return pc

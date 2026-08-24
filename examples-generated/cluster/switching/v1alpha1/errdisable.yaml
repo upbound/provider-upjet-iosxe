@@ -1,0 +1,36 @@
+apiVersion: switching.iosxe.upbound.io/v1alpha1
+kind: Errdisable
+metadata:
+  annotations:
+    meta.upbound.io/example-id: switching/v1alpha1/errdisable
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    detectCauseDhcpRateLimit: true
+    detectCauseDtpFlap: true
+    detectCauseL2Ptguard: true
+    detectCauseLinkFlap: true
+    detectCauseLoopdetect: true
+    detectCausePppoeIaRateLimit: true
+    flapSettingCauseDtpFlapMaxFlaps: 80
+    flapSettingCauseDtpFlapTime: 90
+    flapSettingCauseLinkFlapMaxFlaps: 80
+    flapSettingCauseLinkFlapTime: 90
+    flapSettingCausePagpFlapMaxFlaps: 80
+    flapSettingCausePagpFlapTime: 90
+    recoveryCauseArpInspection: true
+    recoveryCauseBpduguard: true
+    recoveryCauseDhcpRateLimit: true
+    recoveryCauseDtpFlap: true
+    recoveryCauseL2Ptguard: true
+    recoveryCauseLinkFlap: true
+    recoveryCauseLoopdetect: true
+    recoveryCausePortModeFailure: true
+    recoveryCausePppoeIaRateLimit: true
+    recoveryCausePsecureViolation: true
+    recoveryCausePsp: true
+    recoveryCauseSecurityViolation: true
+    recoveryCauseUdld: true
+    recoveryInterval: 855
