@@ -21,12 +21,6 @@ export TERRAFORM_DOCS_PATH ?= docs/resources
 # in-process, so neither the Terraform CLI nor the provider plugin binary is
 # needed at runtime.
 
-# The Cisco IOS-XE Terraform provider is consumed from github.com/upbound/terraform-provider-iosxe,
-# a fork that exports its Terraform Plugin Framework implementation. That
-# repository is private, so fetching it goes directly to GitHub instead of the
-# module proxy and needs credentials for github.com/upbound.
-export GOPRIVATE ?= github.com/upbound/*
-
 
 PLATFORMS ?= linux_amd64 linux_arm64
 
@@ -74,18 +68,25 @@ CROSSPLANE_VERSION = 2.2.1
 # ====================================================================================
 # Setup Images
 
-REGISTRY_ORGS ?= ghcr.io/crossplane-contrib
+REGISTRY_ORGS ?= xpkg.upbound.io/upbound
 IMAGES = $(PROJECT_NAME)
+BATCH_PLATFORMS ?= linux_amd64,linux_arm64
+export BATCH_PLATFORMS := $(BATCH_PLATFORMS)
+
 -include build/makelib/imagelight.mk
 
 # ====================================================================================
 # Setup XPKG
 
-XPKG_REG_ORGS ?= ghcr.io/crossplane-contrib
-# NOTE(hasheddan): skip promoting on xpkg.crossplane.io as channel tags are
+XPKG_REG_ORGS ?= xpkg.upbound.io/upbound
+# NOTE(hasheddan): skip promoting on xpkg.upbound.io as channel tags are
 # inferred.
-XPKG_REG_ORGS_NO_PROMOTE ?= ghcr.io/crossplane-contrib
+XPKG_REG_ORGS_NO_PROMOTE ?= xpkg.upbound.io/upbound
 XPKGS = $(PROJECT_NAME)
+
+export XPKG_REG_ORGS := $(XPKG_REG_ORGS)
+export XPKG_REG_ORGS_NO_PROMOTE := $(XPKG_REG_ORGS_NO_PROMOTE)
+
 -include build/makelib/xpkg.mk
 
 # ====================================================================================

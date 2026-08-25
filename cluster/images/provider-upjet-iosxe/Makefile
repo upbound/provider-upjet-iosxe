@@ -13,7 +13,7 @@ include ../../../build/makelib/imagelight.mk
 
 img.build:
 	@$(INFO) docker build $(IMAGE)
-	@$(MAKE) BUILD_ARGS="--load" img.build.shared
+	@$(MAKE) BUILD_ARGS="--load ${BUILD_ARGS}" img.build.shared
 	@$(OK) docker build $(IMAGE)
 
 img.publish:
@@ -26,9 +26,6 @@ img.build.shared:
 	@cp -r $(OUTPUT_DIR)/bin/ $(IMAGE_TEMP_DIR)/bin || $(FAIL)
 	@docker buildx build $(BUILD_ARGS) \
 		--platform $(IMAGE_PLATFORMS) \
-		--build-arg TERRAFORM_VERSION=$(TERRAFORM_VERSION) \
-		--build-arg TERRAFORM_PROVIDER_SOURCE=$(TERRAFORM_PROVIDER_SOURCE) \
-		--build-arg TERRAFORM_PROVIDER_VERSION=$(TERRAFORM_PROVIDER_VERSION) \
 		-t $(IMAGE) \
 		$(IMAGE_TEMP_DIR) || $(FAIL)
 

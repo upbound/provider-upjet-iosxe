@@ -7,6 +7,7 @@ import (
 	ujconfig "github.com/crossplane/upjet/v2/pkg/config"
 
 	"github.com/upbound/provider-upjet-iosxe/config/resources"
+	"github.com/upbound/provider-upjet-iosxe/config/templates"
 )
 
 const (
@@ -33,6 +34,7 @@ func GetProvider() *ujconfig.Provider {
 		ujconfig.WithTerraformPluginFrameworkIncludeList(resources.IncludeList()),
 		ujconfig.WithTerraformPluginFrameworkProvider(FrameworkProvider()),
 		ujconfig.WithFeaturesPackage("internal/features"),
+		ujconfig.WithControllerTemplate(templates.ControllerTemplate),
 		ujconfig.WithDefaultResourceOptions(
 			ExternalNameConfigurations(),
 			resources.SanitizeSensitiveFields(),
@@ -52,6 +54,7 @@ func GetProviderNamespaced() *ujconfig.Provider {
 		ujconfig.WithTerraformPluginFrameworkIncludeList(resources.IncludeList()),
 		ujconfig.WithTerraformPluginFrameworkProvider(FrameworkProvider()),
 		ujconfig.WithFeaturesPackage("internal/features"),
+		ujconfig.WithControllerTemplate(templates.ControllerTemplate),
 		ujconfig.WithDefaultResourceOptions(
 			ExternalNameConfigurations(),
 			resources.SanitizeSensitiveFields(),

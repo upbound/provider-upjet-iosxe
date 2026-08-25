@@ -38,6 +38,9 @@ type device struct {
 // credentials is the JSON document expected in the secret referenced by a
 // ProviderConfig. It mirrors the configuration of the Cisco IOS-XE Terraform
 // provider, which this provider embeds and configures in-process.
+//
+// The schema is documented for users in the "Credentials schema" section of
+// README.md; keep the two in sync.
 type credentials struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
@@ -58,20 +61,15 @@ type credentials struct {
 	SelectedDevices []string `json:"selectedDevices,omitempty"`
 }
 
-// TerraformSetupBuilder builds a terraform.SetupFn function which returns
-// the Terraform provider setup configuration. The Cisco IOS-XE Terraform
-// provider is a Terraform Plugin Framework provider that is linked into this
-// binary and invoked in-process, so the setup carries the provider instance
-// itself instead of a provider plugin requirement to be executed by the
-// Terraform CLI.
-func TerraformSetupBuilder(version, providerSource, providerVersion string) terraform.SetupFn {
+// TerraformSetupBuilder builds a terraform.SetupFn function which returns the
+// Terraform provider setup configuration. The Cisco IOS-XE Terraform provider
+// is a Terraform Plugin Framework provider that is linked into this binary and
+// invoked in-process, so the setup carries the provider instance itself. There
+// is no Terraform CLI to run and therefore no provider plugin requirement to
+// declare.
+func TerraformSetupBuilder() terraform.SetupFn {
 	return func(ctx context.Context, client client.Client, mg resource.Managed) (terraform.Setup, error) {
 		ps := terraform.Setup{
-			Version: version,
-			Requirement: terraform.ProviderRequirement{
-				Source:  providerSource,
-				Version: providerVersion,
-			},
 			FrameworkProvider: config.FrameworkProvider(),
 		}
 

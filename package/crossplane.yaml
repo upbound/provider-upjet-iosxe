@@ -2,6 +2,16 @@ apiVersion: meta.pkg.crossplane.io/v1
 kind: Provider
 metadata:
   name: provider-upjet-iosxe
+  annotations:
+    meta.crossplane.io/maintainer: Upbound <support@upbound.io>
+    meta.crossplane.io/source: github.com/upbound/provider-upjet-iosxe
+    meta.crossplane.io/license: Apache-2.0
+    meta.crossplane.io/description: |
+      Upbound's Crossplane provider to manage Cisco IOS XE devices in Kubernetes.
+    meta.crossplane.io/readme: |
+      Provider IOS XE is a Crossplane provider for [Cisco IOS XE](https://www.cisco.com/site/us/en/products/networking/cloud-networking/ios-xe/index.html) developed by Upbound.
+      Available resources and their fields can be found in the [Upbound
+      Marketplace](https://marketplace.upbound.io/providers/upbound/provider-iosxe).
 spec:
   capabilities:
     - SafeStart

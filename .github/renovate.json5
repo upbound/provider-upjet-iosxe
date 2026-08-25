@@ -12,6 +12,7 @@
   "semanticCommits": "disabled",
   // All PRs should have a label
   "labels": ["automated"],
+  "enabledManagers": ["gomod", "github-actions", "custom.regex", "dockerfile"],
   "customManagers": [
     {
       // We want a PR to bump golangci-lint versions used through env variables in
@@ -103,6 +104,15 @@
   // PackageRules disabled below should be enabled in case of vulnerabilities
   "vulnerabilityAlerts": {"enabled": true},
   "packageRules": [
+    // Dockerfile: the runtime base is pinned to a digest that moves with
+    // distroless's rebuilds of the `nonroot` tag: one PR per digest bump, so
+    // a rebuild that breaks the image is judged on its own.
+    {
+      "matchManagers": ["dockerfile"],
+      "matchPackageNames": ["gcr.io/distroless/static-debian13"],
+      "pinDigests": true,
+      "groupName": "runtime image"
+    },
     {
       // We need to ignore k8s.io/client-go older versions as they switched to
       // semantic version and old tags are still available in the repo.

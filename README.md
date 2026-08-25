@@ -91,17 +91,42 @@ spec:
       key: credentials
 ```
 
-The supported credential keys are:
+### Credentials schema
 
-| Key | Description |
-| --- | --- |
-| `username`, `password` | Device credentials. Required. |
-| `host` | Hostname or IP address, optionally `host:port`. The NETCONF default port is 830. |
-| `insecure` | Skip SSH host key verification. Defaults to `true` in the Terraform provider. |
-| `retries` | Number of retries for NETCONF calls. |
-| `lockReleaseTimeout` | Seconds to wait for the device configuration lock to be released. |
-| `devices` | List of `{"name", "host", "managed"}` objects to manage several devices with one `ProviderConfig`. |
-| `selectedDevices` | Restricts reconciliation to a subset of `devices`. |
+The secret key referenced by the `ProviderConfig` holds a single JSON object
+with the following keys. Only `username` and `password` are required; every
+other key is optional and left to the defaults of the Terraform provider when
+omitted.
+
+| Key | Type | Description |
+| --- | --- | --- |
+| `username` | string | Device username. Required. |
+| `password` | string | Device password. Required. |
+| `host` | string | Hostname or IP address, optionally `host:port`. The NETCONF default port is 830. Managed resources that do not select a `device` are reconciled against this host. |
+| `insecure` | bool | Skip SSH host key verification. Defaults to `true` in the Terraform provider. |
+| `retries` | int | Number of retries for NETCONF calls. Valid range 0-99. |
+| `lockReleaseTimeout` | int | Seconds to wait for the device configuration lock to be released. Valid range 0-600. |
+| `devices` | list of objects | Manage several devices with one `ProviderConfig`. Each entry takes `name` (string, required), `host` (string) and `managed` (bool, defaults to `true`). Managed resources select one by name with `spec.forProvider.device`. |
+| `selectedDevices` | list of strings | Restricts reconciliation to a subset of `devices` by name. The state of the devices left out is frozen. |
+
+Connection reuse and manual commit mode are not configurable: the provider
+always closes the NETCONF session after an operation and commits the
+configuration it changes. See [Operational notes](#operational-notes) for why.
+
+```json
+{
+  "username": "admin",
+  "password": "t0ps3cr3t11",
+  "host": "10.0.0.1:830",
+  "insecure": true,
+  "retries": 3,
+  "devices": [
+    {"name": "leaf1", "host": "10.0.0.1:830"},
+    {"name": "leaf2", "host": "10.0.0.2:830", "managed": false}
+  ],
+  "selectedDevices": ["leaf1"]
+}
+```
 
 Then create managed resources:
 
@@ -174,12 +199,6 @@ and is wired in through a `replace` directive in `go.mod`:
 replace github.com/CiscoDevNet/terraform-provider-iosxe => github.com/upbound/terraform-provider-iosxe v0.0.0-20260824124157-eb27f95b8016
 ```
 
-> [!IMPORTANT]
-> The fork is a private repository, so fetching it bypasses the module proxy
-> and needs credentials for `github.com/upbound`. The Makefile exports
-> `GOPRIVATE=github.com/upbound/*`; builds that do not go through it need the
-> same setting, and CI needs a token that can read the fork.
-
 To move the fork to a newer upstream release, rebase its `xpprovider` commit
 onto the new tag, push it, and update the pseudo-version in the `replace`
 directive along with `TERRAFORM_PROVIDER_VERSION` in the Makefile and
@@ -216,6 +235,11 @@ generated controller package after it.
 ```console
 make run
 ```
+
+Testing needs a real IOS-XE device, since the provider speaks NETCONF to one.
+[docs/testing.md](docs/testing.md) covers the options: DevNet sandboxes, a
+self-hosted Catalyst 8000V or 9000V, Cisco Modeling Labs, and how to point
+uptest at any of them.
 
 ### Build
 
