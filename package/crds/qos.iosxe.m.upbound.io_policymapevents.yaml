@@ -1,0 +1,979 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: policymapevents.qos.iosxe.m.upbound.io
+spec:
+  group: qos.iosxe.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - iosxe
+    kind: PolicyMapEvent
+    listKind: PolicyMapEventList
+    plural: policymapevents
+    singular: policymapevent
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: PolicyMapEvent is the Schema for the PolicyMapEvents API. This
+          resource can manage the Policy Map Event configuration.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: PolicyMapEventSpec defines the desired state of PolicyMapEvent
+            properties:
+              forProvider:
+                properties:
+                  classNumbers:
+                    description: (Attributes List) class number, 1 for 1st class,
+                      2 for 2nd... (see below for nested schema)
+                    items:
+                      properties:
+                        actionNumbers:
+                          description: (Attributes List) action number, 1 for 1st
+                            class, 2 for 2nd... (see below for nested schema)
+                          items:
+                            properties:
+                              activateInterfaceTemplate:
+                                description: |-
+                                  (String) activate interface template
+                                  activate interface template
+                                type: string
+                              activatePolicyTypeControlSubscriber:
+                                description: |-
+                                  (String) policy type control subscriber
+                                  policy type control subscriber
+                                type: string
+                              activateServiceTemplateConfigAaaList:
+                                description: |-
+                                  (String) Named Method List
+                                  Named Method List
+                                type: string
+                              activateServiceTemplateConfigPrecedence:
+                                description: |-
+                                  (Number) Template precedence
+                                  Template precedence
+                                  - Range: `1`-`254`
+                                type: number
+                              activateServiceTemplateConfigReplaceAll:
+                                description: |-
+                                  (Boolean) Replace all existing authorization data and services
+                                  Replace all existing authorization data and services
+                                type: boolean
+                              activateServiceTemplateConfigServiceTemplate:
+                                description: |-
+                                  (String) activate service template
+                                  activate service template
+                                type: string
+                              authenticateUsingAaaAuthcListLegacy:
+                                description: |-
+                                  (String) Specify authentication method list. Use this for versions before 17.18.
+                                  Specify authentication method list. Use this for versions before `17.18`.
+                                type: string
+                              authenticateUsingAaaAuthzListLegacy:
+                                description: |-
+                                  (String) Specify authorization method list. Use this for versions before 17.18.
+                                  Specify authorization method list. Use this for versions before `17.18`.
+                                type: string
+                              authenticateUsingAaaConfig:
+                                description: |-
+                                  (Boolean) Configure AAA method list. Required when using authenticate_using_authc_list or authenticate_using_authz_list (versions 17.18 and later).
+                                  Configure AAA method list. Required when using `authenticate_using_authc_list` or `authenticate_using_authz_list` (versions `17.18` and later).
+                                type: boolean
+                              authenticateUsingAuthcList:
+                                description: |-
+                                  (String) Specify authentication method list. Use this for versions 17.18 and later.
+                                  Specify authentication method list. Use this for versions `17.18` and later.
+                                type: string
+                              authenticateUsingAuthzList:
+                                description: |-
+                                  (String) Specify authorization method list. Use this for versions 17.18 and later.
+                                  Specify authorization method list. Use this for versions `17.18` and later.
+                                type: string
+                              authenticateUsingBoth:
+                                description: |-
+                                  (Boolean) Enabling Dot1x Authenticator & Supplicant
+                                  Enabling Dot1x Authenticator & Supplicant
+                                type: boolean
+                              authenticateUsingMethod:
+                                description: |-
+                                  (String) method/protocol to be used for authentication
+                                  method/protocol to be used for authentication
+                                  - Choices: `dot1x`, `mab`, `webauth`
+                                type: string
+                              authenticateUsingParameterMap:
+                                description: |-
+                                  (String) Specify parameter map name
+                                  Specify parameter map name
+                                type: string
+                              authenticateUsingPriority:
+                                description: |-
+                                  (Number) Method priority
+                                  Method priority
+                                  - Range: `1`-`254`
+                                type: number
+                              authenticateUsingRetries:
+                                description: |-
+                                  (Number) Number of times to retry failed authentications
+                                  Number of times to retry failed authentications
+                                  - Range: `1`-`5`
+                                type: number
+                              authenticateUsingRetryTime:
+                                description: |-
+                                  (Number) Time interval between retries
+                                  Time interval between retries
+                                  - Range: `0`-`65535`
+                                type: number
+                              authenticationRestart:
+                                description: |-
+                                  (Number) restarts the auth sequence after the specified number of sec
+                                  restarts the auth sequence after the specified number of sec
+                                  - Range: `1`-`65535`
+                                type: number
+                              authorize:
+                                description: |-
+                                  (Boolean) authorize session
+                                  authorize session
+                                type: boolean
+                              clearAuthenticatedDataHostsOnPort:
+                                description: |-
+                                  (Boolean) clears authenticated data hosts on the port
+                                  clears authenticated data hosts on the port
+                                type: boolean
+                              clearSession:
+                                description: |-
+                                  (Boolean) clears an active session
+                                  clears an active session
+                                type: boolean
+                              deactivateInterfaceTemplate:
+                                description: |-
+                                  (String) activate interface template
+                                  activate interface template
+                                type: string
+                              deactivatePolicyTypeControlSubscriber:
+                                description: |-
+                                  (String) policy type control subscriber
+                                  policy type control subscriber
+                                type: string
+                              deactivateServiceTemplate:
+                                description: |-
+                                  (String) activate service template
+                                  activate service template
+                                type: string
+                              errDisable:
+                                description: |-
+                                  (Boolean) temporarily disable port
+                                  temporarily disable port
+                                type: boolean
+                              mapAttributeToServiceTable:
+                                description: |-
+                                  update attribute to a auto-conf templates
+                                  map identity-update attribute to a auto-conf templates
+                                type: string
+                              notify:
+                                description: |-
+                                  (Boolean) notifies the session attributes
+                                  notifies the session attributes
+                                type: boolean
+                              number:
+                                description: |-
+                                  (Number) class number, 1 for 1st class, 2 for 2nd...
+                                  action number, 1 for 1st class, 2 for 2nd...
+                                  - Range: `1`-`254`
+                                type: number
+                              pauseReauthentication:
+                                description: |-
+                                  (Boolean) pause reauthentication
+                                  pause reauthentication
+                                type: boolean
+                              protect:
+                                description: |-
+                                  (Boolean) silently drop violating packets
+                                  silently drop violating packets
+                                type: boolean
+                              replace:
+                                description: |-
+                                  (Boolean) clear existing session and create session for violating host
+                                  clear existing session and create session for violating host
+                                type: boolean
+                              restrict:
+                                description: |-
+                                  (Boolean) drop violating packets and generate a syslog
+                                  drop violating packets and generate a syslog
+                                type: boolean
+                              resumeReauthentication:
+                                description: |-
+                                  (Boolean) resume reauthentication
+                                  resume reauthentication
+                                type: boolean
+                              setDomain:
+                                description: |-
+                                  (String) set domain
+                                  set domain
+                                  - Choices: `data`, `switch`, `voice`
+                                type: string
+                              setTimerName:
+                                description: |-
+                                  (String) timer name
+                                  timer name
+                                type: string
+                              setTimerValue:
+                                description: |-
+                                  (Number) Enter a value between 1 and 65535
+                                  Enter a value between 1 and 65535
+                                  - Range: `0`-`65535`
+                                type: number
+                              terminateConfig:
+                                description: |-
+                                  (String) terminate auth method
+                                  terminate auth method
+                                  - Choices: `dot1x`, `mab`, `webauth`
+                                type: string
+                              unauthorize:
+                                description: |-
+                                  (Boolean) unauthorize session
+                                  unauthorize session
+                                type: boolean
+                            type: object
+                          type: array
+                        class:
+                          description: |-
+                            map triggers upon
+                            The class type this control policy-map triggers upon
+                          type: string
+                        executionType:
+                          description: |-
+                            (String) Policy execution strategy
+                            Policy execution strategy
+                            - Choices: `do-all`, `do-until-failure`, `do-until-success`
+                          type: string
+                        number:
+                          description: |-
+                            (Number) class number, 1 for 1st class, 2 for 2nd...
+                            class number, 1 for 1st class, 2 for 2nd...
+                            - Range: `1`-`254`
+                          type: number
+                      type: object
+                    type: array
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  eventType:
+                    description: |-
+                      map triggers upon
+                      The event this control class-map triggers upon
+                      - Choices: `aaa-available`, `absolute-timeout`, `agent-found`, `authentication-failure`, `authentication-success`, `authorization-failure`, `authorization-success`, `identity-update`, `inactivity-timeout`, `remote-authentication-failure`, `remote-authentication-success`, `remote-update`, `session-disconnected`, `session-started`, `tag-added`, `tag-removed`, `template-activated`, `template-activation-failed`, `template-deactivated`, `template-deactivation-failed`, `timer-expiry`, `violation`
+                    type: string
+                  matchType:
+                    description: |-
+                      (String) Matching criteria for first or all events.
+                      Matching criteria for first or all events.
+                      - Choices: `match-all`, `match-first`
+                    type: string
+                  name:
+                    description: |-
+                      (String) Name of the policy map
+                      Name of the policy map
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  classNumbers:
+                    description: (Attributes List) class number, 1 for 1st class,
+                      2 for 2nd... (see below for nested schema)
+                    items:
+                      properties:
+                        actionNumbers:
+                          description: (Attributes List) action number, 1 for 1st
+                            class, 2 for 2nd... (see below for nested schema)
+                          items:
+                            properties:
+                              activateInterfaceTemplate:
+                                description: |-
+                                  (String) activate interface template
+                                  activate interface template
+                                type: string
+                              activatePolicyTypeControlSubscriber:
+                                description: |-
+                                  (String) policy type control subscriber
+                                  policy type control subscriber
+                                type: string
+                              activateServiceTemplateConfigAaaList:
+                                description: |-
+                                  (String) Named Method List
+                                  Named Method List
+                                type: string
+                              activateServiceTemplateConfigPrecedence:
+                                description: |-
+                                  (Number) Template precedence
+                                  Template precedence
+                                  - Range: `1`-`254`
+                                type: number
+                              activateServiceTemplateConfigReplaceAll:
+                                description: |-
+                                  (Boolean) Replace all existing authorization data and services
+                                  Replace all existing authorization data and services
+                                type: boolean
+                              activateServiceTemplateConfigServiceTemplate:
+                                description: |-
+                                  (String) activate service template
+                                  activate service template
+                                type: string
+                              authenticateUsingAaaAuthcListLegacy:
+                                description: |-
+                                  (String) Specify authentication method list. Use this for versions before 17.18.
+                                  Specify authentication method list. Use this for versions before `17.18`.
+                                type: string
+                              authenticateUsingAaaAuthzListLegacy:
+                                description: |-
+                                  (String) Specify authorization method list. Use this for versions before 17.18.
+                                  Specify authorization method list. Use this for versions before `17.18`.
+                                type: string
+                              authenticateUsingAaaConfig:
+                                description: |-
+                                  (Boolean) Configure AAA method list. Required when using authenticate_using_authc_list or authenticate_using_authz_list (versions 17.18 and later).
+                                  Configure AAA method list. Required when using `authenticate_using_authc_list` or `authenticate_using_authz_list` (versions `17.18` and later).
+                                type: boolean
+                              authenticateUsingAuthcList:
+                                description: |-
+                                  (String) Specify authentication method list. Use this for versions 17.18 and later.
+                                  Specify authentication method list. Use this for versions `17.18` and later.
+                                type: string
+                              authenticateUsingAuthzList:
+                                description: |-
+                                  (String) Specify authorization method list. Use this for versions 17.18 and later.
+                                  Specify authorization method list. Use this for versions `17.18` and later.
+                                type: string
+                              authenticateUsingBoth:
+                                description: |-
+                                  (Boolean) Enabling Dot1x Authenticator & Supplicant
+                                  Enabling Dot1x Authenticator & Supplicant
+                                type: boolean
+                              authenticateUsingMethod:
+                                description: |-
+                                  (String) method/protocol to be used for authentication
+                                  method/protocol to be used for authentication
+                                  - Choices: `dot1x`, `mab`, `webauth`
+                                type: string
+                              authenticateUsingParameterMap:
+                                description: |-
+                                  (String) Specify parameter map name
+                                  Specify parameter map name
+                                type: string
+                              authenticateUsingPriority:
+                                description: |-
+                                  (Number) Method priority
+                                  Method priority
+                                  - Range: `1`-`254`
+                                type: number
+                              authenticateUsingRetries:
+                                description: |-
+                                  (Number) Number of times to retry failed authentications
+                                  Number of times to retry failed authentications
+                                  - Range: `1`-`5`
+                                type: number
+                              authenticateUsingRetryTime:
+                                description: |-
+                                  (Number) Time interval between retries
+                                  Time interval between retries
+                                  - Range: `0`-`65535`
+                                type: number
+                              authenticationRestart:
+                                description: |-
+                                  (Number) restarts the auth sequence after the specified number of sec
+                                  restarts the auth sequence after the specified number of sec
+                                  - Range: `1`-`65535`
+                                type: number
+                              authorize:
+                                description: |-
+                                  (Boolean) authorize session
+                                  authorize session
+                                type: boolean
+                              clearAuthenticatedDataHostsOnPort:
+                                description: |-
+                                  (Boolean) clears authenticated data hosts on the port
+                                  clears authenticated data hosts on the port
+                                type: boolean
+                              clearSession:
+                                description: |-
+                                  (Boolean) clears an active session
+                                  clears an active session
+                                type: boolean
+                              deactivateInterfaceTemplate:
+                                description: |-
+                                  (String) activate interface template
+                                  activate interface template
+                                type: string
+                              deactivatePolicyTypeControlSubscriber:
+                                description: |-
+                                  (String) policy type control subscriber
+                                  policy type control subscriber
+                                type: string
+                              deactivateServiceTemplate:
+                                description: |-
+                                  (String) activate service template
+                                  activate service template
+                                type: string
+                              errDisable:
+                                description: |-
+                                  (Boolean) temporarily disable port
+                                  temporarily disable port
+                                type: boolean
+                              mapAttributeToServiceTable:
+                                description: |-
+                                  update attribute to a auto-conf templates
+                                  map identity-update attribute to a auto-conf templates
+                                type: string
+                              notify:
+                                description: |-
+                                  (Boolean) notifies the session attributes
+                                  notifies the session attributes
+                                type: boolean
+                              number:
+                                description: |-
+                                  (Number) class number, 1 for 1st class, 2 for 2nd...
+                                  action number, 1 for 1st class, 2 for 2nd...
+                                  - Range: `1`-`254`
+                                type: number
+                              pauseReauthentication:
+                                description: |-
+                                  (Boolean) pause reauthentication
+                                  pause reauthentication
+                                type: boolean
+                              protect:
+                                description: |-
+                                  (Boolean) silently drop violating packets
+                                  silently drop violating packets
+                                type: boolean
+                              replace:
+                                description: |-
+                                  (Boolean) clear existing session and create session for violating host
+                                  clear existing session and create session for violating host
+                                type: boolean
+                              restrict:
+                                description: |-
+                                  (Boolean) drop violating packets and generate a syslog
+                                  drop violating packets and generate a syslog
+                                type: boolean
+                              resumeReauthentication:
+                                description: |-
+                                  (Boolean) resume reauthentication
+                                  resume reauthentication
+                                type: boolean
+                              setDomain:
+                                description: |-
+                                  (String) set domain
+                                  set domain
+                                  - Choices: `data`, `switch`, `voice`
+                                type: string
+                              setTimerName:
+                                description: |-
+                                  (String) timer name
+                                  timer name
+                                type: string
+                              setTimerValue:
+                                description: |-
+                                  (Number) Enter a value between 1 and 65535
+                                  Enter a value between 1 and 65535
+                                  - Range: `0`-`65535`
+                                type: number
+                              terminateConfig:
+                                description: |-
+                                  (String) terminate auth method
+                                  terminate auth method
+                                  - Choices: `dot1x`, `mab`, `webauth`
+                                type: string
+                              unauthorize:
+                                description: |-
+                                  (Boolean) unauthorize session
+                                  unauthorize session
+                                type: boolean
+                            type: object
+                          type: array
+                        class:
+                          description: |-
+                            map triggers upon
+                            The class type this control policy-map triggers upon
+                          type: string
+                        executionType:
+                          description: |-
+                            (String) Policy execution strategy
+                            Policy execution strategy
+                            - Choices: `do-all`, `do-until-failure`, `do-until-success`
+                          type: string
+                        number:
+                          description: |-
+                            (Number) class number, 1 for 1st class, 2 for 2nd...
+                            class number, 1 for 1st class, 2 for 2nd...
+                            - Range: `1`-`254`
+                          type: number
+                      type: object
+                    type: array
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  eventType:
+                    description: |-
+                      map triggers upon
+                      The event this control class-map triggers upon
+                      - Choices: `aaa-available`, `absolute-timeout`, `agent-found`, `authentication-failure`, `authentication-success`, `authorization-failure`, `authorization-success`, `identity-update`, `inactivity-timeout`, `remote-authentication-failure`, `remote-authentication-success`, `remote-update`, `session-disconnected`, `session-started`, `tag-added`, `tag-removed`, `template-activated`, `template-activation-failed`, `template-deactivated`, `template-deactivation-failed`, `timer-expiry`, `violation`
+                    type: string
+                  matchType:
+                    description: |-
+                      (String) Matching criteria for first or all events.
+                      Matching criteria for first or all events.
+                      - Choices: `match-all`, `match-first`
+                    type: string
+                  name:
+                    description: |-
+                      (String) Name of the policy map
+                      Name of the policy map
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.eventType is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.eventType)
+                || (has(self.initProvider) && has(self.initProvider.eventType))'
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+          status:
+            description: PolicyMapEventStatus defines the observed state of PolicyMapEvent.
+            properties:
+              atProvider:
+                properties:
+                  classNumbers:
+                    description: (Attributes List) class number, 1 for 1st class,
+                      2 for 2nd... (see below for nested schema)
+                    items:
+                      properties:
+                        actionNumbers:
+                          description: (Attributes List) action number, 1 for 1st
+                            class, 2 for 2nd... (see below for nested schema)
+                          items:
+                            properties:
+                              activateInterfaceTemplate:
+                                description: |-
+                                  (String) activate interface template
+                                  activate interface template
+                                type: string
+                              activatePolicyTypeControlSubscriber:
+                                description: |-
+                                  (String) policy type control subscriber
+                                  policy type control subscriber
+                                type: string
+                              activateServiceTemplateConfigAaaList:
+                                description: |-
+                                  (String) Named Method List
+                                  Named Method List
+                                type: string
+                              activateServiceTemplateConfigPrecedence:
+                                description: |-
+                                  (Number) Template precedence
+                                  Template precedence
+                                  - Range: `1`-`254`
+                                type: number
+                              activateServiceTemplateConfigReplaceAll:
+                                description: |-
+                                  (Boolean) Replace all existing authorization data and services
+                                  Replace all existing authorization data and services
+                                type: boolean
+                              activateServiceTemplateConfigServiceTemplate:
+                                description: |-
+                                  (String) activate service template
+                                  activate service template
+                                type: string
+                              authenticateUsingAaaAuthcListLegacy:
+                                description: |-
+                                  (String) Specify authentication method list. Use this for versions before 17.18.
+                                  Specify authentication method list. Use this for versions before `17.18`.
+                                type: string
+                              authenticateUsingAaaAuthzListLegacy:
+                                description: |-
+                                  (String) Specify authorization method list. Use this for versions before 17.18.
+                                  Specify authorization method list. Use this for versions before `17.18`.
+                                type: string
+                              authenticateUsingAaaConfig:
+                                description: |-
+                                  (Boolean) Configure AAA method list. Required when using authenticate_using_authc_list or authenticate_using_authz_list (versions 17.18 and later).
+                                  Configure AAA method list. Required when using `authenticate_using_authc_list` or `authenticate_using_authz_list` (versions `17.18` and later).
+                                type: boolean
+                              authenticateUsingAuthcList:
+                                description: |-
+                                  (String) Specify authentication method list. Use this for versions 17.18 and later.
+                                  Specify authentication method list. Use this for versions `17.18` and later.
+                                type: string
+                              authenticateUsingAuthzList:
+                                description: |-
+                                  (String) Specify authorization method list. Use this for versions 17.18 and later.
+                                  Specify authorization method list. Use this for versions `17.18` and later.
+                                type: string
+                              authenticateUsingBoth:
+                                description: |-
+                                  (Boolean) Enabling Dot1x Authenticator & Supplicant
+                                  Enabling Dot1x Authenticator & Supplicant
+                                type: boolean
+                              authenticateUsingMethod:
+                                description: |-
+                                  (String) method/protocol to be used for authentication
+                                  method/protocol to be used for authentication
+                                  - Choices: `dot1x`, `mab`, `webauth`
+                                type: string
+                              authenticateUsingParameterMap:
+                                description: |-
+                                  (String) Specify parameter map name
+                                  Specify parameter map name
+                                type: string
+                              authenticateUsingPriority:
+                                description: |-
+                                  (Number) Method priority
+                                  Method priority
+                                  - Range: `1`-`254`
+                                type: number
+                              authenticateUsingRetries:
+                                description: |-
+                                  (Number) Number of times to retry failed authentications
+                                  Number of times to retry failed authentications
+                                  - Range: `1`-`5`
+                                type: number
+                              authenticateUsingRetryTime:
+                                description: |-
+                                  (Number) Time interval between retries
+                                  Time interval between retries
+                                  - Range: `0`-`65535`
+                                type: number
+                              authenticationRestart:
+                                description: |-
+                                  (Number) restarts the auth sequence after the specified number of sec
+                                  restarts the auth sequence after the specified number of sec
+                                  - Range: `1`-`65535`
+                                type: number
+                              authorize:
+                                description: |-
+                                  (Boolean) authorize session
+                                  authorize session
+                                type: boolean
+                              clearAuthenticatedDataHostsOnPort:
+                                description: |-
+                                  (Boolean) clears authenticated data hosts on the port
+                                  clears authenticated data hosts on the port
+                                type: boolean
+                              clearSession:
+                                description: |-
+                                  (Boolean) clears an active session
+                                  clears an active session
+                                type: boolean
+                              deactivateInterfaceTemplate:
+                                description: |-
+                                  (String) activate interface template
+                                  activate interface template
+                                type: string
+                              deactivatePolicyTypeControlSubscriber:
+                                description: |-
+                                  (String) policy type control subscriber
+                                  policy type control subscriber
+                                type: string
+                              deactivateServiceTemplate:
+                                description: |-
+                                  (String) activate service template
+                                  activate service template
+                                type: string
+                              errDisable:
+                                description: |-
+                                  (Boolean) temporarily disable port
+                                  temporarily disable port
+                                type: boolean
+                              mapAttributeToServiceTable:
+                                description: |-
+                                  update attribute to a auto-conf templates
+                                  map identity-update attribute to a auto-conf templates
+                                type: string
+                              notify:
+                                description: |-
+                                  (Boolean) notifies the session attributes
+                                  notifies the session attributes
+                                type: boolean
+                              number:
+                                description: |-
+                                  (Number) class number, 1 for 1st class, 2 for 2nd...
+                                  action number, 1 for 1st class, 2 for 2nd...
+                                  - Range: `1`-`254`
+                                type: number
+                              pauseReauthentication:
+                                description: |-
+                                  (Boolean) pause reauthentication
+                                  pause reauthentication
+                                type: boolean
+                              protect:
+                                description: |-
+                                  (Boolean) silently drop violating packets
+                                  silently drop violating packets
+                                type: boolean
+                              replace:
+                                description: |-
+                                  (Boolean) clear existing session and create session for violating host
+                                  clear existing session and create session for violating host
+                                type: boolean
+                              restrict:
+                                description: |-
+                                  (Boolean) drop violating packets and generate a syslog
+                                  drop violating packets and generate a syslog
+                                type: boolean
+                              resumeReauthentication:
+                                description: |-
+                                  (Boolean) resume reauthentication
+                                  resume reauthentication
+                                type: boolean
+                              setDomain:
+                                description: |-
+                                  (String) set domain
+                                  set domain
+                                  - Choices: `data`, `switch`, `voice`
+                                type: string
+                              setTimerName:
+                                description: |-
+                                  (String) timer name
+                                  timer name
+                                type: string
+                              setTimerValue:
+                                description: |-
+                                  (Number) Enter a value between 1 and 65535
+                                  Enter a value between 1 and 65535
+                                  - Range: `0`-`65535`
+                                type: number
+                              terminateConfig:
+                                description: |-
+                                  (String) terminate auth method
+                                  terminate auth method
+                                  - Choices: `dot1x`, `mab`, `webauth`
+                                type: string
+                              unauthorize:
+                                description: |-
+                                  (Boolean) unauthorize session
+                                  unauthorize session
+                                type: boolean
+                            type: object
+                          type: array
+                        class:
+                          description: |-
+                            map triggers upon
+                            The class type this control policy-map triggers upon
+                          type: string
+                        executionType:
+                          description: |-
+                            (String) Policy execution strategy
+                            Policy execution strategy
+                            - Choices: `do-all`, `do-until-failure`, `do-until-success`
+                          type: string
+                        number:
+                          description: |-
+                            (Number) class number, 1 for 1st class, 2 for 2nd...
+                            class number, 1 for 1st class, 2 for 2nd...
+                            - Range: `1`-`254`
+                          type: number
+                      type: object
+                    type: array
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  eventType:
+                    description: |-
+                      map triggers upon
+                      The event this control class-map triggers upon
+                      - Choices: `aaa-available`, `absolute-timeout`, `agent-found`, `authentication-failure`, `authentication-success`, `authorization-failure`, `authorization-success`, `identity-update`, `inactivity-timeout`, `remote-authentication-failure`, `remote-authentication-success`, `remote-update`, `session-disconnected`, `session-started`, `tag-added`, `tag-removed`, `template-activated`, `template-activation-failed`, `template-deactivated`, `template-deactivation-failed`, `timer-expiry`, `violation`
+                    type: string
+                  id:
+                    description: (String) The path of the object.
+                    type: string
+                  matchType:
+                    description: |-
+                      (String) Matching criteria for first or all events.
+                      Matching criteria for first or all events.
+                      - Choices: `match-all`, `match-first`
+                    type: string
+                  name:
+                    description: |-
+                      (String) Name of the policy map
+                      Name of the policy map
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              lastHandledReconcileAt:
+                description: |-
+                  LastHandledReconcileAt holds the value of the most recent
+                  reconcile-requested-at annotation token that the controller has
+                  processed. Users can compare this to the annotation to determine
+                  whether a reconcile request has been handled.
+                type: string
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

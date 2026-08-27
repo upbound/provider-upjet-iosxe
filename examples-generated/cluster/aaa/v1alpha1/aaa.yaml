@@ -1,0 +1,32 @@
+apiVersion: aaa.iosxe.upbound.io/v1alpha1
+kind: AAA
+metadata:
+  annotations:
+    meta.upbound.io/example-id: aaa/v1alpha1/aaa
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    groupServerRadius:
+    - deadtime: 5
+      ipRadiusSourceInterfaceLoopback: 0
+      name: T-Group
+      serverNames:
+      - name: TESTRADIUS
+    groupServerTacacsplus:
+    - ipTacacsSourceInterfaceLoopback: 0
+      name: tacacs-group
+      serverNames:
+      - name: tacacs_10.10.15.12
+      vrf: VRF1
+    newModel: true
+    serverRadiusDynamicAuthor: true
+    serverRadiusDynamicAuthorClients:
+    - ip: 11.1.1.1
+      serverKeySecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      serverKeyType: "0"
+    sessionId: common

@@ -1,0 +1,20 @@
+apiVersion: aaa.iosxe.m.upbound.io/v1alpha1
+kind: TACACSServer
+metadata:
+  annotations:
+    meta.upbound.io/example-id: aaa/v1alpha1/tacacsserver
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    attributeAllowUnknown: true
+    directedRequest: true
+    directedRequestNoTruncate: true
+    directedRequestRestricted: true
+    encryption: "0"
+    keySecretRef:
+      key: example-key
+      name: example-secret
+    timeout: 5

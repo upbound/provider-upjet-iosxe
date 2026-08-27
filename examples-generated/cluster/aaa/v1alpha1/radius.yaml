@@ -1,0 +1,25 @@
+apiVersion: aaa.iosxe.upbound.io/v1alpha1
+kind: RADIUS
+metadata:
+  annotations:
+    meta.upbound.io/example-id: aaa/v1alpha1/radius
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    accountingPort: 1812
+    authenticationPort: 1813
+    automateTesterIgnoreAcctPort: true
+    automateTesterIgnoreAuthPort: true
+    automateTesterProbeOnConfig: true
+    automateTesterUsername: dummy
+    ipv4Address: 10.10.15.12
+    keyEncryption: "0"
+    keySecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    name: radius_10.10.15.12
+    retransmit: 3
+    timeout: 4

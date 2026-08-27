@@ -1,42 +1,264 @@
-# Provider Template
+# provider-upjet-iosxe
 
-`upjet-provider-template` is a [Crossplane](https://crossplane.io/) provider
-template that is built using [Upjet](https://github.com/crossplane/upjet) code
-generation tools and exposes XRM-conformant managed resources for the Template
-API.
+`provider-upjet-iosxe` is a [Crossplane](https://crossplane.io/) provider for
+Cisco IOS-XE devices. It is built with [Upjet](https://github.com/crossplane/upjet)
+from the [Cisco IOS-XE Terraform provider](https://github.com/CiscoDevNet/terraform-provider-iosxe)
+and exposes IOS-XE configuration as Kubernetes managed resources.
 
-## Getting Started
+The provider runs in Upjet's **no-fork** mode: the Terraform provider is linked
+into the controller binary and called in-process through the
+[Terraform Plugin Framework](https://developer.hashicorp.com/terraform/plugin/framework).
+No Terraform CLI, no provider plugin process and no Terraform state files are
+involved at runtime; the controller talks NETCONF to the devices through the
+embedded provider.
 
-This template serves as a starting point for generating a new [Crossplane Provider](https://docs.crossplane.io/latest/packages/providers/) using the [`upjet`](https://github.com/crossplane/upjet) tooling. Please follow the guide linked below to generate a new Provider:
+Both API flavours of Crossplane v2 are generated:
 
-https://github.com/crossplane/upjet/blob/main/docs/generating-a-provider.md
+| Scope | API groups | ProviderConfig |
+| --- | --- | --- |
+| Cluster scoped (legacy) | `<group>.iosxe.upbound.io` | `iosxe.upbound.io/v1beta1` |
+| Namespaced | `<group>.iosxe.m.upbound.io` | `iosxe.m.upbound.io/v1beta1` |
+
+## API groups
+
+138 of the 141 Terraform resources are exposed as managed resources, grouped by
+configuration domain:
+
+| Group | Contents |
+| --- | --- |
+| `aaa` | AAA, accounting, authentication, authorization, RADIUS, TACACS, local users |
+| `acl` | Standard, extended, IPv6 and role based access lists, object groups |
+| `bfd` | BFD and BFD templates |
+| `bgp` | BGP, address families, neighbors, peer templates, BMP servers |
+| `crypto` | IKEv2, IPsec, PKI |
+| `eigrp` | EIGRP, EIGRP VRFs |
+| `evpn` | EVPN, ethernet segments, EVPN instances, L2 VFIs |
+| `flow` | Flexible NetFlow exporters, monitors, records |
+| `interface` | Ethernet, loopback, port channel, tunnel, VLAN and other interfaces |
+| `isis` | IS-IS |
+| `mpls` | MPLS |
+| `multicast` | Multicast, PIM, MSDP |
+| `nat` | NAT |
+| `ospf` | OSPF, OSPFv3 and their VRF address families |
+| `qos` | Class maps, policy maps, QoS |
+| `routing` | Static routes, VRFs, route maps, prefix lists, community lists, ARP |
+| `security` | 802.1X, CTS, device tracking, zone based firewall, key chains |
+| `switching` | VLANs, spanning tree, VTP, UDLD, bridge domains, stacking |
+| `system` | Hostname and system settings, logging, NTP, SNMP, LLDP, CDP, EEM, telemetry |
+| `yang` | Generic YANG object, an escape hatch for unsupported configuration |
+
+`iosxe_cli`, `iosxe_commit` and `iosxe_save_config` are deliberately not
+exposed: they are imperative one-shot operations rather than declarative
+configuration that can be observed and reconciled.
+
+## Getting started
+
+Install the provider:
+
+```console
+kubectl apply -f examples/install.yaml
+```
+
+Create a secret with the device credentials and a `ProviderConfig` that
+references it:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: example-creds
+  namespace: crossplane-system
+type: Opaque
+stringData:
+  credentials: |
+    {
+      "username": "admin",
+      "password": "t0ps3cr3t11",
+      "host": "10.0.0.1:830",
+      "insecure": true
+    }
+---
+apiVersion: iosxe.upbound.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: default
+spec:
+  credentials:
+    source: Secret
+    secretRef:
+      name: example-creds
+      namespace: crossplane-system
+      key: credentials
+```
+
+### Credentials schema
+
+The secret key referenced by the `ProviderConfig` holds a single JSON object
+with the following keys. Only `username` and `password` are required; every
+other key is optional and left to the defaults of the Terraform provider when
+omitted.
+
+| Key | Type | Description |
+| --- | --- | --- |
+| `username` | string | Device username. Required. |
+| `password` | string | Device password. Required. |
+| `host` | string | Hostname or IP address, optionally `host:port`. The NETCONF default port is 830. Managed resources that do not select a `device` are reconciled against this host. |
+| `insecure` | bool | Skip SSH host key verification. Defaults to `true` in the Terraform provider. |
+| `retries` | int | Number of retries for NETCONF calls. Valid range 0-99. |
+| `lockReleaseTimeout` | int | Seconds to wait for the device configuration lock to be released. Valid range 0-600. |
+| `devices` | list of objects | Manage several devices with one `ProviderConfig`. Each entry takes `name` (string, required), `host` (string) and `managed` (bool, defaults to `true`). Managed resources select one by name with `spec.forProvider.device`. |
+| `selectedDevices` | list of strings | Restricts reconciliation to a subset of `devices` by name. The state of the devices left out is frozen. |
+
+Connection reuse and manual commit mode are not configurable: the provider
+always closes the NETCONF session after an operation and commits the
+configuration it changes. See [Operational notes](#operational-notes) for why.
+
+```json
+{
+  "username": "admin",
+  "password": "t0ps3cr3t11",
+  "host": "10.0.0.1:830",
+  "insecure": true,
+  "retries": 3,
+  "devices": [
+    {"name": "leaf1", "host": "10.0.0.1:830"},
+    {"name": "leaf2", "host": "10.0.0.2:830", "managed": false}
+  ],
+  "selectedDevices": ["leaf1"]
+}
+```
+
+Then create managed resources:
+
+```yaml
+apiVersion: routing.iosxe.upbound.io/v1alpha1
+kind: VRF
+metadata:
+  name: example
+spec:
+  forProvider:
+    name: VRF22
+    description: Managed by Crossplane
+    rd: "22:22"
+    addressFamilyIpv4: true
+  providerConfigRef:
+    name: default
+```
+
+`examples-generated/` contains a generated example for every resource, in both
+the cluster scoped and the namespaced flavour.
+
+### Selecting a device
+
+Every managed resource has an optional `spec.forProvider.device` field that
+selects a device by name from the `devices` list of the `ProviderConfig`.
+Resources that leave it empty are reconciled against the device configured in
+the top level `host`.
+
+### External names and importing
+
+Each IOS-XE resource manages a YANG object and is identified by the path of
+that object, for example
+`Cisco-IOS-XE-native:native/vrf/definition=VRF22`. That path is what the
+Terraform provider reports as the resource id, so it is also this provider's
+external name: it is set in the `crossplane.io/external-name` annotation after
+creation, and setting it on a new managed resource adopts the existing device
+configuration instead of creating it.
+
+### Deletion behaviour
+
+The `spec.forProvider.deleteMode` field of most resources controls what happens
+on deletion: `all` (the default) removes the whole YANG object, while
+`attributes` only removes the attributes that are explicitly configured and
+leaves the rest of the object in place.
 
 ## Developing
 
-Run code-generation pipeline:
-```console
-go run cmd/generator/main.go "$PWD"
+### Terraform provider dependency
+
+The IOS-XE Terraform provider keeps its Plugin Framework implementation in an
+`internal/` package, which Go does not allow other modules to import. Running
+it in-process therefore requires a fork of the Terraform provider that exports
+it, which lives at
+[upbound/terraform-provider-iosxe](https://github.com/upbound/terraform-provider-iosxe)
+on the `upbound-v1.0.0` branch. The fork keeps the upstream module path and
+adds a single package:
+
+```go
+// xpprovider/xpprovider.go
+package xpprovider
+
+func GetProvider(version string) provider.Provider {
+	return iosxeprovider.New(version)()
+}
 ```
 
-Run against a Kubernetes cluster:
+and is wired in through a `replace` directive in `go.mod`:
+
+```text
+replace github.com/CiscoDevNet/terraform-provider-iosxe => github.com/upbound/terraform-provider-iosxe v0.0.0-20260824124157-eb27f95b8016
+```
+
+To move the fork to a newer upstream release, rebase its `xpprovider` commit
+onto the new tag, push it, and update the pseudo-version in the `replace`
+directive along with `TERRAFORM_PROVIDER_VERSION` in the Makefile and
+`TerraformProviderVersion` in [config/framework.go](config/framework.go).
+
+### Code generation
+
+```console
+make submodules          # first time only
+make generate
+```
+
+`make generate` fetches the Terraform provider schema with the Terraform CLI
+(`config/schema.json`), scrapes the provider documentation into
+`config/provider-metadata.yaml`, and runs the Upjet pipeline. Note that
+Terraform is only used at generation time.
+
+### Adding a resource
+
+Add an entry to `resourceConfigs` in
+[config/resources/resources.go](config/resources/resources.go) with the API
+group and kind it should be generated into, then run `make generate`. That
+table is also the include list of the provider, so a resource that is not
+listed is not generated. External names do not need to be configured per
+resource: every IOS-XE resource is identified by the YANG path the Terraform
+provider computes, so `config.IdentifierFromProvider` applies to all of them.
+
+Two constraints are worth remembering when picking a kind: kinds must be unique
+within a group, and a kind must not be a Go keyword, because Upjet names the
+generated controller package after it.
+
+### Running locally
 
 ```console
 make run
 ```
 
-Build, push, and install:
+Testing needs a real IOS-XE device, since the provider speaks NETCONF to one.
+[docs/testing.md](docs/testing.md) covers the options: DevNet sandboxes, a
+self-hosted Catalyst 8000V or 9000V, Cisco Modeling Labs, and how to point
+uptest at any of them.
+
+### Build
 
 ```console
-make all
+make build      # binary and provider package
 ```
 
-Build binary:
+## Operational notes
 
-```console
-make build
-```
+- Upjet configures the embedded Terraform provider once per reconciliation, so
+  NETCONF connection reuse is disabled and the provider opens and closes a
+  session per operation. Automatic commit is enabled, which means every
+  operation commits the configuration it changes.
+- Because each reconciliation gets its own provider instance, the in-provider
+  serialization of NETCONF operations does not span concurrent reconciliations.
+  Devices that are sensitive to concurrent configuration sessions should be
+  managed with a low `--max-reconcile-rate`.
 
 ## Report a Bug
 
 For filing bugs, suggesting improvements, or requesting new features, please
-open an [issue](https://github.com/crossplane/upjet-provider-template/issues).
+open an [issue](https://github.com/upbound/provider-upjet-iosxe/issues).

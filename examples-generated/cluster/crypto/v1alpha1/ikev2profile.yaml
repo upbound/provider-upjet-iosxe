@@ -1,0 +1,29 @@
+apiVersion: crypto.iosxe.upbound.io/v1alpha1
+kind: IKEv2Profile
+metadata:
+  annotations:
+    meta.upbound.io/example-id: crypto/v1alpha1/ikev2profile
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    authenticationLocalPreShare: true
+    authenticationRemotePreShare: true
+    configExchangeRequest: false
+    description: My description
+    dpdInterval: 10
+    dpdQuery: periodic
+    dpdRetry: 2
+    identityLocalKeyId: key1
+    ivrf: VRF1
+    keyringLocal: test
+    lifetime: 28800
+    matchAddressLocalIp: 1.2.3.4
+    matchFvrfAny: true
+    matchIdentityRemoteIpv4Addresses:
+    - address: 1.2.3.4
+      mask: 255.255.255.0
+    matchIdentityRemoteKeys:
+    - key1
+    name: profile1

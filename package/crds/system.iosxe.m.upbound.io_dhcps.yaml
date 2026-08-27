@@ -1,0 +1,1612 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: dhcps.system.iosxe.m.upbound.io
+spec:
+  group: system.iosxe.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - iosxe
+    kind: DHCP
+    listKind: DHCPList
+    plural: dhcps
+    singular: dhcp
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: DHCP is the Schema for the DHCPs API. This resource can manage
+          the DHCP configuration.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: DHCPSpec defines the desired state of DHCP
+            properties:
+              forProvider:
+                properties:
+                  compatibilitySuboptionLinkSelection:
+                    description: |-
+                      Choices: cisco, standard
+
+                      - Choices: `cisco`, `standard`
+                    type: string
+                  compatibilitySuboptionServerOverride:
+                    description: |-
+                      Choices: cisco, standard
+
+                      - Choices: `cisco`, `standard`
+                    type: string
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  ipv6Pools:
+                    description: (Attributes List) Configure IPv6 DHCP pool (see below
+                      for nested schema)
+                    items:
+                      properties:
+                        addressPrefixes:
+                          description: (Attributes List) IPv6 address allocation prefix
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              address:
+                                description: |-
+                                  (String) IPv6 prefix address
+                                  IPv6 prefix address
+                                type: string
+                              preferredLifetime:
+                                description: |-
+                                  (String) Preferred lifetime in seconds or infinite
+                                  Preferred lifetime in seconds or infinite
+                                type: string
+                              validLifetime:
+                                description: |-
+                                  (String) Valid lifetime in seconds or infinite
+                                  Valid lifetime in seconds or infinite
+                                type: string
+                            type: object
+                          type: array
+                        bootfileUrl:
+                          description: |-
+                            (String) Boot file URL
+                            Boot file URL
+                          type: string
+                        dnsServers:
+                          description: |-
+                            (List of String) DNS server addresses
+                            DNS server addresses
+                          items:
+                            type: string
+                          type: array
+                        domainNames:
+                          description: |-
+                            (List of String) Domain names
+                            Domain names
+                          items:
+                            type: string
+                          type: array
+                        importDnsServer:
+                          description: |-
+                            (Boolean) Import DNS address from interface
+                            Import DNS address from interface
+                          type: boolean
+                        importDomainName:
+                          description: |-
+                            (Boolean) Import domain name from interface
+                            Import domain name from interface
+                          type: boolean
+                        informationRefreshDays:
+                          description: |-
+                            (Number) Information refresh days
+                            Information refresh days
+                            - Range: `0`-`365`
+                          type: number
+                        informationRefreshHours:
+                          description: |-
+                            (Number) Information refresh hours
+                            Information refresh hours
+                            - Range: `0`-`23`
+                          type: number
+                        informationRefreshInfinite:
+                          description: |-
+                            (Boolean) Infinite information refresh
+                            Infinite information refresh
+                          type: boolean
+                        informationRefreshMinutes:
+                          description: |-
+                            (Number) Information refresh minutes
+                            Information refresh minutes
+                            - Range: `0`-`59`
+                          type: number
+                        linkAddresses:
+                          description: address to match (see below for nested schema)
+                          items:
+                            properties:
+                              address:
+                                description: |-
+                                  (String) IPv6 prefix address
+                                  IPv6 prefix
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) DHCP pool name
+                            DHCP pool name
+                          type: string
+                        optionIncludeAll:
+                          description: |-
+                            (Boolean) Include all DHCPv6 configured options in REPLY
+                            Include all DHCPv6 configured options in REPLY
+                          type: boolean
+                        prefixDelegationPoolName:
+                          description: |-
+                            (String) IPv6 prefix delegation pool name
+                            IPv6 prefix delegation pool name
+                          type: string
+                        prefixDelegationPoolPreferredLifetime:
+                          description: |-
+                            (String) Preferred lifetime in seconds or infinite
+                            Preferred lifetime in seconds or infinite
+                          type: string
+                        prefixDelegationPoolValidLifetime:
+                          description: |-
+                            (String) Valid lifetime in seconds or infinite
+                            Valid lifetime in seconds or infinite
+                          type: string
+                        prefixDelegationPrefixes:
+                          description: (Attributes List) IPv6 prefix delegation prefix
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              hexString:
+                                description: |-
+                                  (String) DHCPv6 unique identifier (hex)
+                                  DHCPv6 unique identifier (hex)
+                                type: string
+                              iaid:
+                                description: |-
+                                  (String) DHCPv6 IAID (hex)
+                                  DHCPv6 IAID (hex)
+                                type: string
+                              preferredLifetime:
+                                description: |-
+                                  (String) Preferred lifetime in seconds or infinite
+                                  Preferred lifetime in seconds or infinite
+                                type: string
+                              prefix:
+                                description: |-
+                                  (String) IPv6 prefix
+                                  IPv6 prefix
+                                type: string
+                              validLifetime:
+                                description: |-
+                                  (String) Valid lifetime in seconds or infinite
+                                  Valid lifetime in seconds or infinite
+                                type: string
+                            type: object
+                          type: array
+                        sntpAddresses:
+                          description: |-
+                            (List of String) SNTP server addresses
+                            SNTP server addresses
+                          items:
+                            type: string
+                          type: array
+                        vendorSpecifics:
+                          description: specific options (see below for nested schema)
+                          items:
+                            properties:
+                              enterpriseId:
+                                description: |-
+                                  (Number) Enterprise ID
+                                  Enterprise ID
+                                  - Range: `1`-`4294967295`
+                                type: number
+                              suboptions:
+                                description: specific suboption (see below for nested
+                                  schema)
+                                items:
+                                  properties:
+                                    address:
+                                      description: |-
+                                        (String) IPv6 prefix address
+                                        IPv6 address value
+                                      type: string
+                                    ascii:
+                                      description: |-
+                                        (String) ASCII string value
+                                        ASCII string value
+                                      type: string
+                                    hex:
+                                      description: |-
+                                        (String) Hex string value
+                                        Hex string value
+                                      type: string
+                                    number:
+                                      description: |-
+                                        (Number) Suboption number
+                                        Suboption number
+                                        - Range: `1`-`65535`
+                                      type: number
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        vrf:
+                          description: |-
+                            (String) VRF name
+                            VRF name
+                          type: string
+                      type: object
+                    type: array
+                  pools:
+                    description: (Attributes List) Configure DHCP address pools (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        bootfile:
+                          description: |-
+                            (String) Boot file name
+                            Boot file name
+                          type: string
+                        clientName:
+                          description: |-
+                            (String) Client name
+                            Client name
+                          type: string
+                        defaultRouters:
+                          description: |-
+                            (List of String) Default routers
+                            Default routers
+                          items:
+                            type: string
+                          type: array
+                        dnsServers:
+                          description: |-
+                            (List of String) DNS server addresses
+                            DNS servers
+                          items:
+                            type: string
+                          type: array
+                        domainName:
+                          description: |-
+                            (String) Domain name
+                            Domain name
+                          type: string
+                        hostMask:
+                          description: |-
+                            (String) Network mask
+                            Network mask
+                          type: string
+                        hostNumber:
+                          description: |-
+                            (String) Client IP address
+                            Client IP address
+                          type: string
+                        leaseDays:
+                          description: |-
+                            (Number) Lease days
+                            Lease days
+                            - Range: `0`-`365`
+                          type: number
+                        leaseHours:
+                          description: |-
+                            (Number) Lease hours
+                            Lease hours
+                            - Range: `0`-`23`
+                          type: number
+                        leaseInfinite:
+                          description: |-
+                            (Boolean) Infinite lease
+                            Infinite lease
+                          type: boolean
+                        leaseMinutes:
+                          description: |-
+                            (Number) Lease minutes
+                            Lease minutes
+                            - Range: `0`-`59`
+                          type: number
+                        name:
+                          description: (String) DHCP pool name
+                          type: string
+                        networkMask:
+                          description: |-
+                            (String) Network mask
+                            Network mask
+                          type: string
+                        networkNumber:
+                          description: |-
+                            (String) Network number
+                            Network number
+                          type: string
+                        nextServers:
+                          description: |-
+                            (List of String) Next server IP addresses
+                            Next server IP addresses
+                          items:
+                            type: string
+                          type: array
+                        options:
+                          description: (Attributes List) (see below for nested schema)
+                          items:
+                            properties:
+                              ascii:
+                                description: |-
+                                  (String) ASCII string value
+                                  Data is an NVT ASCII string
+                                type: string
+                              hex:
+                                description: |-
+                                  (String) Hex string value
+                                  Data is a hexadecimal string
+                                type: string
+                              ip:
+                                description: |-
+                                  (List of String) Data is one or more IP addresses. Use this for versions 17.15 and later.
+                                  Data is one or more IP addresses. Use this for versions `17.15` and later.
+                                items:
+                                  type: string
+                                type: array
+                              ipLegacy:
+                                description: |-
+                                  (List of String) Data is one or more IP addresses. Use this for versions before 17.15.
+                                  Data is one or more IP addresses. Use this for versions before `17.15`.
+                                items:
+                                  type: string
+                                type: array
+                              optionCode:
+                                description: |-
+                                  (Number) DHCP option code
+                                  DHCP option code
+                                  - Range: `0`-`254`
+                                type: number
+                            type: object
+                          type: array
+                        secondaryNetworks:
+                          description: (Attributes List) Secondary number and mask
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              mask:
+                                description: |-
+                                  (String) Network mask
+                                  Network mask
+                                type: string
+                              number:
+                                description: |-
+                                  (Number) Suboption number
+                                  Network number
+                                type: string
+                              secondary:
+                                description: |-
+                                  (Boolean) Configure as secondary subnet
+                                  Configure as secondary subnet
+                                  - Default value: `true`
+                                type: boolean
+                            type: object
+                          type: array
+                        subnetPrefixLength:
+                          description: |-
+                            (Number) Subnet prefix length
+                            Subnet prefix length
+                            - Range: `1`-`32`
+                          type: number
+                        utilizationMarkHigh:
+                          description: |-
+                            (Number) High utilization mark percentage
+                            High utilization mark percentage
+                            - Range: `1`-`100`
+                          type: number
+                        utilizationMarkHighLog:
+                          description: |-
+                            (Boolean) Log when high utilization is detected
+                            Log when high utilization is detected
+                          type: boolean
+                        utilizationMarkLow:
+                          description: |-
+                            (Number) Low utilization mark percentage
+                            Low utilization mark percentage
+                            - Range: `1`-`100`
+                          type: number
+                        utilizationMarkLowLog:
+                          description: |-
+                            (Boolean) Log when low utilization is detected
+                            Log when low utilization is detected
+                          type: boolean
+                        vrf:
+                          description: |-
+                            (String) VRF name
+                            Associate this pool with a VRF
+                          type: string
+                      type: object
+                    type: array
+                  relayBootpIgnore:
+                    description: |-
+                      (Boolean) Configure this DHCP relay to ignore to BOOTP requests.
+                      Configure this DHCP relay to ignore to BOOTP requests.
+                    type: boolean
+                  relayInformationOptionDefault:
+                    description: |-
+                      (Boolean) Default option, no vpn
+                      Default option, no vpn
+                    type: boolean
+                  relayInformationOptionVpn:
+                    description: |-
+                      options and change the giaddr to the outgoing interface
+                      Insert VPN sub-options and change the giaddr to the outgoing interface
+                    type: boolean
+                  relayInformationTrustAll:
+                    description: |-
+                      (Boolean) Received DHCP packets may contain relay info option with zero giaddr
+                      Received DHCP packets may contain relay info option with zero giaddr
+                    type: boolean
+                  snooping:
+                    description: |-
+                      (Boolean) DHCP Snooping
+                      DHCP Snooping
+                    type: boolean
+                  snoopingInformationOption:
+                    description: (Boolean)
+                    type: boolean
+                  snoopingInformationOptionAllowUntrusted:
+                    description: |-
+                      untrusted
+                      DHCP Snooping information option allow-untrusted
+                    type: boolean
+                  snoopingInformationOptionFormatRemoteIdHostname:
+                    description: |-
+                      (Boolean) Use configured hostname for remote id
+                      Use configured hostname for remote id
+                    type: boolean
+                  snoopingInformationOptionFormatRemoteIdString:
+                    description: |-
+                      (String) User defined string for remote id
+                      User defined string for remote id
+                    type: string
+                  snoopingVlans:
+                    description: (Attributes List) DHCP Snooping vlan list. Use this
+                      for versions 17.14 and later. (see below for nested schema)
+                    items:
+                      properties:
+                        vlanId:
+                          description: |-
+                            Range: 1-4094
+
+                            - Range: `1`-`4094`
+                          type: number
+                      type: object
+                    type: array
+                  snoopingVlansLegacy:
+                    description: (Attributes List) DHCP Snooping vlan list. Use this
+                      for versions before 17.14. (see below for nested schema)
+                    items:
+                      properties:
+                        vlanId:
+                          description: |-
+                            Range: 1-4094
+                            DHCP Snooping vlan first number or vlan range,example: 1,3-5,7,9-11
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  compatibilitySuboptionLinkSelection:
+                    description: |-
+                      Choices: cisco, standard
+
+                      - Choices: `cisco`, `standard`
+                    type: string
+                  compatibilitySuboptionServerOverride:
+                    description: |-
+                      Choices: cisco, standard
+
+                      - Choices: `cisco`, `standard`
+                    type: string
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  ipv6Pools:
+                    description: (Attributes List) Configure IPv6 DHCP pool (see below
+                      for nested schema)
+                    items:
+                      properties:
+                        addressPrefixes:
+                          description: (Attributes List) IPv6 address allocation prefix
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              address:
+                                description: |-
+                                  (String) IPv6 prefix address
+                                  IPv6 prefix address
+                                type: string
+                              preferredLifetime:
+                                description: |-
+                                  (String) Preferred lifetime in seconds or infinite
+                                  Preferred lifetime in seconds or infinite
+                                type: string
+                              validLifetime:
+                                description: |-
+                                  (String) Valid lifetime in seconds or infinite
+                                  Valid lifetime in seconds or infinite
+                                type: string
+                            type: object
+                          type: array
+                        bootfileUrl:
+                          description: |-
+                            (String) Boot file URL
+                            Boot file URL
+                          type: string
+                        dnsServers:
+                          description: |-
+                            (List of String) DNS server addresses
+                            DNS server addresses
+                          items:
+                            type: string
+                          type: array
+                        domainNames:
+                          description: |-
+                            (List of String) Domain names
+                            Domain names
+                          items:
+                            type: string
+                          type: array
+                        importDnsServer:
+                          description: |-
+                            (Boolean) Import DNS address from interface
+                            Import DNS address from interface
+                          type: boolean
+                        importDomainName:
+                          description: |-
+                            (Boolean) Import domain name from interface
+                            Import domain name from interface
+                          type: boolean
+                        informationRefreshDays:
+                          description: |-
+                            (Number) Information refresh days
+                            Information refresh days
+                            - Range: `0`-`365`
+                          type: number
+                        informationRefreshHours:
+                          description: |-
+                            (Number) Information refresh hours
+                            Information refresh hours
+                            - Range: `0`-`23`
+                          type: number
+                        informationRefreshInfinite:
+                          description: |-
+                            (Boolean) Infinite information refresh
+                            Infinite information refresh
+                          type: boolean
+                        informationRefreshMinutes:
+                          description: |-
+                            (Number) Information refresh minutes
+                            Information refresh minutes
+                            - Range: `0`-`59`
+                          type: number
+                        linkAddresses:
+                          description: address to match (see below for nested schema)
+                          items:
+                            properties:
+                              address:
+                                description: |-
+                                  (String) IPv6 prefix address
+                                  IPv6 prefix
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) DHCP pool name
+                            DHCP pool name
+                          type: string
+                        optionIncludeAll:
+                          description: |-
+                            (Boolean) Include all DHCPv6 configured options in REPLY
+                            Include all DHCPv6 configured options in REPLY
+                          type: boolean
+                        prefixDelegationPoolName:
+                          description: |-
+                            (String) IPv6 prefix delegation pool name
+                            IPv6 prefix delegation pool name
+                          type: string
+                        prefixDelegationPoolPreferredLifetime:
+                          description: |-
+                            (String) Preferred lifetime in seconds or infinite
+                            Preferred lifetime in seconds or infinite
+                          type: string
+                        prefixDelegationPoolValidLifetime:
+                          description: |-
+                            (String) Valid lifetime in seconds or infinite
+                            Valid lifetime in seconds or infinite
+                          type: string
+                        prefixDelegationPrefixes:
+                          description: (Attributes List) IPv6 prefix delegation prefix
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              hexString:
+                                description: |-
+                                  (String) DHCPv6 unique identifier (hex)
+                                  DHCPv6 unique identifier (hex)
+                                type: string
+                              iaid:
+                                description: |-
+                                  (String) DHCPv6 IAID (hex)
+                                  DHCPv6 IAID (hex)
+                                type: string
+                              preferredLifetime:
+                                description: |-
+                                  (String) Preferred lifetime in seconds or infinite
+                                  Preferred lifetime in seconds or infinite
+                                type: string
+                              prefix:
+                                description: |-
+                                  (String) IPv6 prefix
+                                  IPv6 prefix
+                                type: string
+                              validLifetime:
+                                description: |-
+                                  (String) Valid lifetime in seconds or infinite
+                                  Valid lifetime in seconds or infinite
+                                type: string
+                            type: object
+                          type: array
+                        sntpAddresses:
+                          description: |-
+                            (List of String) SNTP server addresses
+                            SNTP server addresses
+                          items:
+                            type: string
+                          type: array
+                        vendorSpecifics:
+                          description: specific options (see below for nested schema)
+                          items:
+                            properties:
+                              enterpriseId:
+                                description: |-
+                                  (Number) Enterprise ID
+                                  Enterprise ID
+                                  - Range: `1`-`4294967295`
+                                type: number
+                              suboptions:
+                                description: specific suboption (see below for nested
+                                  schema)
+                                items:
+                                  properties:
+                                    address:
+                                      description: |-
+                                        (String) IPv6 prefix address
+                                        IPv6 address value
+                                      type: string
+                                    ascii:
+                                      description: |-
+                                        (String) ASCII string value
+                                        ASCII string value
+                                      type: string
+                                    hex:
+                                      description: |-
+                                        (String) Hex string value
+                                        Hex string value
+                                      type: string
+                                    number:
+                                      description: |-
+                                        (Number) Suboption number
+                                        Suboption number
+                                        - Range: `1`-`65535`
+                                      type: number
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        vrf:
+                          description: |-
+                            (String) VRF name
+                            VRF name
+                          type: string
+                      type: object
+                    type: array
+                  pools:
+                    description: (Attributes List) Configure DHCP address pools (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        bootfile:
+                          description: |-
+                            (String) Boot file name
+                            Boot file name
+                          type: string
+                        clientName:
+                          description: |-
+                            (String) Client name
+                            Client name
+                          type: string
+                        defaultRouters:
+                          description: |-
+                            (List of String) Default routers
+                            Default routers
+                          items:
+                            type: string
+                          type: array
+                        dnsServers:
+                          description: |-
+                            (List of String) DNS server addresses
+                            DNS servers
+                          items:
+                            type: string
+                          type: array
+                        domainName:
+                          description: |-
+                            (String) Domain name
+                            Domain name
+                          type: string
+                        hostMask:
+                          description: |-
+                            (String) Network mask
+                            Network mask
+                          type: string
+                        hostNumber:
+                          description: |-
+                            (String) Client IP address
+                            Client IP address
+                          type: string
+                        leaseDays:
+                          description: |-
+                            (Number) Lease days
+                            Lease days
+                            - Range: `0`-`365`
+                          type: number
+                        leaseHours:
+                          description: |-
+                            (Number) Lease hours
+                            Lease hours
+                            - Range: `0`-`23`
+                          type: number
+                        leaseInfinite:
+                          description: |-
+                            (Boolean) Infinite lease
+                            Infinite lease
+                          type: boolean
+                        leaseMinutes:
+                          description: |-
+                            (Number) Lease minutes
+                            Lease minutes
+                            - Range: `0`-`59`
+                          type: number
+                        name:
+                          description: (String) DHCP pool name
+                          type: string
+                        networkMask:
+                          description: |-
+                            (String) Network mask
+                            Network mask
+                          type: string
+                        networkNumber:
+                          description: |-
+                            (String) Network number
+                            Network number
+                          type: string
+                        nextServers:
+                          description: |-
+                            (List of String) Next server IP addresses
+                            Next server IP addresses
+                          items:
+                            type: string
+                          type: array
+                        options:
+                          description: (Attributes List) (see below for nested schema)
+                          items:
+                            properties:
+                              ascii:
+                                description: |-
+                                  (String) ASCII string value
+                                  Data is an NVT ASCII string
+                                type: string
+                              hex:
+                                description: |-
+                                  (String) Hex string value
+                                  Data is a hexadecimal string
+                                type: string
+                              ip:
+                                description: |-
+                                  (List of String) Data is one or more IP addresses. Use this for versions 17.15 and later.
+                                  Data is one or more IP addresses. Use this for versions `17.15` and later.
+                                items:
+                                  type: string
+                                type: array
+                              ipLegacy:
+                                description: |-
+                                  (List of String) Data is one or more IP addresses. Use this for versions before 17.15.
+                                  Data is one or more IP addresses. Use this for versions before `17.15`.
+                                items:
+                                  type: string
+                                type: array
+                              optionCode:
+                                description: |-
+                                  (Number) DHCP option code
+                                  DHCP option code
+                                  - Range: `0`-`254`
+                                type: number
+                            type: object
+                          type: array
+                        secondaryNetworks:
+                          description: (Attributes List) Secondary number and mask
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              mask:
+                                description: |-
+                                  (String) Network mask
+                                  Network mask
+                                type: string
+                              number:
+                                description: |-
+                                  (Number) Suboption number
+                                  Network number
+                                type: string
+                              secondary:
+                                description: |-
+                                  (Boolean) Configure as secondary subnet
+                                  Configure as secondary subnet
+                                  - Default value: `true`
+                                type: boolean
+                            type: object
+                          type: array
+                        subnetPrefixLength:
+                          description: |-
+                            (Number) Subnet prefix length
+                            Subnet prefix length
+                            - Range: `1`-`32`
+                          type: number
+                        utilizationMarkHigh:
+                          description: |-
+                            (Number) High utilization mark percentage
+                            High utilization mark percentage
+                            - Range: `1`-`100`
+                          type: number
+                        utilizationMarkHighLog:
+                          description: |-
+                            (Boolean) Log when high utilization is detected
+                            Log when high utilization is detected
+                          type: boolean
+                        utilizationMarkLow:
+                          description: |-
+                            (Number) Low utilization mark percentage
+                            Low utilization mark percentage
+                            - Range: `1`-`100`
+                          type: number
+                        utilizationMarkLowLog:
+                          description: |-
+                            (Boolean) Log when low utilization is detected
+                            Log when low utilization is detected
+                          type: boolean
+                        vrf:
+                          description: |-
+                            (String) VRF name
+                            Associate this pool with a VRF
+                          type: string
+                      type: object
+                    type: array
+                  relayBootpIgnore:
+                    description: |-
+                      (Boolean) Configure this DHCP relay to ignore to BOOTP requests.
+                      Configure this DHCP relay to ignore to BOOTP requests.
+                    type: boolean
+                  relayInformationOptionDefault:
+                    description: |-
+                      (Boolean) Default option, no vpn
+                      Default option, no vpn
+                    type: boolean
+                  relayInformationOptionVpn:
+                    description: |-
+                      options and change the giaddr to the outgoing interface
+                      Insert VPN sub-options and change the giaddr to the outgoing interface
+                    type: boolean
+                  relayInformationTrustAll:
+                    description: |-
+                      (Boolean) Received DHCP packets may contain relay info option with zero giaddr
+                      Received DHCP packets may contain relay info option with zero giaddr
+                    type: boolean
+                  snooping:
+                    description: |-
+                      (Boolean) DHCP Snooping
+                      DHCP Snooping
+                    type: boolean
+                  snoopingInformationOption:
+                    description: (Boolean)
+                    type: boolean
+                  snoopingInformationOptionAllowUntrusted:
+                    description: |-
+                      untrusted
+                      DHCP Snooping information option allow-untrusted
+                    type: boolean
+                  snoopingInformationOptionFormatRemoteIdHostname:
+                    description: |-
+                      (Boolean) Use configured hostname for remote id
+                      Use configured hostname for remote id
+                    type: boolean
+                  snoopingInformationOptionFormatRemoteIdString:
+                    description: |-
+                      (String) User defined string for remote id
+                      User defined string for remote id
+                    type: string
+                  snoopingVlans:
+                    description: (Attributes List) DHCP Snooping vlan list. Use this
+                      for versions 17.14 and later. (see below for nested schema)
+                    items:
+                      properties:
+                        vlanId:
+                          description: |-
+                            Range: 1-4094
+
+                            - Range: `1`-`4094`
+                          type: number
+                      type: object
+                    type: array
+                  snoopingVlansLegacy:
+                    description: (Attributes List) DHCP Snooping vlan list. Use this
+                      for versions before 17.14. (see below for nested schema)
+                    items:
+                      properties:
+                        vlanId:
+                          description: |-
+                            Range: 1-4094
+                            DHCP Snooping vlan first number or vlan range,example: 1,3-5,7,9-11
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: DHCPStatus defines the observed state of DHCP.
+            properties:
+              atProvider:
+                properties:
+                  compatibilitySuboptionLinkSelection:
+                    description: |-
+                      Choices: cisco, standard
+
+                      - Choices: `cisco`, `standard`
+                    type: string
+                  compatibilitySuboptionServerOverride:
+                    description: |-
+                      Choices: cisco, standard
+
+                      - Choices: `cisco`, `standard`
+                    type: string
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  id:
+                    description: (String) The path of the object.
+                    type: string
+                  ipv6Pools:
+                    description: (Attributes List) Configure IPv6 DHCP pool (see below
+                      for nested schema)
+                    items:
+                      properties:
+                        addressPrefixes:
+                          description: (Attributes List) IPv6 address allocation prefix
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              address:
+                                description: |-
+                                  (String) IPv6 prefix address
+                                  IPv6 prefix address
+                                type: string
+                              preferredLifetime:
+                                description: |-
+                                  (String) Preferred lifetime in seconds or infinite
+                                  Preferred lifetime in seconds or infinite
+                                type: string
+                              validLifetime:
+                                description: |-
+                                  (String) Valid lifetime in seconds or infinite
+                                  Valid lifetime in seconds or infinite
+                                type: string
+                            type: object
+                          type: array
+                        bootfileUrl:
+                          description: |-
+                            (String) Boot file URL
+                            Boot file URL
+                          type: string
+                        dnsServers:
+                          description: |-
+                            (List of String) DNS server addresses
+                            DNS server addresses
+                          items:
+                            type: string
+                          type: array
+                        domainNames:
+                          description: |-
+                            (List of String) Domain names
+                            Domain names
+                          items:
+                            type: string
+                          type: array
+                        importDnsServer:
+                          description: |-
+                            (Boolean) Import DNS address from interface
+                            Import DNS address from interface
+                          type: boolean
+                        importDomainName:
+                          description: |-
+                            (Boolean) Import domain name from interface
+                            Import domain name from interface
+                          type: boolean
+                        informationRefreshDays:
+                          description: |-
+                            (Number) Information refresh days
+                            Information refresh days
+                            - Range: `0`-`365`
+                          type: number
+                        informationRefreshHours:
+                          description: |-
+                            (Number) Information refresh hours
+                            Information refresh hours
+                            - Range: `0`-`23`
+                          type: number
+                        informationRefreshInfinite:
+                          description: |-
+                            (Boolean) Infinite information refresh
+                            Infinite information refresh
+                          type: boolean
+                        informationRefreshMinutes:
+                          description: |-
+                            (Number) Information refresh minutes
+                            Information refresh minutes
+                            - Range: `0`-`59`
+                          type: number
+                        linkAddresses:
+                          description: address to match (see below for nested schema)
+                          items:
+                            properties:
+                              address:
+                                description: |-
+                                  (String) IPv6 prefix address
+                                  IPv6 prefix
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) DHCP pool name
+                            DHCP pool name
+                          type: string
+                        optionIncludeAll:
+                          description: |-
+                            (Boolean) Include all DHCPv6 configured options in REPLY
+                            Include all DHCPv6 configured options in REPLY
+                          type: boolean
+                        prefixDelegationPoolName:
+                          description: |-
+                            (String) IPv6 prefix delegation pool name
+                            IPv6 prefix delegation pool name
+                          type: string
+                        prefixDelegationPoolPreferredLifetime:
+                          description: |-
+                            (String) Preferred lifetime in seconds or infinite
+                            Preferred lifetime in seconds or infinite
+                          type: string
+                        prefixDelegationPoolValidLifetime:
+                          description: |-
+                            (String) Valid lifetime in seconds or infinite
+                            Valid lifetime in seconds or infinite
+                          type: string
+                        prefixDelegationPrefixes:
+                          description: (Attributes List) IPv6 prefix delegation prefix
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              hexString:
+                                description: |-
+                                  (String) DHCPv6 unique identifier (hex)
+                                  DHCPv6 unique identifier (hex)
+                                type: string
+                              iaid:
+                                description: |-
+                                  (String) DHCPv6 IAID (hex)
+                                  DHCPv6 IAID (hex)
+                                type: string
+                              preferredLifetime:
+                                description: |-
+                                  (String) Preferred lifetime in seconds or infinite
+                                  Preferred lifetime in seconds or infinite
+                                type: string
+                              prefix:
+                                description: |-
+                                  (String) IPv6 prefix
+                                  IPv6 prefix
+                                type: string
+                              validLifetime:
+                                description: |-
+                                  (String) Valid lifetime in seconds or infinite
+                                  Valid lifetime in seconds or infinite
+                                type: string
+                            type: object
+                          type: array
+                        sntpAddresses:
+                          description: |-
+                            (List of String) SNTP server addresses
+                            SNTP server addresses
+                          items:
+                            type: string
+                          type: array
+                        vendorSpecifics:
+                          description: specific options (see below for nested schema)
+                          items:
+                            properties:
+                              enterpriseId:
+                                description: |-
+                                  (Number) Enterprise ID
+                                  Enterprise ID
+                                  - Range: `1`-`4294967295`
+                                type: number
+                              suboptions:
+                                description: specific suboption (see below for nested
+                                  schema)
+                                items:
+                                  properties:
+                                    address:
+                                      description: |-
+                                        (String) IPv6 prefix address
+                                        IPv6 address value
+                                      type: string
+                                    ascii:
+                                      description: |-
+                                        (String) ASCII string value
+                                        ASCII string value
+                                      type: string
+                                    hex:
+                                      description: |-
+                                        (String) Hex string value
+                                        Hex string value
+                                      type: string
+                                    number:
+                                      description: |-
+                                        (Number) Suboption number
+                                        Suboption number
+                                        - Range: `1`-`65535`
+                                      type: number
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        vrf:
+                          description: |-
+                            (String) VRF name
+                            VRF name
+                          type: string
+                      type: object
+                    type: array
+                  pools:
+                    description: (Attributes List) Configure DHCP address pools (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        bootfile:
+                          description: |-
+                            (String) Boot file name
+                            Boot file name
+                          type: string
+                        clientName:
+                          description: |-
+                            (String) Client name
+                            Client name
+                          type: string
+                        defaultRouters:
+                          description: |-
+                            (List of String) Default routers
+                            Default routers
+                          items:
+                            type: string
+                          type: array
+                        dnsServers:
+                          description: |-
+                            (List of String) DNS server addresses
+                            DNS servers
+                          items:
+                            type: string
+                          type: array
+                        domainName:
+                          description: |-
+                            (String) Domain name
+                            Domain name
+                          type: string
+                        hostMask:
+                          description: |-
+                            (String) Network mask
+                            Network mask
+                          type: string
+                        hostNumber:
+                          description: |-
+                            (String) Client IP address
+                            Client IP address
+                          type: string
+                        leaseDays:
+                          description: |-
+                            (Number) Lease days
+                            Lease days
+                            - Range: `0`-`365`
+                          type: number
+                        leaseHours:
+                          description: |-
+                            (Number) Lease hours
+                            Lease hours
+                            - Range: `0`-`23`
+                          type: number
+                        leaseInfinite:
+                          description: |-
+                            (Boolean) Infinite lease
+                            Infinite lease
+                          type: boolean
+                        leaseMinutes:
+                          description: |-
+                            (Number) Lease minutes
+                            Lease minutes
+                            - Range: `0`-`59`
+                          type: number
+                        name:
+                          description: (String) DHCP pool name
+                          type: string
+                        networkMask:
+                          description: |-
+                            (String) Network mask
+                            Network mask
+                          type: string
+                        networkNumber:
+                          description: |-
+                            (String) Network number
+                            Network number
+                          type: string
+                        nextServers:
+                          description: |-
+                            (List of String) Next server IP addresses
+                            Next server IP addresses
+                          items:
+                            type: string
+                          type: array
+                        options:
+                          description: (Attributes List) (see below for nested schema)
+                          items:
+                            properties:
+                              ascii:
+                                description: |-
+                                  (String) ASCII string value
+                                  Data is an NVT ASCII string
+                                type: string
+                              hex:
+                                description: |-
+                                  (String) Hex string value
+                                  Data is a hexadecimal string
+                                type: string
+                              ip:
+                                description: |-
+                                  (List of String) Data is one or more IP addresses. Use this for versions 17.15 and later.
+                                  Data is one or more IP addresses. Use this for versions `17.15` and later.
+                                items:
+                                  type: string
+                                type: array
+                              ipLegacy:
+                                description: |-
+                                  (List of String) Data is one or more IP addresses. Use this for versions before 17.15.
+                                  Data is one or more IP addresses. Use this for versions before `17.15`.
+                                items:
+                                  type: string
+                                type: array
+                              optionCode:
+                                description: |-
+                                  (Number) DHCP option code
+                                  DHCP option code
+                                  - Range: `0`-`254`
+                                type: number
+                            type: object
+                          type: array
+                        secondaryNetworks:
+                          description: (Attributes List) Secondary number and mask
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              mask:
+                                description: |-
+                                  (String) Network mask
+                                  Network mask
+                                type: string
+                              number:
+                                description: |-
+                                  (Number) Suboption number
+                                  Network number
+                                type: string
+                              secondary:
+                                description: |-
+                                  (Boolean) Configure as secondary subnet
+                                  Configure as secondary subnet
+                                  - Default value: `true`
+                                type: boolean
+                            type: object
+                          type: array
+                        subnetPrefixLength:
+                          description: |-
+                            (Number) Subnet prefix length
+                            Subnet prefix length
+                            - Range: `1`-`32`
+                          type: number
+                        utilizationMarkHigh:
+                          description: |-
+                            (Number) High utilization mark percentage
+                            High utilization mark percentage
+                            - Range: `1`-`100`
+                          type: number
+                        utilizationMarkHighLog:
+                          description: |-
+                            (Boolean) Log when high utilization is detected
+                            Log when high utilization is detected
+                          type: boolean
+                        utilizationMarkLow:
+                          description: |-
+                            (Number) Low utilization mark percentage
+                            Low utilization mark percentage
+                            - Range: `1`-`100`
+                          type: number
+                        utilizationMarkLowLog:
+                          description: |-
+                            (Boolean) Log when low utilization is detected
+                            Log when low utilization is detected
+                          type: boolean
+                        vrf:
+                          description: |-
+                            (String) VRF name
+                            Associate this pool with a VRF
+                          type: string
+                      type: object
+                    type: array
+                  relayBootpIgnore:
+                    description: |-
+                      (Boolean) Configure this DHCP relay to ignore to BOOTP requests.
+                      Configure this DHCP relay to ignore to BOOTP requests.
+                    type: boolean
+                  relayInformationOptionDefault:
+                    description: |-
+                      (Boolean) Default option, no vpn
+                      Default option, no vpn
+                    type: boolean
+                  relayInformationOptionVpn:
+                    description: |-
+                      options and change the giaddr to the outgoing interface
+                      Insert VPN sub-options and change the giaddr to the outgoing interface
+                    type: boolean
+                  relayInformationTrustAll:
+                    description: |-
+                      (Boolean) Received DHCP packets may contain relay info option with zero giaddr
+                      Received DHCP packets may contain relay info option with zero giaddr
+                    type: boolean
+                  snooping:
+                    description: |-
+                      (Boolean) DHCP Snooping
+                      DHCP Snooping
+                    type: boolean
+                  snoopingInformationOption:
+                    description: (Boolean)
+                    type: boolean
+                  snoopingInformationOptionAllowUntrusted:
+                    description: |-
+                      untrusted
+                      DHCP Snooping information option allow-untrusted
+                    type: boolean
+                  snoopingInformationOptionFormatRemoteIdHostname:
+                    description: |-
+                      (Boolean) Use configured hostname for remote id
+                      Use configured hostname for remote id
+                    type: boolean
+                  snoopingInformationOptionFormatRemoteIdString:
+                    description: |-
+                      (String) User defined string for remote id
+                      User defined string for remote id
+                    type: string
+                  snoopingVlans:
+                    description: (Attributes List) DHCP Snooping vlan list. Use this
+                      for versions 17.14 and later. (see below for nested schema)
+                    items:
+                      properties:
+                        vlanId:
+                          description: |-
+                            Range: 1-4094
+
+                            - Range: `1`-`4094`
+                          type: number
+                      type: object
+                    type: array
+                  snoopingVlansLegacy:
+                    description: (Attributes List) DHCP Snooping vlan list. Use this
+                      for versions before 17.14. (see below for nested schema)
+                    items:
+                      properties:
+                        vlanId:
+                          description: |-
+                            Range: 1-4094
+                            DHCP Snooping vlan first number or vlan range,example: 1,3-5,7,9-11
+                          type: string
+                      type: object
+                    type: array
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              lastHandledReconcileAt:
+                description: |-
+                  LastHandledReconcileAt holds the value of the most recent
+                  reconcile-requested-at annotation token that the controller has
+                  processed. Users can compare this to the annotation to determine
+                  whether a reconcile request has been handled.
+                type: string
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

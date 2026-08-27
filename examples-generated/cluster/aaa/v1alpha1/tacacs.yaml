@@ -1,0 +1,19 @@
+apiVersion: aaa.iosxe.upbound.io/v1alpha1
+kind: TACACS
+metadata:
+  annotations:
+    meta.upbound.io/example-id: aaa/v1alpha1/tacacs
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    addressIpv4: 10.10.15.13
+    encryption: "0"
+    keySecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    name: tacacs_10.10.15.13
+    port: 490
+    timeout: 4

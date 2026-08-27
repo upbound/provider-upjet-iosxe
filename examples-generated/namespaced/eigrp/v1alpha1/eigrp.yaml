@@ -1,0 +1,19 @@
+apiVersion: eigrp.iosxe.m.upbound.io/v1alpha1
+kind: EIGRP
+metadata:
+  annotations:
+    meta.upbound.io/example-id: eigrp/v1alpha1/eigrp
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    autoSummary: false
+    autonomousSystem: 100
+    name: TOPGEN
+    networks:
+    - ip: 10.10.0.0
+      wildcard: 0.0.255.255
+    routerId: 10.255.0.1
+    shutdown: false

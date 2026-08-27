@@ -1,0 +1,25 @@
+apiVersion: evpn.iosxe.m.upbound.io/v1alpha1
+kind: EVPN
+metadata:
+  annotations:
+    meta.upbound.io/example-id: evpn/v1alpha1/evpn
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    defaultGatewayAdvertise: true
+    floodingSuppressionAddressResolutionDisable: true
+    ipDuplicationLimit: 10
+    ipDuplicationTime: 100
+    loggingPeerState: true
+    macDuplicationLimit: 10
+    macDuplicationTime: 100
+    multicastAdvertise: true
+    replicationTypeIngress: false
+    replicationTypeMp2Mp: false
+    replicationTypeP2Mp: false
+    replicationTypeStatic: true
+    routeTargetAutoVni: true
+    routerIdLoopback: 100

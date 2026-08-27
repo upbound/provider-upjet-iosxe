@@ -1,0 +1,38 @@
+apiVersion: system.iosxe.m.upbound.io/v1alpha1
+kind: Logging
+metadata:
+  annotations:
+    meta.upbound.io/example-id: system/v1alpha1/logging
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    bufferedSeverityLegacy: informational
+    bufferedSizeLegacy: 16000
+    console: true
+    facility: local0
+    historySeverity: informational
+    historySize: 100
+    ipv4Hosts:
+    - ipv4Host: 1.1.1.1
+    ipv4VrfHosts:
+    - ipv4Host: 1.1.1.1
+      vrf: VRF1
+    ipv6Hosts:
+    - ipv6Host: 2001::1
+    ipv6VrfHosts:
+    - ipv6Host: 2001::1
+      vrf: VRF1
+    monitorSeverity: informational
+    originIdType: hostname
+    persistentFilesize: 500000
+    persistentSize: 1000000
+    rateLimitAll: 200
+    sourceInterface: Loopback0
+    sourceInterfacesVrf:
+    - interfaceName: Loopback200
+      vrf: VRF1
+    trap: true
+    trapSeverity: informational

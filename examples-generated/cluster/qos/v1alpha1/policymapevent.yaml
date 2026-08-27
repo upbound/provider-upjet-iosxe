@@ -1,0 +1,42 @@
+apiVersion: qos.iosxe.upbound.io/v1alpha1
+kind: PolicyMapEvent
+metadata:
+  annotations:
+    meta.upbound.io/example-id: qos/v1alpha1/policymapevent
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    classNumbers:
+    - actionNumbers:
+      - activateInterfaceTemplate: templ1
+        activatePolicyTypeControlSubscriber: subscriber1
+        activateServiceTemplateConfigAaaList: methodlist1
+        activateServiceTemplateConfigPrecedence: 1
+        activateServiceTemplateConfigServiceTemplate: DEFAULT_LINK_POLICY
+        authenticateUsingBoth: true
+        authenticateUsingMethod: dot1x
+        authenticateUsingPriority: 10
+        authenticateUsingRetries: 2
+        authenticateUsingRetryTime: 0
+        authenticationRestart: 2
+        clearAuthenticatedDataHostsOnPort: true
+        clearSession: true
+        errDisable: true
+        notify: true
+        number: 10
+        protect: true
+        replace: true
+        restrict: true
+        resumeReauthentication: true
+        setDomain: data
+        setTimerName: timer1
+        setTimerValue: 3600
+        unauthorize: true
+      class: MY_CLASS
+      executionType: do-until-failure
+      number: 10
+    eventType: authentication-success
+    matchType: match-all
+    name: dot1x_policy

@@ -1,0 +1,42 @@
+apiVersion: bgp.iosxe.m.upbound.io/v1alpha1
+kind: AddressFamilyIPv4
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bgp/v1alpha1/addressfamilyipv4
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    afName: unicast
+    asnSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    ipv4UnicastAdminDistances:
+    - distance: 200
+      sourceIp: 10.1.1.1
+      wildcard: 0.0.0.0
+    ipv4UnicastAggregateAddresses:
+    - ipv4Address: 10.0.0.0
+      ipv4Mask: 255.255.0.0
+    ipv4UnicastDistanceBgpExternal: 20
+    ipv4UnicastDistanceBgpInternal: 200
+    ipv4UnicastDistanceBgpLocal: 200
+    ipv4UnicastMaximumPathsEbgp: 2
+    ipv4UnicastMaximumPathsIbgp: 2
+    ipv4UnicastNetworks:
+    - backdoor: true
+      network: 13.0.0.0
+      routeMap: RM1
+    ipv4UnicastNetworksMask:
+    - backdoor: true
+      mask: 255.255.0.0
+      network: 12.0.0.0
+      routeMap: RM1
+    ipv4UnicastRedistributeConnected: true
+    ipv4UnicastRedistributeConnectedMetric: 100
+    ipv4UnicastRedistributeConnectedRouteMap: RM_BGP_CONNECTED
+    ipv4UnicastRedistributeStatic: true
+    ipv4UnicastRedistributeStaticMetric: 200
+    ipv4UnicastRedistributeStaticRouteMap: RM_BGP_STATIC

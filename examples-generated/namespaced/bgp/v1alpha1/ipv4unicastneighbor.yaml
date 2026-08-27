@@ -1,0 +1,25 @@
+apiVersion: bgp.iosxe.m.upbound.io/v1alpha1
+kind: IPv4UnicastNeighbor
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bgp/v1alpha1/ipv4unicastneighbor
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    activate: true
+    asnSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    defaultOriginate: true
+    defaultOriginateRouteMap: RM1
+    inheritPeerPolicy: PEER_POLICY_TEMPLATE_1
+    ip: 3.3.3.3
+    routeMaps:
+    - inOut: in
+      routeMapName: RM1
+    routeReflectorClient: false
+    sendCommunity: both
+    softReconfiguration: inbound

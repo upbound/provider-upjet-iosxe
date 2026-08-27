@@ -1,0 +1,231 @@
+apiVersion: acl.iosxe.m.upbound.io/v1alpha1
+kind: ObjectGroup
+metadata:
+  annotations:
+    meta.upbound.io/example-id: acl/v1alpha1/objectgroup
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    fqdn:
+    - description: My FQDN object group
+      name: FQDN_GROUP_1
+      patterns:
+      - fqdnPattern: .*\.cisco\.com
+    network:
+    - addressRanges:
+      - end: 10.1.3.10
+        start: 10.1.3.1
+      description: My network object group
+      hosts:
+      - ipv4Host: 10.1.1.1
+      name: NETWORK_GROUP_1
+      networkAddresses:
+      - ipv4Address: 10.1.2.0
+        ipv4Mask: 255.255.255.0
+    service:
+    - ahp: true
+      description: My service object group
+      eigrp: false
+      esp: false
+      gre: false
+      icmp: false
+      icmpAlternateAddress: false
+      icmpConversionError: false
+      icmpEcho: false
+      icmpEchoReply: false
+      icmpInformationReply: false
+      icmpInformationRequest: false
+      icmpMaskReply: false
+      icmpMaskRequest: false
+      icmpMobileRedirect: false
+      icmpParameterProblem: false
+      icmpPortNumber: 8
+      icmpRedirect: false
+      icmpRouterAdvertisement: false
+      icmpRouterSolicitation: false
+      icmpSourceQuench: false
+      icmpTimeExceeded: false
+      icmpTimestampReply: false
+      icmpTimestampRequest: false
+      icmpTraceroute: false
+      icmpUnreachable: false
+      igmp: false
+      ip: false
+      ipinip: false
+      name: SERVICE_GROUP_1
+      nos: false
+      ospf: false
+      pcp: false
+      pim: false
+      protocolNumbers:
+      - 47
+      tcp: false
+      tcpDstPortList:
+      - port: www
+      tcpDstPortListOp:
+      - operator: eq
+        port: www
+      tcpDstPortRanges:
+      - maxPort: "2048"
+        minPort: "1024"
+      tcpSrcDstPortList:
+      - dstPort: www
+        srcPort: "8080"
+      tcpSrcDstPortListDstOp:
+      - dstOperator: eq
+        dstPort: www
+        srcPort: "8080"
+      tcpSrcDstPortListOp:
+      - dstOperator: eq
+        dstPort: www
+        srcOperator: eq
+        srcPort: "8080"
+      tcpSrcDstPortListSrcOp:
+      - dstPort: www
+        srcOperator: eq
+        srcPort: "8080"
+      tcpSrcDstRangePortList:
+      - dstMaxPort: "4000"
+        dstMinPort: "3000"
+        srcPort: "8080"
+      tcpSrcDstRangePortListOp:
+      - dstMaxPort: "4000"
+        dstMinPort: "3000"
+        operator: eq
+        srcPort: "8080"
+      tcpSrcPortList:
+      - port: "8080"
+      tcpSrcPortListOp:
+      - operator: eq
+        port: "8080"
+      tcpSrcPortRanges:
+      - maxPort: "5000"
+        minPort: "4000"
+      tcpSrcRangeDstPortList:
+      - dstPort: www
+        srcMaxPort: "2048"
+        srcMinPort: "1024"
+      tcpSrcRangeDstPortListOp:
+      - dstPort: www
+        operator: eq
+        srcMaxPort: "2048"
+        srcMinPort: "1024"
+      tcpSrcRangeDstRangePortList:
+      - dstMaxPort: "4000"
+        dstMinPort: "3000"
+        srcMaxPort: "2048"
+        srcMinPort: "1024"
+      tcpUdpDstPortList:
+      - port: "3389"
+      tcpUdpDstPortListOp:
+      - operator: eq
+        port: "3389"
+      tcpUdpDstPortRanges:
+      - maxPort: "2048"
+        minPort: "1024"
+      tcpUdpSrcDstPortList:
+      - dstPort: "3389"
+        srcPort: "5000"
+      tcpUdpSrcDstPortListDstOp:
+      - dstOperator: eq
+        dstPort: "3389"
+        srcPort: "5000"
+      tcpUdpSrcDstPortListOp:
+      - dstOperator: eq
+        dstPort: "3389"
+        srcOperator: eq
+        srcPort: "5000"
+      tcpUdpSrcDstPortListSrcOp:
+      - dstPort: "3389"
+        srcOperator: eq
+        srcPort: "5000"
+      tcpUdpSrcDstRangePortList:
+      - dstMaxPort: "4000"
+        dstMinPort: "3000"
+        srcPort: "5000"
+      tcpUdpSrcDstRangePortListOp:
+      - dstMaxPort: "4000"
+        dstMinPort: "3000"
+        operator: eq
+        srcPort: "5000"
+      tcpUdpSrcPortList:
+      - port: "5000"
+      tcpUdpSrcPortListOp:
+      - operator: eq
+        port: "5000"
+      tcpUdpSrcPortRanges:
+      - maxPort: "5000"
+        minPort: "4000"
+      tcpUdpSrcRangeDstPortList:
+      - dstPort: "3389"
+        srcMaxPort: "2048"
+        srcMinPort: "1024"
+      tcpUdpSrcRangeDstPortListOp:
+      - dstPort: "3389"
+        operator: eq
+        srcMaxPort: "2048"
+        srcMinPort: "1024"
+      tcpUdpSrcRangeDstRangePortList:
+      - dstMaxPort: "4000"
+        dstMinPort: "3000"
+        srcMaxPort: "2048"
+        srcMinPort: "1024"
+      udp: false
+      udpDstPortList:
+      - port: syslog
+      udpDstPortListOp:
+      - operator: eq
+        port: syslog
+      udpDstPortRanges:
+      - maxPort: "2048"
+        minPort: "1024"
+      udpSrcDstPortList:
+      - dstPort: syslog
+        srcPort: "5000"
+      udpSrcDstPortListDstOp:
+      - dstOperator: eq
+        dstPort: syslog
+        srcPort: "5000"
+      udpSrcDstPortListOp:
+      - dstOperator: eq
+        dstPort: syslog
+        srcOperator: eq
+        srcPort: "5000"
+      udpSrcDstPortListSrcOp:
+      - dstPort: syslog
+        srcOperator: eq
+        srcPort: "5000"
+      udpSrcDstRangePortList:
+      - dstMaxPort: "4000"
+        dstMinPort: "3000"
+        srcPort: "5000"
+      udpSrcDstRangePortListOp:
+      - dstMaxPort: "4000"
+        dstMinPort: "3000"
+        operator: eq
+        srcPort: "5000"
+      udpSrcPortList:
+      - port: "5000"
+      udpSrcPortListOp:
+      - operator: eq
+        port: "5000"
+      udpSrcPortRanges:
+      - maxPort: "5000"
+        minPort: "4000"
+      udpSrcRangeDstPortList:
+      - dstPort: syslog
+        srcMaxPort: "2048"
+        srcMinPort: "1024"
+      udpSrcRangeDstPortListOp:
+      - dstPort: syslog
+        operator: eq
+        srcMaxPort: "2048"
+        srcMinPort: "1024"
+      udpSrcRangeDstRangePortList:
+      - dstMaxPort: "4000"
+        dstMinPort: "3000"
+        srcMaxPort: "2048"
+        srcMinPort: "1024"

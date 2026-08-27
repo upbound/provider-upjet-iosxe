@@ -1,0 +1,13 @@
+apiVersion: security.iosxe.m.upbound.io/v1alpha1
+kind: Zone
+metadata:
+  annotations:
+    meta.upbound.io/example-id: security/v1alpha1/zone
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    description: Internal trusted network
+    name: INSIDE

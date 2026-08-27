@@ -1,0 +1,35 @@
+apiVersion: interface.iosxe.upbound.io/v1alpha1
+kind: OSPF
+metadata:
+  annotations:
+    meta.upbound.io/example-id: interface/v1alpha1/ospf
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    cost: 10
+    deadInterval: 30
+    helloInterval: 5
+    messageDigestKeys:
+    - id: 1
+      md5AuthKeySecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      md5AuthType: 0
+    mtuIgnore: false
+    multiAreaIds:
+    - areaId: "10"
+    name: "1"
+    networkTypeBroadcast: false
+    networkTypeNonBroadcast: false
+    networkTypePointToMultipoint: false
+    networkTypePointToPoint: true
+    priority: 10
+    processIds:
+    - areas:
+      - areaId: "0"
+      id: 1
+    ttlSecurityHops: 2
+    type: Loopback

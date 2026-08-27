@@ -1,0 +1,17 @@
+apiVersion: acl.iosxe.upbound.io/v1alpha1
+kind: Standard
+metadata:
+  annotations:
+    meta.upbound.io/example-id: acl/v1alpha1/standard
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    entries:
+    - denyLog: true
+      denyPrefix: 10.0.0.0
+      denyPrefixMask: 0.0.0.255
+      remark: Description
+      sequence: 10
+    name: SACL1

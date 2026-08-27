@@ -1,0 +1,14 @@
+apiVersion: crypto.iosxe.upbound.io/v1alpha1
+kind: IKEv2Proposal
+metadata:
+  annotations:
+    meta.upbound.io/example-id: crypto/v1alpha1/ikev2proposal
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    encryptionAesCbc256: true
+    groupSixteen: true
+    integritySha256: true
+    name: PROPOSAL1

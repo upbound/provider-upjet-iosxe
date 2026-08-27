@@ -1,0 +1,34 @@
+apiVersion: system.iosxe.upbound.io/v1alpha1
+kind: EEM
+metadata:
+  annotations:
+    meta.upbound.io/example-id: system/v1alpha1/eem
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    applets:
+    - actions:
+      - cliCommand: enable
+        name: "10"
+      authorization: bypass
+      class: A
+      description: test describing applet
+      eventSyslogMaxrun: 30
+      eventSyslogOccurs: 1
+      eventSyslogPattern: '%EXAMPLE-5-TEST: Example syslog for testing purposes'
+      eventSyslogPeriod: 60
+      eventSyslogRatelimit: 10
+      name: test_applet_10
+    detectorRoutingBootupDelay: 2
+    directoryUserPolicy: test/test_path
+    environmentVariables:
+    - name: IOSXE_TEST_VAR
+      value: test_pass
+    historySizeEvents: 25
+    historySizeTraps: 25
+    schedulerAppletThreadClassDefault: true
+    schedulerAppletThreadClassNumber: 1
+    sessionCliUsername: test_user
+    sessionCliUsernamePrivilege: 15

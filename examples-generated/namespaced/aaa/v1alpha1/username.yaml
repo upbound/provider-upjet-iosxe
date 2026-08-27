@@ -1,0 +1,18 @@
+apiVersion: aaa.iosxe.m.upbound.io/v1alpha1
+kind: Username
+metadata:
+  annotations:
+    meta.upbound.io/example-id: aaa/v1alpha1/username
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    description: User1 description
+    name: user1
+    passwordEncryption: "0"
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+    privilege: 15

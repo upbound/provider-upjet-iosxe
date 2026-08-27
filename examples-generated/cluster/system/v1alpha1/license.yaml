@@ -1,0 +1,13 @@
+apiVersion: system.iosxe.upbound.io/v1alpha1
+kind: License
+metadata:
+  annotations:
+    meta.upbound.io/example-id: system/v1alpha1/license
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    bootLevelNetworkAdvantage: true
+    bootLevelNetworkAdvantageAddon: dna-advantage
+    smartTransportType: "Off"

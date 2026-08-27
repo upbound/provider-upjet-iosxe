@@ -1,0 +1,1620 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: templates.system.iosxe.upbound.io
+spec:
+  group: system.iosxe.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - iosxe
+    kind: Template
+    listKind: TemplateList
+    plural: templates
+    singular: template
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Template is the Schema for the Templates API. This resource can
+          manage the Template configuration.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: TemplateSpec defines the desired state of Template
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  accessSessionClosed:
+                    description: |-
+                      (Boolean) Enable closed access on port (disabled by default, i.e. open access)
+                      Enable closed access on port (disabled by default, i.e. open access)
+                    type: boolean
+                  accessSessionControlDirection:
+                    description: |-
+                      direction on the interface
+                      Set the control-direction on the interface
+                      - Choices: `both`, `in`
+                    type: string
+                  accessSessionHostMode:
+                    description: |-
+                      (String) Set the Host mode for authentication on this interface
+                      Set the Host mode for authentication on this interface
+                      - Choices: `multi-auth`, `multi-domain`, `multi-host`, `single-host`
+                    type: string
+                  accessSessionInterfaceTemplateSticky:
+                    description: |-
+                      (Boolean) Interface templates set to sticky
+                      Interface templates set to sticky
+                    type: boolean
+                  accessSessionInterfaceTemplateStickyTimer:
+                    description: |-
+                      (Number) Sticky timer value
+                      Sticky timer value
+                      - Range: `1`-`65535`
+                    type: number
+                  accessSessionMonitor:
+                    description: |-
+                      (Boolean) Apply template to monitor access sessions on the port
+                      Apply template to monitor access sessions on the port
+                    type: boolean
+                  accessSessionPortControl:
+                    description: |-
+                      control value
+                      Set the port-control value
+                      - Choices: `auto`, `force-authorized`, `force-unauthorized`
+                    type: string
+                  authenticationPeriodic:
+                    description: |-
+                      (Boolean) Enable or Disable Reauthentication for this port
+                      Enable or Disable Reauthentication for this port
+                    type: boolean
+                  authenticationTimerReauthenticateRange:
+                    description: |-
+                      (Number) Enter a value between 1 and 1073741823
+                      Enter a value between 1 and 1073741823
+                      - Range: `1`-`1073741823`
+                    type: number
+                  authenticationTimerReauthenticateServer:
+                    description: |-
+                      authentication timeout value from the server
+                      Obtain re-authentication timeout value from the server
+                    type: boolean
+                  ctsManual:
+                    description: |-
+                      (Boolean) Supply local configuration for CTS parameters
+                      Supply local configuration for CTS parameters
+                    type: boolean
+                  ctsManualPolicyStaticSgt:
+                    description: |-
+                      trusted incoming traffic
+                      Source Security Group Tag to apply to untagged or non-trusted incoming traffic
+                      - Range: `2`-`65519`
+                    type: number
+                  ctsManualPolicyStaticTrusted:
+                    description: |-
+                      (Boolean) Trust the Source Group Tags (SGT) that the peer uses for sending
+                      Trust the Source Group Tags (SGT) that the peer uses for sending
+                    type: boolean
+                  ctsManualPropagateSgt:
+                    description: |-
+                      (Boolean) CTS SGT Propagation configuration
+                      CTS SGT Propagation configuration
+                    type: boolean
+                  ctsRoleBasedEnforcement:
+                    description: |-
+                      based Access Control enforcement
+                      Enable Role-based Access Control enforcement
+                    type: boolean
+                  deleteMode:
+                    description: |-
+                      is. Default value is all.
+                      Configure behavior when deleting/destroying the resource. Either delete the entire object (YANG container) being managed, or only delete the individual resource attributes configured explicitly and leave everything else as-is. Default value is `all`.
+                      - Choices: `all`, `attributes`
+                    type: string
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  deviceTracking:
+                    description: |-
+                      tracking on the interface
+                      Configure device-tracking on the interface
+                    type: boolean
+                  deviceTrackingAttachPolicy:
+                    description: (Attributes List) policy name for device tracking
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        policyName:
+                          description: (String)
+                          type: string
+                        vlanRange:
+                          description: |-
+                            (String) VLAN IDs of the VLANs for which this policy applies
+                            VLAN IDs of the VLANs for which this policy applies
+                          type: string
+                      type: object
+                    type: array
+                  deviceTrackingVlanRange:
+                    description: |-
+                      (String) VLAN IDs of the VLANs for which this policy applies
+                      VLAN IDs of the VLANs for which this policy applies
+                    type: string
+                  dot1xMaxReauthReq:
+                    description: |-
+                      (Number) Max No. of Reauthentication Attempts
+                      Max No. of Reauthentication Attempts
+                      - Range: `1`-`10`
+                    type: number
+                  dot1xMaxReq:
+                    description: |-
+                      (Number) Max No. of Retries
+                      Max No. of Retries
+                      - Range: `1`-`10`
+                    type: number
+                  dot1xPae:
+                    description: |-
+                      (String) Set 802.1x interface pae type
+                      Set 802.1x interface pae type
+                      - Choices: `authenticator`, `both`, `supplicant`
+                    type: string
+                  dot1xTimeoutQuietPeriod:
+                    description: |-
+                      (Number) QuietPeriod in Seconds
+                      QuietPeriod in Seconds
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutRatelimitPeriod:
+                    description: |-
+                      (Number) Ratelimit Period in seconds
+                      Ratelimit Period in seconds
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutServerTimeout:
+                    description: |-
+                      (Number) Timeout for Radius Retries
+                      Timeout for Radius Retries
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutSuppTimeout:
+                    description: |-
+                      (Number) Timeout for supplicant reply
+                      Timeout for supplicant reply
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutTxPeriod:
+                    description: |-
+                      (Number) Timeout for supplicant retries
+                      Timeout for supplicant retries
+                      - Range: `1`-`65535`
+                    type: number
+                  ipAccessGroup:
+                    description: (Attributes List) Access control list for IP packets
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        accessList:
+                          description: |-
+                            (String) Access control list name
+                            Access control list name
+                          type: string
+                        direction:
+                          description: |-
+                            (String) packet flow direction
+                            packet flow direction
+                            - Choices: `in`, `out`
+                          type: string
+                      type: object
+                    type: array
+                  ipDhcpSnoopingLimitRate:
+                    description: |-
+                      (Number) DHCP snooping rate limit
+                      DHCP snooping rate limit
+                      - Range: `1`-`2048`
+                    type: number
+                  ipDhcpSnoopingTrust:
+                    description: |-
+                      (Boolean) DHCP Snooping trust config
+                      DHCP Snooping trust config
+                    type: boolean
+                  loadInterval:
+                    description: |-
+                      (Number) Load interval delay in seconds
+                      Load interval delay in seconds
+                      - Range: `30`-`600`
+                    type: number
+                  mab:
+                    description: |-
+                      (Boolean) MAC Authentication Bypass Interface Config Commands
+                      MAC Authentication Bypass Interface Config Commands
+                    type: boolean
+                  mabEap:
+                    description: |-
+                      (Boolean) Use EAP authentication for MAC Auth Bypass
+                      Use EAP authentication for MAC Auth Bypass
+                    type: boolean
+                  servicePolicyInput:
+                    description: |-
+                      map name
+                      policy-map name
+                    type: string
+                  servicePolicyOutput:
+                    description: |-
+                      map name
+                      policy-map name
+                    type: string
+                  servicePolicyTypeControlSubscriber:
+                    description: |-
+                      (String) Apply a subscriber control policy to the interface
+                      Apply a subscriber control policy to the interface
+                    type: string
+                  sourceTemplate:
+                    description: |-
+                      (String) Get config from a template
+                      Get config from a template
+                    type: string
+                  spanningTreeBpduguardEnable:
+                    description: |-
+                      (Boolean) Enable BPDU guard for this interface
+                      Enable BPDU guard for this interface
+                    type: boolean
+                  spanningTreePortfast:
+                    description: |-
+                      (Boolean) Portfast options for the interface
+                      Portfast options for the interface
+                    type: boolean
+                  spanningTreePortfastDisable:
+                    description: |-
+                      (Boolean) Disable portfast for this interface
+                      Disable portfast for this interface
+                    type: boolean
+                  spanningTreePortfastEdge:
+                    description: |-
+                      (Boolean) Enable portfast edge on the interface
+                      Enable portfast edge on the interface
+                    type: boolean
+                  spanningTreePortfastNetwork:
+                    description: |-
+                      (Boolean) Enable portfast network on the interface
+                      Enable portfast network on the interface
+                    type: boolean
+                  spanningTreeServicePolicy:
+                    description: |-
+                      (Boolean) help
+                      help
+                    type: boolean
+                  stormControlActionShutdown:
+                    description: |-
+                      (Boolean) Shutdown this interface if a storm occurs
+                      Shutdown this interface if a storm occurs
+                    type: boolean
+                  stormControlActionTrap:
+                    description: |-
+                      (Boolean) Send SNMP trap if a storm occurs
+                      Send SNMP trap if a storm occurs
+                    type: boolean
+                  stormControlBroadcastLevelBpsThreshold:
+                    description: |-
+                      (Number) Enter threshold
+                      Enter threshold
+                    type: number
+                  stormControlBroadcastLevelPpsThreshold:
+                    description: |-
+                      (String) Enter threshold
+                      Enter threshold
+                    type: string
+                  stormControlBroadcastLevelThreshold:
+                    description: |-
+                      (Number) Enter threshold
+                      Enter threshold
+                    type: number
+                  stormControlMulticastLevelBpsThreshold:
+                    description: |-
+                      (Number) Enter threshold
+                      Enter threshold
+                    type: number
+                  stormControlMulticastLevelPpsThreshold:
+                    description: |-
+                      (String) Enter threshold
+                      Enter threshold
+                    type: string
+                  stormControlMulticastLevelThreshold:
+                    description: |-
+                      (Number) Enter threshold
+                      Enter threshold
+                    type: number
+                  subscriberAgingInactivityTimerProbe:
+                    description: |-
+                      (Boolean) ARP probe
+                      ARP probe
+                    type: boolean
+                  subscriberAgingInactivityTimerValue:
+                    description: |-
+                      (Number) Enter a value between 1 and 65535 in seconds
+                      Enter a value between 1 and 65535 in seconds
+                      - Range: `1`-`65535`
+                    type: number
+                  subscriberAgingProbe:
+                    description: |-
+                      (Boolean) ARP probe
+                      ARP probe
+                    type: boolean
+                  switchportAccessVlan:
+                    description: |-
+                      (Number) VLAN ID of the VLAN when this port is in access mode
+                      VLAN ID of the VLAN when this port is in access mode
+                      - Range: `1`-`4094`
+                    type: number
+                  switchportBlockUnicast:
+                    description: |-
+                      (Boolean) Block unknown unicast addresses
+                      Block unknown unicast addresses
+                    type: boolean
+                  switchportModeAccess:
+                    description: |-
+                      (Boolean) Set trunking mode to ACCESS unconditionally
+                      Set trunking mode to ACCESS unconditionally
+                    type: boolean
+                  switchportModeTrunk:
+                    description: |-
+                      (Boolean) Set trunking mode to TRUNK unconditionally
+                      Set trunking mode to TRUNK unconditionally
+                    type: boolean
+                  switchportNonegotiate:
+                    description: |-
+                      (Boolean) Device will not engage in negotiation protocol on this interface
+                      Device will not engage in negotiation protocol on this interface
+                    type: boolean
+                  switchportPortSecurity:
+                    description: |-
+                      (Boolean) Security related command
+                      Security related command
+                    type: boolean
+                  switchportPortSecurityAgingStatic:
+                    description: |-
+                      (Boolean) Enable aging for configured secure addresses
+                      Enable aging for configured secure addresses
+                    type: boolean
+                  switchportPortSecurityAgingTime:
+                    description: |-
+                      security aging time
+                      Port-security aging time
+                      - Range: `1`-`1440`
+                    type: number
+                  switchportPortSecurityAgingType:
+                    description: |-
+                      security aging type
+                      Port-security aging type
+                    type: boolean
+                  switchportPortSecurityAgingTypeInactivity:
+                    description: |-
+                      (Boolean) Aging based on inactivity time period
+                      Aging based on inactivity time period
+                    type: boolean
+                  switchportPortSecurityMaximumRange:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        range:
+                          description: |-
+                            (Number) Maximum addresses
+                            Maximum addresses
+                            - Range: `1`-`3072`
+                          type: number
+                        vlan:
+                          description: |-
+                            (Boolean) Max secure addresses per vlan
+                            Max secure addresses per vlan
+                          type: boolean
+                        vlanAccess:
+                          description: |-
+                            (Boolean) access vlan
+                            access vlan
+                          type: boolean
+                      type: object
+                    type: array
+                  switchportPortSecurityViolationProtect:
+                    description: |-
+                      (Boolean) Security violation protect mode
+                      Security violation protect mode
+                    type: boolean
+                  switchportPortSecurityViolationRestrict:
+                    description: |-
+                      (Boolean) Security violation restrict mode
+                      Security violation restrict mode
+                    type: boolean
+                  switchportPortSecurityViolationShutdown:
+                    description: |-
+                      (Boolean) Security violation shutdown mode
+                      Security violation shutdown mode
+                    type: boolean
+                  switchportPrivateVlanHostAssociationPrimaryRange:
+                    description: |-
+                      (Number) Primary normal range VLAN ID of the private VLAN port association
+                      Primary normal range VLAN ID of the private VLAN port association
+                      - Range: `2`-`1001`
+                    type: number
+                  switchportPrivateVlanHostAssociationSecondaryRange:
+                    description: |-
+                      (Number) Secondary normal range VLAN ID of the private VLAN host port association
+                      Secondary normal range VLAN ID of the private VLAN host port association
+                      - Range: `2`-`1001`
+                    type: number
+                  switchportTrunkAllowedVlans:
+                    description: |-
+                      (String) VLAN IDs of the allowed VLANs when this port is in trunking mode
+                      VLAN IDs of the allowed VLANs when this port is in trunking mode
+                    type: string
+                  switchportTrunkAllowedVlansAll:
+                    description: |-
+                      (Boolean) all VLANs
+                      all VLANs
+                    type: boolean
+                  switchportTrunkAllowedVlansNone:
+                    description: |-
+                      (Boolean) no VLANs
+                      no VLANs
+                    type: boolean
+                  switchportTrunkNativeVlanTag:
+                    description: |-
+                      (Boolean) Set native VLAN tagging state
+                      Set native VLAN tagging state
+                    type: boolean
+                  switchportTrunkNativeVlanVlanId:
+                    description: |-
+                      (Number) VLAN ID of the native VLAN when this port is in trunking mode
+                      VLAN ID of the native VLAN when this port is in trunking mode
+                      - Range: `1`-`4094`
+                    type: number
+                  switchportVoiceVlan:
+                    description: |-
+                      (Number) Vlan for voice traffic
+                      Vlan for voice traffic
+                      - Range: `1`-`4094`
+                    type: number
+                  templateName:
+                    description: |-
+                      (String) Template name
+                      Template name
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  accessSessionClosed:
+                    description: |-
+                      (Boolean) Enable closed access on port (disabled by default, i.e. open access)
+                      Enable closed access on port (disabled by default, i.e. open access)
+                    type: boolean
+                  accessSessionControlDirection:
+                    description: |-
+                      direction on the interface
+                      Set the control-direction on the interface
+                      - Choices: `both`, `in`
+                    type: string
+                  accessSessionHostMode:
+                    description: |-
+                      (String) Set the Host mode for authentication on this interface
+                      Set the Host mode for authentication on this interface
+                      - Choices: `multi-auth`, `multi-domain`, `multi-host`, `single-host`
+                    type: string
+                  accessSessionInterfaceTemplateSticky:
+                    description: |-
+                      (Boolean) Interface templates set to sticky
+                      Interface templates set to sticky
+                    type: boolean
+                  accessSessionInterfaceTemplateStickyTimer:
+                    description: |-
+                      (Number) Sticky timer value
+                      Sticky timer value
+                      - Range: `1`-`65535`
+                    type: number
+                  accessSessionMonitor:
+                    description: |-
+                      (Boolean) Apply template to monitor access sessions on the port
+                      Apply template to monitor access sessions on the port
+                    type: boolean
+                  accessSessionPortControl:
+                    description: |-
+                      control value
+                      Set the port-control value
+                      - Choices: `auto`, `force-authorized`, `force-unauthorized`
+                    type: string
+                  authenticationPeriodic:
+                    description: |-
+                      (Boolean) Enable or Disable Reauthentication for this port
+                      Enable or Disable Reauthentication for this port
+                    type: boolean
+                  authenticationTimerReauthenticateRange:
+                    description: |-
+                      (Number) Enter a value between 1 and 1073741823
+                      Enter a value between 1 and 1073741823
+                      - Range: `1`-`1073741823`
+                    type: number
+                  authenticationTimerReauthenticateServer:
+                    description: |-
+                      authentication timeout value from the server
+                      Obtain re-authentication timeout value from the server
+                    type: boolean
+                  ctsManual:
+                    description: |-
+                      (Boolean) Supply local configuration for CTS parameters
+                      Supply local configuration for CTS parameters
+                    type: boolean
+                  ctsManualPolicyStaticSgt:
+                    description: |-
+                      trusted incoming traffic
+                      Source Security Group Tag to apply to untagged or non-trusted incoming traffic
+                      - Range: `2`-`65519`
+                    type: number
+                  ctsManualPolicyStaticTrusted:
+                    description: |-
+                      (Boolean) Trust the Source Group Tags (SGT) that the peer uses for sending
+                      Trust the Source Group Tags (SGT) that the peer uses for sending
+                    type: boolean
+                  ctsManualPropagateSgt:
+                    description: |-
+                      (Boolean) CTS SGT Propagation configuration
+                      CTS SGT Propagation configuration
+                    type: boolean
+                  ctsRoleBasedEnforcement:
+                    description: |-
+                      based Access Control enforcement
+                      Enable Role-based Access Control enforcement
+                    type: boolean
+                  deleteMode:
+                    description: |-
+                      is. Default value is all.
+                      Configure behavior when deleting/destroying the resource. Either delete the entire object (YANG container) being managed, or only delete the individual resource attributes configured explicitly and leave everything else as-is. Default value is `all`.
+                      - Choices: `all`, `attributes`
+                    type: string
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  deviceTracking:
+                    description: |-
+                      tracking on the interface
+                      Configure device-tracking on the interface
+                    type: boolean
+                  deviceTrackingAttachPolicy:
+                    description: (Attributes List) policy name for device tracking
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        policyName:
+                          description: (String)
+                          type: string
+                        vlanRange:
+                          description: |-
+                            (String) VLAN IDs of the VLANs for which this policy applies
+                            VLAN IDs of the VLANs for which this policy applies
+                          type: string
+                      type: object
+                    type: array
+                  deviceTrackingVlanRange:
+                    description: |-
+                      (String) VLAN IDs of the VLANs for which this policy applies
+                      VLAN IDs of the VLANs for which this policy applies
+                    type: string
+                  dot1xMaxReauthReq:
+                    description: |-
+                      (Number) Max No. of Reauthentication Attempts
+                      Max No. of Reauthentication Attempts
+                      - Range: `1`-`10`
+                    type: number
+                  dot1xMaxReq:
+                    description: |-
+                      (Number) Max No. of Retries
+                      Max No. of Retries
+                      - Range: `1`-`10`
+                    type: number
+                  dot1xPae:
+                    description: |-
+                      (String) Set 802.1x interface pae type
+                      Set 802.1x interface pae type
+                      - Choices: `authenticator`, `both`, `supplicant`
+                    type: string
+                  dot1xTimeoutQuietPeriod:
+                    description: |-
+                      (Number) QuietPeriod in Seconds
+                      QuietPeriod in Seconds
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutRatelimitPeriod:
+                    description: |-
+                      (Number) Ratelimit Period in seconds
+                      Ratelimit Period in seconds
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutServerTimeout:
+                    description: |-
+                      (Number) Timeout for Radius Retries
+                      Timeout for Radius Retries
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutSuppTimeout:
+                    description: |-
+                      (Number) Timeout for supplicant reply
+                      Timeout for supplicant reply
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutTxPeriod:
+                    description: |-
+                      (Number) Timeout for supplicant retries
+                      Timeout for supplicant retries
+                      - Range: `1`-`65535`
+                    type: number
+                  ipAccessGroup:
+                    description: (Attributes List) Access control list for IP packets
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        accessList:
+                          description: |-
+                            (String) Access control list name
+                            Access control list name
+                          type: string
+                        direction:
+                          description: |-
+                            (String) packet flow direction
+                            packet flow direction
+                            - Choices: `in`, `out`
+                          type: string
+                      type: object
+                    type: array
+                  ipDhcpSnoopingLimitRate:
+                    description: |-
+                      (Number) DHCP snooping rate limit
+                      DHCP snooping rate limit
+                      - Range: `1`-`2048`
+                    type: number
+                  ipDhcpSnoopingTrust:
+                    description: |-
+                      (Boolean) DHCP Snooping trust config
+                      DHCP Snooping trust config
+                    type: boolean
+                  loadInterval:
+                    description: |-
+                      (Number) Load interval delay in seconds
+                      Load interval delay in seconds
+                      - Range: `30`-`600`
+                    type: number
+                  mab:
+                    description: |-
+                      (Boolean) MAC Authentication Bypass Interface Config Commands
+                      MAC Authentication Bypass Interface Config Commands
+                    type: boolean
+                  mabEap:
+                    description: |-
+                      (Boolean) Use EAP authentication for MAC Auth Bypass
+                      Use EAP authentication for MAC Auth Bypass
+                    type: boolean
+                  servicePolicyInput:
+                    description: |-
+                      map name
+                      policy-map name
+                    type: string
+                  servicePolicyOutput:
+                    description: |-
+                      map name
+                      policy-map name
+                    type: string
+                  servicePolicyTypeControlSubscriber:
+                    description: |-
+                      (String) Apply a subscriber control policy to the interface
+                      Apply a subscriber control policy to the interface
+                    type: string
+                  sourceTemplate:
+                    description: |-
+                      (String) Get config from a template
+                      Get config from a template
+                    type: string
+                  spanningTreeBpduguardEnable:
+                    description: |-
+                      (Boolean) Enable BPDU guard for this interface
+                      Enable BPDU guard for this interface
+                    type: boolean
+                  spanningTreePortfast:
+                    description: |-
+                      (Boolean) Portfast options for the interface
+                      Portfast options for the interface
+                    type: boolean
+                  spanningTreePortfastDisable:
+                    description: |-
+                      (Boolean) Disable portfast for this interface
+                      Disable portfast for this interface
+                    type: boolean
+                  spanningTreePortfastEdge:
+                    description: |-
+                      (Boolean) Enable portfast edge on the interface
+                      Enable portfast edge on the interface
+                    type: boolean
+                  spanningTreePortfastNetwork:
+                    description: |-
+                      (Boolean) Enable portfast network on the interface
+                      Enable portfast network on the interface
+                    type: boolean
+                  spanningTreeServicePolicy:
+                    description: |-
+                      (Boolean) help
+                      help
+                    type: boolean
+                  stormControlActionShutdown:
+                    description: |-
+                      (Boolean) Shutdown this interface if a storm occurs
+                      Shutdown this interface if a storm occurs
+                    type: boolean
+                  stormControlActionTrap:
+                    description: |-
+                      (Boolean) Send SNMP trap if a storm occurs
+                      Send SNMP trap if a storm occurs
+                    type: boolean
+                  stormControlBroadcastLevelBpsThreshold:
+                    description: |-
+                      (Number) Enter threshold
+                      Enter threshold
+                    type: number
+                  stormControlBroadcastLevelPpsThreshold:
+                    description: |-
+                      (String) Enter threshold
+                      Enter threshold
+                    type: string
+                  stormControlBroadcastLevelThreshold:
+                    description: |-
+                      (Number) Enter threshold
+                      Enter threshold
+                    type: number
+                  stormControlMulticastLevelBpsThreshold:
+                    description: |-
+                      (Number) Enter threshold
+                      Enter threshold
+                    type: number
+                  stormControlMulticastLevelPpsThreshold:
+                    description: |-
+                      (String) Enter threshold
+                      Enter threshold
+                    type: string
+                  stormControlMulticastLevelThreshold:
+                    description: |-
+                      (Number) Enter threshold
+                      Enter threshold
+                    type: number
+                  subscriberAgingInactivityTimerProbe:
+                    description: |-
+                      (Boolean) ARP probe
+                      ARP probe
+                    type: boolean
+                  subscriberAgingInactivityTimerValue:
+                    description: |-
+                      (Number) Enter a value between 1 and 65535 in seconds
+                      Enter a value between 1 and 65535 in seconds
+                      - Range: `1`-`65535`
+                    type: number
+                  subscriberAgingProbe:
+                    description: |-
+                      (Boolean) ARP probe
+                      ARP probe
+                    type: boolean
+                  switchportAccessVlan:
+                    description: |-
+                      (Number) VLAN ID of the VLAN when this port is in access mode
+                      VLAN ID of the VLAN when this port is in access mode
+                      - Range: `1`-`4094`
+                    type: number
+                  switchportBlockUnicast:
+                    description: |-
+                      (Boolean) Block unknown unicast addresses
+                      Block unknown unicast addresses
+                    type: boolean
+                  switchportModeAccess:
+                    description: |-
+                      (Boolean) Set trunking mode to ACCESS unconditionally
+                      Set trunking mode to ACCESS unconditionally
+                    type: boolean
+                  switchportModeTrunk:
+                    description: |-
+                      (Boolean) Set trunking mode to TRUNK unconditionally
+                      Set trunking mode to TRUNK unconditionally
+                    type: boolean
+                  switchportNonegotiate:
+                    description: |-
+                      (Boolean) Device will not engage in negotiation protocol on this interface
+                      Device will not engage in negotiation protocol on this interface
+                    type: boolean
+                  switchportPortSecurity:
+                    description: |-
+                      (Boolean) Security related command
+                      Security related command
+                    type: boolean
+                  switchportPortSecurityAgingStatic:
+                    description: |-
+                      (Boolean) Enable aging for configured secure addresses
+                      Enable aging for configured secure addresses
+                    type: boolean
+                  switchportPortSecurityAgingTime:
+                    description: |-
+                      security aging time
+                      Port-security aging time
+                      - Range: `1`-`1440`
+                    type: number
+                  switchportPortSecurityAgingType:
+                    description: |-
+                      security aging type
+                      Port-security aging type
+                    type: boolean
+                  switchportPortSecurityAgingTypeInactivity:
+                    description: |-
+                      (Boolean) Aging based on inactivity time period
+                      Aging based on inactivity time period
+                    type: boolean
+                  switchportPortSecurityMaximumRange:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        range:
+                          description: |-
+                            (Number) Maximum addresses
+                            Maximum addresses
+                            - Range: `1`-`3072`
+                          type: number
+                        vlan:
+                          description: |-
+                            (Boolean) Max secure addresses per vlan
+                            Max secure addresses per vlan
+                          type: boolean
+                        vlanAccess:
+                          description: |-
+                            (Boolean) access vlan
+                            access vlan
+                          type: boolean
+                      type: object
+                    type: array
+                  switchportPortSecurityViolationProtect:
+                    description: |-
+                      (Boolean) Security violation protect mode
+                      Security violation protect mode
+                    type: boolean
+                  switchportPortSecurityViolationRestrict:
+                    description: |-
+                      (Boolean) Security violation restrict mode
+                      Security violation restrict mode
+                    type: boolean
+                  switchportPortSecurityViolationShutdown:
+                    description: |-
+                      (Boolean) Security violation shutdown mode
+                      Security violation shutdown mode
+                    type: boolean
+                  switchportPrivateVlanHostAssociationPrimaryRange:
+                    description: |-
+                      (Number) Primary normal range VLAN ID of the private VLAN port association
+                      Primary normal range VLAN ID of the private VLAN port association
+                      - Range: `2`-`1001`
+                    type: number
+                  switchportPrivateVlanHostAssociationSecondaryRange:
+                    description: |-
+                      (Number) Secondary normal range VLAN ID of the private VLAN host port association
+                      Secondary normal range VLAN ID of the private VLAN host port association
+                      - Range: `2`-`1001`
+                    type: number
+                  switchportTrunkAllowedVlans:
+                    description: |-
+                      (String) VLAN IDs of the allowed VLANs when this port is in trunking mode
+                      VLAN IDs of the allowed VLANs when this port is in trunking mode
+                    type: string
+                  switchportTrunkAllowedVlansAll:
+                    description: |-
+                      (Boolean) all VLANs
+                      all VLANs
+                    type: boolean
+                  switchportTrunkAllowedVlansNone:
+                    description: |-
+                      (Boolean) no VLANs
+                      no VLANs
+                    type: boolean
+                  switchportTrunkNativeVlanTag:
+                    description: |-
+                      (Boolean) Set native VLAN tagging state
+                      Set native VLAN tagging state
+                    type: boolean
+                  switchportTrunkNativeVlanVlanId:
+                    description: |-
+                      (Number) VLAN ID of the native VLAN when this port is in trunking mode
+                      VLAN ID of the native VLAN when this port is in trunking mode
+                      - Range: `1`-`4094`
+                    type: number
+                  switchportVoiceVlan:
+                    description: |-
+                      (Number) Vlan for voice traffic
+                      Vlan for voice traffic
+                      - Range: `1`-`4094`
+                    type: number
+                  templateName:
+                    description: |-
+                      (String) Template name
+                      Template name
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.templateName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.templateName)
+                || (has(self.initProvider) && has(self.initProvider.templateName))'
+          status:
+            description: TemplateStatus defines the observed state of Template.
+            properties:
+              atProvider:
+                properties:
+                  accessSessionClosed:
+                    description: |-
+                      (Boolean) Enable closed access on port (disabled by default, i.e. open access)
+                      Enable closed access on port (disabled by default, i.e. open access)
+                    type: boolean
+                  accessSessionControlDirection:
+                    description: |-
+                      direction on the interface
+                      Set the control-direction on the interface
+                      - Choices: `both`, `in`
+                    type: string
+                  accessSessionHostMode:
+                    description: |-
+                      (String) Set the Host mode for authentication on this interface
+                      Set the Host mode for authentication on this interface
+                      - Choices: `multi-auth`, `multi-domain`, `multi-host`, `single-host`
+                    type: string
+                  accessSessionInterfaceTemplateSticky:
+                    description: |-
+                      (Boolean) Interface templates set to sticky
+                      Interface templates set to sticky
+                    type: boolean
+                  accessSessionInterfaceTemplateStickyTimer:
+                    description: |-
+                      (Number) Sticky timer value
+                      Sticky timer value
+                      - Range: `1`-`65535`
+                    type: number
+                  accessSessionMonitor:
+                    description: |-
+                      (Boolean) Apply template to monitor access sessions on the port
+                      Apply template to monitor access sessions on the port
+                    type: boolean
+                  accessSessionPortControl:
+                    description: |-
+                      control value
+                      Set the port-control value
+                      - Choices: `auto`, `force-authorized`, `force-unauthorized`
+                    type: string
+                  authenticationPeriodic:
+                    description: |-
+                      (Boolean) Enable or Disable Reauthentication for this port
+                      Enable or Disable Reauthentication for this port
+                    type: boolean
+                  authenticationTimerReauthenticateRange:
+                    description: |-
+                      (Number) Enter a value between 1 and 1073741823
+                      Enter a value between 1 and 1073741823
+                      - Range: `1`-`1073741823`
+                    type: number
+                  authenticationTimerReauthenticateServer:
+                    description: |-
+                      authentication timeout value from the server
+                      Obtain re-authentication timeout value from the server
+                    type: boolean
+                  ctsManual:
+                    description: |-
+                      (Boolean) Supply local configuration for CTS parameters
+                      Supply local configuration for CTS parameters
+                    type: boolean
+                  ctsManualPolicyStaticSgt:
+                    description: |-
+                      trusted incoming traffic
+                      Source Security Group Tag to apply to untagged or non-trusted incoming traffic
+                      - Range: `2`-`65519`
+                    type: number
+                  ctsManualPolicyStaticTrusted:
+                    description: |-
+                      (Boolean) Trust the Source Group Tags (SGT) that the peer uses for sending
+                      Trust the Source Group Tags (SGT) that the peer uses for sending
+                    type: boolean
+                  ctsManualPropagateSgt:
+                    description: |-
+                      (Boolean) CTS SGT Propagation configuration
+                      CTS SGT Propagation configuration
+                    type: boolean
+                  ctsRoleBasedEnforcement:
+                    description: |-
+                      based Access Control enforcement
+                      Enable Role-based Access Control enforcement
+                    type: boolean
+                  deleteMode:
+                    description: |-
+                      is. Default value is all.
+                      Configure behavior when deleting/destroying the resource. Either delete the entire object (YANG container) being managed, or only delete the individual resource attributes configured explicitly and leave everything else as-is. Default value is `all`.
+                      - Choices: `all`, `attributes`
+                    type: string
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  deviceTracking:
+                    description: |-
+                      tracking on the interface
+                      Configure device-tracking on the interface
+                    type: boolean
+                  deviceTrackingAttachPolicy:
+                    description: (Attributes List) policy name for device tracking
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        policyName:
+                          description: (String)
+                          type: string
+                        vlanRange:
+                          description: |-
+                            (String) VLAN IDs of the VLANs for which this policy applies
+                            VLAN IDs of the VLANs for which this policy applies
+                          type: string
+                      type: object
+                    type: array
+                  deviceTrackingVlanRange:
+                    description: |-
+                      (String) VLAN IDs of the VLANs for which this policy applies
+                      VLAN IDs of the VLANs for which this policy applies
+                    type: string
+                  dot1xMaxReauthReq:
+                    description: |-
+                      (Number) Max No. of Reauthentication Attempts
+                      Max No. of Reauthentication Attempts
+                      - Range: `1`-`10`
+                    type: number
+                  dot1xMaxReq:
+                    description: |-
+                      (Number) Max No. of Retries
+                      Max No. of Retries
+                      - Range: `1`-`10`
+                    type: number
+                  dot1xPae:
+                    description: |-
+                      (String) Set 802.1x interface pae type
+                      Set 802.1x interface pae type
+                      - Choices: `authenticator`, `both`, `supplicant`
+                    type: string
+                  dot1xTimeoutQuietPeriod:
+                    description: |-
+                      (Number) QuietPeriod in Seconds
+                      QuietPeriod in Seconds
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutRatelimitPeriod:
+                    description: |-
+                      (Number) Ratelimit Period in seconds
+                      Ratelimit Period in seconds
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutServerTimeout:
+                    description: |-
+                      (Number) Timeout for Radius Retries
+                      Timeout for Radius Retries
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutSuppTimeout:
+                    description: |-
+                      (Number) Timeout for supplicant reply
+                      Timeout for supplicant reply
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutTxPeriod:
+                    description: |-
+                      (Number) Timeout for supplicant retries
+                      Timeout for supplicant retries
+                      - Range: `1`-`65535`
+                    type: number
+                  id:
+                    description: (String) The path of the object.
+                    type: string
+                  ipAccessGroup:
+                    description: (Attributes List) Access control list for IP packets
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        accessList:
+                          description: |-
+                            (String) Access control list name
+                            Access control list name
+                          type: string
+                        direction:
+                          description: |-
+                            (String) packet flow direction
+                            packet flow direction
+                            - Choices: `in`, `out`
+                          type: string
+                      type: object
+                    type: array
+                  ipDhcpSnoopingLimitRate:
+                    description: |-
+                      (Number) DHCP snooping rate limit
+                      DHCP snooping rate limit
+                      - Range: `1`-`2048`
+                    type: number
+                  ipDhcpSnoopingTrust:
+                    description: |-
+                      (Boolean) DHCP Snooping trust config
+                      DHCP Snooping trust config
+                    type: boolean
+                  loadInterval:
+                    description: |-
+                      (Number) Load interval delay in seconds
+                      Load interval delay in seconds
+                      - Range: `30`-`600`
+                    type: number
+                  mab:
+                    description: |-
+                      (Boolean) MAC Authentication Bypass Interface Config Commands
+                      MAC Authentication Bypass Interface Config Commands
+                    type: boolean
+                  mabEap:
+                    description: |-
+                      (Boolean) Use EAP authentication for MAC Auth Bypass
+                      Use EAP authentication for MAC Auth Bypass
+                    type: boolean
+                  servicePolicyInput:
+                    description: |-
+                      map name
+                      policy-map name
+                    type: string
+                  servicePolicyOutput:
+                    description: |-
+                      map name
+                      policy-map name
+                    type: string
+                  servicePolicyTypeControlSubscriber:
+                    description: |-
+                      (String) Apply a subscriber control policy to the interface
+                      Apply a subscriber control policy to the interface
+                    type: string
+                  sourceTemplate:
+                    description: |-
+                      (String) Get config from a template
+                      Get config from a template
+                    type: string
+                  spanningTreeBpduguardEnable:
+                    description: |-
+                      (Boolean) Enable BPDU guard for this interface
+                      Enable BPDU guard for this interface
+                    type: boolean
+                  spanningTreePortfast:
+                    description: |-
+                      (Boolean) Portfast options for the interface
+                      Portfast options for the interface
+                    type: boolean
+                  spanningTreePortfastDisable:
+                    description: |-
+                      (Boolean) Disable portfast for this interface
+                      Disable portfast for this interface
+                    type: boolean
+                  spanningTreePortfastEdge:
+                    description: |-
+                      (Boolean) Enable portfast edge on the interface
+                      Enable portfast edge on the interface
+                    type: boolean
+                  spanningTreePortfastNetwork:
+                    description: |-
+                      (Boolean) Enable portfast network on the interface
+                      Enable portfast network on the interface
+                    type: boolean
+                  spanningTreeServicePolicy:
+                    description: |-
+                      (Boolean) help
+                      help
+                    type: boolean
+                  stormControlActionShutdown:
+                    description: |-
+                      (Boolean) Shutdown this interface if a storm occurs
+                      Shutdown this interface if a storm occurs
+                    type: boolean
+                  stormControlActionTrap:
+                    description: |-
+                      (Boolean) Send SNMP trap if a storm occurs
+                      Send SNMP trap if a storm occurs
+                    type: boolean
+                  stormControlBroadcastLevelBpsThreshold:
+                    description: |-
+                      (Number) Enter threshold
+                      Enter threshold
+                    type: number
+                  stormControlBroadcastLevelPpsThreshold:
+                    description: |-
+                      (String) Enter threshold
+                      Enter threshold
+                    type: string
+                  stormControlBroadcastLevelThreshold:
+                    description: |-
+                      (Number) Enter threshold
+                      Enter threshold
+                    type: number
+                  stormControlMulticastLevelBpsThreshold:
+                    description: |-
+                      (Number) Enter threshold
+                      Enter threshold
+                    type: number
+                  stormControlMulticastLevelPpsThreshold:
+                    description: |-
+                      (String) Enter threshold
+                      Enter threshold
+                    type: string
+                  stormControlMulticastLevelThreshold:
+                    description: |-
+                      (Number) Enter threshold
+                      Enter threshold
+                    type: number
+                  subscriberAgingInactivityTimerProbe:
+                    description: |-
+                      (Boolean) ARP probe
+                      ARP probe
+                    type: boolean
+                  subscriberAgingInactivityTimerValue:
+                    description: |-
+                      (Number) Enter a value between 1 and 65535 in seconds
+                      Enter a value between 1 and 65535 in seconds
+                      - Range: `1`-`65535`
+                    type: number
+                  subscriberAgingProbe:
+                    description: |-
+                      (Boolean) ARP probe
+                      ARP probe
+                    type: boolean
+                  switchportAccessVlan:
+                    description: |-
+                      (Number) VLAN ID of the VLAN when this port is in access mode
+                      VLAN ID of the VLAN when this port is in access mode
+                      - Range: `1`-`4094`
+                    type: number
+                  switchportBlockUnicast:
+                    description: |-
+                      (Boolean) Block unknown unicast addresses
+                      Block unknown unicast addresses
+                    type: boolean
+                  switchportModeAccess:
+                    description: |-
+                      (Boolean) Set trunking mode to ACCESS unconditionally
+                      Set trunking mode to ACCESS unconditionally
+                    type: boolean
+                  switchportModeTrunk:
+                    description: |-
+                      (Boolean) Set trunking mode to TRUNK unconditionally
+                      Set trunking mode to TRUNK unconditionally
+                    type: boolean
+                  switchportNonegotiate:
+                    description: |-
+                      (Boolean) Device will not engage in negotiation protocol on this interface
+                      Device will not engage in negotiation protocol on this interface
+                    type: boolean
+                  switchportPortSecurity:
+                    description: |-
+                      (Boolean) Security related command
+                      Security related command
+                    type: boolean
+                  switchportPortSecurityAgingStatic:
+                    description: |-
+                      (Boolean) Enable aging for configured secure addresses
+                      Enable aging for configured secure addresses
+                    type: boolean
+                  switchportPortSecurityAgingTime:
+                    description: |-
+                      security aging time
+                      Port-security aging time
+                      - Range: `1`-`1440`
+                    type: number
+                  switchportPortSecurityAgingType:
+                    description: |-
+                      security aging type
+                      Port-security aging type
+                    type: boolean
+                  switchportPortSecurityAgingTypeInactivity:
+                    description: |-
+                      (Boolean) Aging based on inactivity time period
+                      Aging based on inactivity time period
+                    type: boolean
+                  switchportPortSecurityMaximumRange:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        range:
+                          description: |-
+                            (Number) Maximum addresses
+                            Maximum addresses
+                            - Range: `1`-`3072`
+                          type: number
+                        vlan:
+                          description: |-
+                            (Boolean) Max secure addresses per vlan
+                            Max secure addresses per vlan
+                          type: boolean
+                        vlanAccess:
+                          description: |-
+                            (Boolean) access vlan
+                            access vlan
+                          type: boolean
+                      type: object
+                    type: array
+                  switchportPortSecurityViolationProtect:
+                    description: |-
+                      (Boolean) Security violation protect mode
+                      Security violation protect mode
+                    type: boolean
+                  switchportPortSecurityViolationRestrict:
+                    description: |-
+                      (Boolean) Security violation restrict mode
+                      Security violation restrict mode
+                    type: boolean
+                  switchportPortSecurityViolationShutdown:
+                    description: |-
+                      (Boolean) Security violation shutdown mode
+                      Security violation shutdown mode
+                    type: boolean
+                  switchportPrivateVlanHostAssociationPrimaryRange:
+                    description: |-
+                      (Number) Primary normal range VLAN ID of the private VLAN port association
+                      Primary normal range VLAN ID of the private VLAN port association
+                      - Range: `2`-`1001`
+                    type: number
+                  switchportPrivateVlanHostAssociationSecondaryRange:
+                    description: |-
+                      (Number) Secondary normal range VLAN ID of the private VLAN host port association
+                      Secondary normal range VLAN ID of the private VLAN host port association
+                      - Range: `2`-`1001`
+                    type: number
+                  switchportTrunkAllowedVlans:
+                    description: |-
+                      (String) VLAN IDs of the allowed VLANs when this port is in trunking mode
+                      VLAN IDs of the allowed VLANs when this port is in trunking mode
+                    type: string
+                  switchportTrunkAllowedVlansAll:
+                    description: |-
+                      (Boolean) all VLANs
+                      all VLANs
+                    type: boolean
+                  switchportTrunkAllowedVlansNone:
+                    description: |-
+                      (Boolean) no VLANs
+                      no VLANs
+                    type: boolean
+                  switchportTrunkNativeVlanTag:
+                    description: |-
+                      (Boolean) Set native VLAN tagging state
+                      Set native VLAN tagging state
+                    type: boolean
+                  switchportTrunkNativeVlanVlanId:
+                    description: |-
+                      (Number) VLAN ID of the native VLAN when this port is in trunking mode
+                      VLAN ID of the native VLAN when this port is in trunking mode
+                      - Range: `1`-`4094`
+                    type: number
+                  switchportVoiceVlan:
+                    description: |-
+                      (Number) Vlan for voice traffic
+                      Vlan for voice traffic
+                      - Range: `1`-`4094`
+                    type: number
+                  templateName:
+                    description: |-
+                      (String) Template name
+                      Template name
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              lastHandledReconcileAt:
+                description: |-
+                  LastHandledReconcileAt holds the value of the most recent
+                  reconcile-requested-at annotation token that the controller has
+                  processed. Users can compare this to the annotation to determine
+                  whether a reconcile request has been handled.
+                type: string
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

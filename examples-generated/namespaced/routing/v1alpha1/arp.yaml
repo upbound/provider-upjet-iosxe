@@ -1,0 +1,13 @@
+apiVersion: routing.iosxe.m.upbound.io/v1alpha1
+kind: ARP
+metadata:
+  annotations:
+    meta.upbound.io/example-id: routing/v1alpha1/arp
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    incompleteEntries: 10
+    proxyDisable: true

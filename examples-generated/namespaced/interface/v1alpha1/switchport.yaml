@@ -1,0 +1,25 @@
+apiVersion: interface.iosxe.m.upbound.io/v1alpha1
+kind: Switchport
+metadata:
+  annotations:
+    meta.upbound.io/example-id: interface/v1alpha1/switchport
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    accessVlan: "100"
+    host: false
+    modeAccess: false
+    modeDot1QTunnel: false
+    modePrivateVlanHost: false
+    modePrivateVlanPromiscuous: false
+    modePrivateVlanTrunk: false
+    modeTrunk: true
+    name: 1/0/3
+    nonegotiate: false
+    trunkAllowedVlans: 100,101
+    trunkNativeVlan: 100
+    type: GigabitEthernet
+    voiceVlan: "200"

@@ -1,0 +1,17 @@
+apiVersion: system.iosxe.upbound.io/v1alpha1
+kind: MonitorSession
+metadata:
+  annotations:
+    meta.upbound.io/example-id: system/v1alpha1/monitorsession
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    destinationInterface:
+    - encapsulation: replicate
+      name: GigabitEthernet1/0/1
+    sessionId: 1
+    sourceInterface:
+    - direction: both
+      name: GigabitEthernet1/0/2

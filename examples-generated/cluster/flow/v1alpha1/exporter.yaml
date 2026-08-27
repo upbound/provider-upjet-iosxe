@@ -1,0 +1,17 @@
+apiVersion: flow.iosxe.upbound.io/v1alpha1
+kind: Exporter
+metadata:
+  annotations:
+    meta.upbound.io/example-id: flow/v1alpha1/exporter
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: My exporter
+    destinationIp: 1.1.1.1
+    name: EXPORTER1
+    sourceLoopback: 123
+    templateDataTimeout: 60
+    transportUdp: 655
+    ttl: 64

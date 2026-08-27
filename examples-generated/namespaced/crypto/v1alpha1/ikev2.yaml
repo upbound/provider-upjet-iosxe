@@ -1,0 +1,16 @@
+apiVersion: crypto.iosxe.m.upbound.io/v1alpha1
+kind: IKEv2
+metadata:
+  annotations:
+    meta.upbound.io/example-id: crypto/v1alpha1/ikev2
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    dpd: 10
+    dpdQuery: periodic
+    dpdRetryInterval: 5
+    httpUrlCert: true
+    natKeepalive: 20

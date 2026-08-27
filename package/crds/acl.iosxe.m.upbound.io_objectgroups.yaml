@@ -1,0 +1,3556 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: objectgroups.acl.iosxe.m.upbound.io
+spec:
+  group: acl.iosxe.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - iosxe
+    kind: ObjectGroup
+    listKind: ObjectGroupList
+    plural: objectgroups
+    singular: objectgroup
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: ObjectGroup is the Schema for the ObjectGroups API. This resource
+          can manage the Object Group configuration.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ObjectGroupSpec defines the desired state of ObjectGroup
+            properties:
+              forProvider:
+                properties:
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  fqdn:
+                    description: group type (see below for nested schema)
+                    items:
+                      properties:
+                        description:
+                          description: |-
+                            (String) Description for FQDN OG
+                            Description for FQDN OG
+                          type: string
+                        groupObjects:
+                          description: (Attributes Set) List of nested FQDN Groups
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              groupName:
+                                description: |-
+                                  (String) FQDN group name
+                                  FQDN group name
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) Name of FQDN OG
+                            Name of FQDN OG
+                          type: string
+                        patterns:
+                          description: (Attributes Set) List of reg exp FQDN patterns
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              fqdnPattern:
+                                description: |-
+                                  (String) FQDN pattern
+                                  FQDN pattern
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  network:
+                    description: (Attributes List) network group (see below for nested
+                      schema)
+                    items:
+                      properties:
+                        addressRanges:
+                          description: (Attributes Set) List of IPv4 address ranges
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              end:
+                                description: |-
+                                  (String) Ending IPv4 Address
+                                  Ending IPv4 Address
+                                type: string
+                              start:
+                                description: |-
+                                  (String) Starting IPv4 Address
+                                  Starting IPv4 Address
+                                type: string
+                            type: object
+                          type: array
+                        description:
+                          description: |-
+                            (String) Description for FQDN OG
+                            Network object group description
+                          type: string
+                        groupObjects:
+                          description: (Attributes Set) List of nested FQDN Groups
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              groupName:
+                                description: |-
+                                  (String) FQDN group name
+                                  Nested network object group name
+                                type: string
+                            type: object
+                          type: array
+                        hosts:
+                          description: group member (see below for nested schema)
+                          items:
+                            properties:
+                              ipv4Host:
+                                description: |-
+                                  group member
+                                  Host address of the object-group member
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) Name of FQDN OG
+                            WORD;;object-group name
+                          type: string
+                        networkAddresses:
+                          description: (Attributes Set) (see below for nested schema)
+                          items:
+                            properties:
+                              ipv4Address:
+                                description: |-
+                                  (String) A.B.C.D;;Network address of the group members
+                                  A.B.C.D;;Network address of the group members
+                                type: string
+                              ipv4Mask:
+                                description: |-
+                                  (String) A.B.C.D;;Network mask
+                                  A.B.C.D;;Network mask
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  service:
+                    description: (Attributes List) service group (see below for nested
+                      schema)
+                    items:
+                      properties:
+                        ahp:
+                          description: |-
+                            (Boolean) Authentication Header Protocol
+                            Authentication Header Protocol
+                          type: boolean
+                        description:
+                          description: |-
+                            (String) Description for FQDN OG
+                            Service object group description
+                          type: string
+                        eigrp:
+                          description: |-
+                            (Boolean) Cisco's EIGRP routing protocol
+                            Cisco's EIGRP routing protocol
+                          type: boolean
+                        esp:
+                          description: |-
+                            (Boolean) Encapsulation Security Payload
+                            Encapsulation Security Payload
+                          type: boolean
+                        gre:
+                          description: |-
+                            (Boolean) Cisco's GRE tunneling
+                            Cisco's GRE tunneling
+                          type: boolean
+                        groupObjects:
+                          description: (Attributes Set) List of nested FQDN Groups
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              groupName:
+                                description: |-
+                                  (String) FQDN group name
+                                  Nested service object group name
+                                type: string
+                            type: object
+                          type: array
+                        icmp:
+                          description: |-
+                            (Boolean) Internet Control Message Protocol
+                            Internet Control Message Protocol
+                          type: boolean
+                        icmpAlternateAddress:
+                          description: |-
+                            (Boolean) Alternate address
+                            Alternate address
+                          type: boolean
+                        icmpConversionError:
+                          description: |-
+                            (Boolean) Datagram conversion
+                            Datagram conversion
+                          type: boolean
+                        icmpEcho:
+                          description: |-
+                            (Boolean) Echo (ping)
+                            Echo (ping)
+                          type: boolean
+                        icmpEchoReply:
+                          description: |-
+                            (Boolean) Echo reply
+                            Echo reply
+                          type: boolean
+                        icmpInformationReply:
+                          description: |-
+                            (Boolean) Information replies
+                            Information replies
+                          type: boolean
+                        icmpInformationRequest:
+                          description: |-
+                            (Boolean) Information requests
+                            Information requests
+                          type: boolean
+                        icmpMaskReply:
+                          description: |-
+                            (Boolean) Mask replies
+                            Mask replies
+                          type: boolean
+                        icmpMaskRequest:
+                          description: |-
+                            (Boolean) Mask requests
+                            Mask requests
+                          type: boolean
+                        icmpMobileRedirect:
+                          description: |-
+                            (Boolean) Mobile host redirect
+                            Mobile host redirect
+                          type: boolean
+                        icmpParameterProblem:
+                          description: |-
+                            (Boolean) All parameter problems
+                            All parameter problems
+                          type: boolean
+                        icmpPortNumber:
+                          description: |-
+                            Range: 0-255
+
+                            - Range: `0`-`255`
+                          type: number
+                        icmpRedirect:
+                          description: |-
+                            (Boolean) All redirects
+                            All redirects
+                          type: boolean
+                        icmpRouterAdvertisement:
+                          description: |-
+                            (Boolean) Router discovery advertisements
+                            Router discovery advertisements
+                          type: boolean
+                        icmpRouterSolicitation:
+                          description: |-
+                            (Boolean) Router discovery solicitations
+                            Router discovery solicitations
+                          type: boolean
+                        icmpSourceQuench:
+                          description: |-
+                            (Boolean) Source quenches
+                            Source quenches
+                          type: boolean
+                        icmpTimeExceeded:
+                          description: |-
+                            (Boolean) All time exceeded
+                            All time exceeded
+                          type: boolean
+                        icmpTimestampReply:
+                          description: |-
+                            (Boolean) Timestamp replies
+                            Timestamp replies
+                          type: boolean
+                        icmpTimestampRequest:
+                          description: |-
+                            (Boolean) Timestamp requests
+                            Timestamp requests
+                          type: boolean
+                        icmpTraceroute:
+                          description: |-
+                            (Boolean) Traceroute
+                            Traceroute
+                          type: boolean
+                        icmpUnreachable:
+                          description: |-
+                            (Boolean) All unreachables
+                            All unreachables
+                          type: boolean
+                        igmp:
+                          description: |-
+                            (Boolean) Internet Gateway Message Protocol
+                            Internet Gateway Message Protocol
+                          type: boolean
+                        ip:
+                          description: |-
+                            (Boolean) Any Internet Protocol
+                            Any Internet Protocol
+                          type: boolean
+                        ipinip:
+                          description: |-
+                            (Boolean) IP in IP tunneling
+                            IP in IP tunneling
+                          type: boolean
+                        name:
+                          description: (String) Name of FQDN OG
+                          type: string
+                        nos:
+                          description: |-
+                            (Boolean) KA9Q NOS compatible IP over IP tunneling
+                            KA9Q NOS compatible IP over IP tunneling
+                          type: boolean
+                        ospf:
+                          description: |-
+                            (Boolean) OSPF routing protocol
+                            OSPF routing protocol
+                          type: boolean
+                        pcp:
+                          description: |-
+                            (Boolean) Payload Compression Protocol
+                            Payload Compression Protocol
+                          type: boolean
+                        pim:
+                          description: |-
+                            (Boolean) Protocol Independent Multicast
+                            Protocol Independent Multicast
+                          type: boolean
+                        protocolNumbers:
+                          description: |-
+                            (Set of Number) An IP protocol number
+                            An IP protocol number
+                          items:
+                            type: number
+                          type: array
+                          x-kubernetes-list-type: set
+                        tcp:
+                          description: |-
+                            (Boolean) Transmission Control Protocol
+                            Transmission Control Protocol
+                          type: boolean
+                        tcpDstPortList:
+                          description: (Attributes Set) List of Destination TCP ports
+                            without port operator (see below for nested schema)
+                          items:
+                            properties:
+                              port:
+                                description: |-
+                                  (String) Destination TCP port number
+                                  Destination TCP port number
+                                type: string
+                            type: object
+                          type: array
+                        tcpDstPortListOp:
+                          description: (Attributes Set) List of Destination TCP ports
+                            with port operator (see below for nested schema)
+                          items:
+                            properties:
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+                                  Port operator - equal to/lesser than/greater than
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              port:
+                                description: |-
+                                  (String) Destination TCP port number
+                                  Destination TCP port number
+                                type: string
+                            type: object
+                          type: array
+                        tcpDstPortRanges:
+                          description: (Attributes Set) Match only packets in the
+                            range of port numbers (see below for nested schema)
+                          items:
+                            properties:
+                              maxPort:
+                                description: (String)
+                                type: string
+                              minPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcDstPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: (String)
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcDstPortListDstOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              dstPort:
+                                description: (String)
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcDstPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              dstPort:
+                                description: (String)
+                                type: string
+                              srcOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcDstPortListSrcOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: (String)
+                                type: string
+                              srcOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcDstRangePortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcDstRangePortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              port:
+                                description: (String) Destination TCP port number
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              port:
+                                description: (String) Destination TCP port number
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcPortRanges:
+                          description: (Attributes Set) Match only packets in the
+                            range of port numbers (see below for nested schema)
+                          items:
+                            properties:
+                              maxPort:
+                                description: (String)
+                                type: string
+                              minPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcRangeDstPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: (String)
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcRangeDstPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: (String)
+                                type: string
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcRangeDstRangePortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpDstPortList:
+                          description: udp ports without port operator (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              port:
+                                description: |-
+                                  (String) Destination TCP port number
+                                  Destination tcp-udp port number
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpDstPortListOp:
+                          description: udp ports with port operator (see below for
+                            nested schema)
+                          items:
+                            properties:
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+                                  Port operator - equal to/lesser than/greater than
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              port:
+                                description: |-
+                                  (String) Destination TCP port number
+                                  Destination tcp-udp port number
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpDstPortRanges:
+                          description: (Attributes Set) Match only packets in the
+                            range of port numbers (see below for nested schema)
+                          items:
+                            properties:
+                              maxPort:
+                                description: (String)
+                                type: string
+                              minPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcDstPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: |-
+                                  (String)
+                                  Destination port value
+                                type: string
+                              srcPort:
+                                description: |-
+                                  (String)
+                                  Source port value
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcDstPortListDstOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+                                  Destination port operator
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              dstPort:
+                                description: |-
+                                  (String)
+                                  Destination port value
+                                type: string
+                              srcPort:
+                                description: |-
+                                  (String)
+                                  Source port operator
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcDstPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+                                  Destination port operator
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              dstPort:
+                                description: |-
+                                  (String)
+                                  Destination port value
+                                type: string
+                              srcOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+                                  Source port operator
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: |-
+                                  (String)
+                                  Source port value
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcDstPortListSrcOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: |-
+                                  (String)
+                                  Destination port value
+                                type: string
+                              srcOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+                                  Source port operator
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: |-
+                                  (String)
+                                  Source port value
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcDstRangePortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcDstRangePortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              port:
+                                description: (String) Destination TCP port number
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              port:
+                                description: (String) Destination TCP port number
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcPortRanges:
+                          description: (Attributes Set) Match only packets in the
+                            range of port numbers (see below for nested schema)
+                          items:
+                            properties:
+                              maxPort:
+                                description: (String)
+                                type: string
+                              minPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcRangeDstPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: (String)
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcRangeDstPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: (String)
+                                type: string
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcRangeDstRangePortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        udp:
+                          description: |-
+                            (Boolean) User Datagram Protocol
+                            User Datagram Protocol
+                          type: boolean
+                        udpDstPortList:
+                          description: (Attributes Set) List of Destination udp ports
+                            without port operator (see below for nested schema)
+                          items:
+                            properties:
+                              port:
+                                description: |-
+                                  (String) Destination TCP port number
+                                  Destination udp port number
+                                type: string
+                            type: object
+                          type: array
+                        udpDstPortListOp:
+                          description: (Attributes Set) List of Destination udp ports
+                            with port operator (see below for nested schema)
+                          items:
+                            properties:
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+                                  Port operator - equal to/lesser than/greater than
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              port:
+                                description: |-
+                                  (String) Destination TCP port number
+                                  Destination udp port number
+                                type: string
+                            type: object
+                          type: array
+                        udpDstPortRanges:
+                          description: (Attributes Set) Match only packets in the
+                            range of port numbers (see below for nested schema)
+                          items:
+                            properties:
+                              maxPort:
+                                description: (String)
+                                type: string
+                              minPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcDstPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: |-
+                                  (String)
+                                  Destination port value
+                                type: string
+                              srcPort:
+                                description: |-
+                                  (String)
+                                  Source port value
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcDstPortListDstOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+                                  Destination port operator
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              dstPort:
+                                description: |-
+                                  (String)
+                                  Destination port value
+                                type: string
+                              srcPort:
+                                description: |-
+                                  (String)
+                                  Source port value
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcDstPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+                                  Destination port operator
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              dstPort:
+                                description: |-
+                                  (String)
+                                  Destination port value
+                                type: string
+                              srcOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+                                  Source port operator
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: |-
+                                  (String)
+                                  Source port value
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcDstPortListSrcOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: |-
+                                  (String)
+                                  Destination port value
+                                type: string
+                              srcOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+                                  Source port operator
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: |-
+                                  (String)
+                                  Source port value
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcDstRangePortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcDstRangePortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              port:
+                                description: (String) Destination TCP port number
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              port:
+                                description: (String) Destination TCP port number
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcPortRanges:
+                          description: (Attributes Set) Match only packets in the
+                            range of port numbers (see below for nested schema)
+                          items:
+                            properties:
+                              maxPort:
+                                description: (String)
+                                type: string
+                              minPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcRangeDstPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: (String)
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcRangeDstPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: (String)
+                                type: string
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcRangeDstRangePortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  fqdn:
+                    description: group type (see below for nested schema)
+                    items:
+                      properties:
+                        description:
+                          description: |-
+                            (String) Description for FQDN OG
+                            Description for FQDN OG
+                          type: string
+                        groupObjects:
+                          description: (Attributes Set) List of nested FQDN Groups
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              groupName:
+                                description: |-
+                                  (String) FQDN group name
+                                  FQDN group name
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) Name of FQDN OG
+                            Name of FQDN OG
+                          type: string
+                        patterns:
+                          description: (Attributes Set) List of reg exp FQDN patterns
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              fqdnPattern:
+                                description: |-
+                                  (String) FQDN pattern
+                                  FQDN pattern
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  network:
+                    description: (Attributes List) network group (see below for nested
+                      schema)
+                    items:
+                      properties:
+                        addressRanges:
+                          description: (Attributes Set) List of IPv4 address ranges
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              end:
+                                description: |-
+                                  (String) Ending IPv4 Address
+                                  Ending IPv4 Address
+                                type: string
+                              start:
+                                description: |-
+                                  (String) Starting IPv4 Address
+                                  Starting IPv4 Address
+                                type: string
+                            type: object
+                          type: array
+                        description:
+                          description: |-
+                            (String) Description for FQDN OG
+                            Network object group description
+                          type: string
+                        groupObjects:
+                          description: (Attributes Set) List of nested FQDN Groups
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              groupName:
+                                description: |-
+                                  (String) FQDN group name
+                                  Nested network object group name
+                                type: string
+                            type: object
+                          type: array
+                        hosts:
+                          description: group member (see below for nested schema)
+                          items:
+                            properties:
+                              ipv4Host:
+                                description: |-
+                                  group member
+                                  Host address of the object-group member
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) Name of FQDN OG
+                            WORD;;object-group name
+                          type: string
+                        networkAddresses:
+                          description: (Attributes Set) (see below for nested schema)
+                          items:
+                            properties:
+                              ipv4Address:
+                                description: |-
+                                  (String) A.B.C.D;;Network address of the group members
+                                  A.B.C.D;;Network address of the group members
+                                type: string
+                              ipv4Mask:
+                                description: |-
+                                  (String) A.B.C.D;;Network mask
+                                  A.B.C.D;;Network mask
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  service:
+                    description: (Attributes List) service group (see below for nested
+                      schema)
+                    items:
+                      properties:
+                        ahp:
+                          description: |-
+                            (Boolean) Authentication Header Protocol
+                            Authentication Header Protocol
+                          type: boolean
+                        description:
+                          description: |-
+                            (String) Description for FQDN OG
+                            Service object group description
+                          type: string
+                        eigrp:
+                          description: |-
+                            (Boolean) Cisco's EIGRP routing protocol
+                            Cisco's EIGRP routing protocol
+                          type: boolean
+                        esp:
+                          description: |-
+                            (Boolean) Encapsulation Security Payload
+                            Encapsulation Security Payload
+                          type: boolean
+                        gre:
+                          description: |-
+                            (Boolean) Cisco's GRE tunneling
+                            Cisco's GRE tunneling
+                          type: boolean
+                        groupObjects:
+                          description: (Attributes Set) List of nested FQDN Groups
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              groupName:
+                                description: |-
+                                  (String) FQDN group name
+                                  Nested service object group name
+                                type: string
+                            type: object
+                          type: array
+                        icmp:
+                          description: |-
+                            (Boolean) Internet Control Message Protocol
+                            Internet Control Message Protocol
+                          type: boolean
+                        icmpAlternateAddress:
+                          description: |-
+                            (Boolean) Alternate address
+                            Alternate address
+                          type: boolean
+                        icmpConversionError:
+                          description: |-
+                            (Boolean) Datagram conversion
+                            Datagram conversion
+                          type: boolean
+                        icmpEcho:
+                          description: |-
+                            (Boolean) Echo (ping)
+                            Echo (ping)
+                          type: boolean
+                        icmpEchoReply:
+                          description: |-
+                            (Boolean) Echo reply
+                            Echo reply
+                          type: boolean
+                        icmpInformationReply:
+                          description: |-
+                            (Boolean) Information replies
+                            Information replies
+                          type: boolean
+                        icmpInformationRequest:
+                          description: |-
+                            (Boolean) Information requests
+                            Information requests
+                          type: boolean
+                        icmpMaskReply:
+                          description: |-
+                            (Boolean) Mask replies
+                            Mask replies
+                          type: boolean
+                        icmpMaskRequest:
+                          description: |-
+                            (Boolean) Mask requests
+                            Mask requests
+                          type: boolean
+                        icmpMobileRedirect:
+                          description: |-
+                            (Boolean) Mobile host redirect
+                            Mobile host redirect
+                          type: boolean
+                        icmpParameterProblem:
+                          description: |-
+                            (Boolean) All parameter problems
+                            All parameter problems
+                          type: boolean
+                        icmpPortNumber:
+                          description: |-
+                            Range: 0-255
+
+                            - Range: `0`-`255`
+                          type: number
+                        icmpRedirect:
+                          description: |-
+                            (Boolean) All redirects
+                            All redirects
+                          type: boolean
+                        icmpRouterAdvertisement:
+                          description: |-
+                            (Boolean) Router discovery advertisements
+                            Router discovery advertisements
+                          type: boolean
+                        icmpRouterSolicitation:
+                          description: |-
+                            (Boolean) Router discovery solicitations
+                            Router discovery solicitations
+                          type: boolean
+                        icmpSourceQuench:
+                          description: |-
+                            (Boolean) Source quenches
+                            Source quenches
+                          type: boolean
+                        icmpTimeExceeded:
+                          description: |-
+                            (Boolean) All time exceeded
+                            All time exceeded
+                          type: boolean
+                        icmpTimestampReply:
+                          description: |-
+                            (Boolean) Timestamp replies
+                            Timestamp replies
+                          type: boolean
+                        icmpTimestampRequest:
+                          description: |-
+                            (Boolean) Timestamp requests
+                            Timestamp requests
+                          type: boolean
+                        icmpTraceroute:
+                          description: |-
+                            (Boolean) Traceroute
+                            Traceroute
+                          type: boolean
+                        icmpUnreachable:
+                          description: |-
+                            (Boolean) All unreachables
+                            All unreachables
+                          type: boolean
+                        igmp:
+                          description: |-
+                            (Boolean) Internet Gateway Message Protocol
+                            Internet Gateway Message Protocol
+                          type: boolean
+                        ip:
+                          description: |-
+                            (Boolean) Any Internet Protocol
+                            Any Internet Protocol
+                          type: boolean
+                        ipinip:
+                          description: |-
+                            (Boolean) IP in IP tunneling
+                            IP in IP tunneling
+                          type: boolean
+                        name:
+                          description: (String) Name of FQDN OG
+                          type: string
+                        nos:
+                          description: |-
+                            (Boolean) KA9Q NOS compatible IP over IP tunneling
+                            KA9Q NOS compatible IP over IP tunneling
+                          type: boolean
+                        ospf:
+                          description: |-
+                            (Boolean) OSPF routing protocol
+                            OSPF routing protocol
+                          type: boolean
+                        pcp:
+                          description: |-
+                            (Boolean) Payload Compression Protocol
+                            Payload Compression Protocol
+                          type: boolean
+                        pim:
+                          description: |-
+                            (Boolean) Protocol Independent Multicast
+                            Protocol Independent Multicast
+                          type: boolean
+                        protocolNumbers:
+                          description: |-
+                            (Set of Number) An IP protocol number
+                            An IP protocol number
+                          items:
+                            type: number
+                          type: array
+                          x-kubernetes-list-type: set
+                        tcp:
+                          description: |-
+                            (Boolean) Transmission Control Protocol
+                            Transmission Control Protocol
+                          type: boolean
+                        tcpDstPortList:
+                          description: (Attributes Set) List of Destination TCP ports
+                            without port operator (see below for nested schema)
+                          items:
+                            properties:
+                              port:
+                                description: |-
+                                  (String) Destination TCP port number
+                                  Destination TCP port number
+                                type: string
+                            type: object
+                          type: array
+                        tcpDstPortListOp:
+                          description: (Attributes Set) List of Destination TCP ports
+                            with port operator (see below for nested schema)
+                          items:
+                            properties:
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+                                  Port operator - equal to/lesser than/greater than
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              port:
+                                description: |-
+                                  (String) Destination TCP port number
+                                  Destination TCP port number
+                                type: string
+                            type: object
+                          type: array
+                        tcpDstPortRanges:
+                          description: (Attributes Set) Match only packets in the
+                            range of port numbers (see below for nested schema)
+                          items:
+                            properties:
+                              maxPort:
+                                description: (String)
+                                type: string
+                              minPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcDstPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: (String)
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcDstPortListDstOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              dstPort:
+                                description: (String)
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcDstPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              dstPort:
+                                description: (String)
+                                type: string
+                              srcOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcDstPortListSrcOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: (String)
+                                type: string
+                              srcOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcDstRangePortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcDstRangePortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              port:
+                                description: (String) Destination TCP port number
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              port:
+                                description: (String) Destination TCP port number
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcPortRanges:
+                          description: (Attributes Set) Match only packets in the
+                            range of port numbers (see below for nested schema)
+                          items:
+                            properties:
+                              maxPort:
+                                description: (String)
+                                type: string
+                              minPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcRangeDstPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: (String)
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcRangeDstPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: (String)
+                                type: string
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcRangeDstRangePortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpDstPortList:
+                          description: udp ports without port operator (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              port:
+                                description: |-
+                                  (String) Destination TCP port number
+                                  Destination tcp-udp port number
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpDstPortListOp:
+                          description: udp ports with port operator (see below for
+                            nested schema)
+                          items:
+                            properties:
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+                                  Port operator - equal to/lesser than/greater than
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              port:
+                                description: |-
+                                  (String) Destination TCP port number
+                                  Destination tcp-udp port number
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpDstPortRanges:
+                          description: (Attributes Set) Match only packets in the
+                            range of port numbers (see below for nested schema)
+                          items:
+                            properties:
+                              maxPort:
+                                description: (String)
+                                type: string
+                              minPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcDstPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: |-
+                                  (String)
+                                  Destination port value
+                                type: string
+                              srcPort:
+                                description: |-
+                                  (String)
+                                  Source port value
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcDstPortListDstOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+                                  Destination port operator
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              dstPort:
+                                description: |-
+                                  (String)
+                                  Destination port value
+                                type: string
+                              srcPort:
+                                description: |-
+                                  (String)
+                                  Source port operator
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcDstPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+                                  Destination port operator
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              dstPort:
+                                description: |-
+                                  (String)
+                                  Destination port value
+                                type: string
+                              srcOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+                                  Source port operator
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: |-
+                                  (String)
+                                  Source port value
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcDstPortListSrcOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: |-
+                                  (String)
+                                  Destination port value
+                                type: string
+                              srcOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+                                  Source port operator
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: |-
+                                  (String)
+                                  Source port value
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcDstRangePortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcDstRangePortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              port:
+                                description: (String) Destination TCP port number
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              port:
+                                description: (String) Destination TCP port number
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcPortRanges:
+                          description: (Attributes Set) Match only packets in the
+                            range of port numbers (see below for nested schema)
+                          items:
+                            properties:
+                              maxPort:
+                                description: (String)
+                                type: string
+                              minPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcRangeDstPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: (String)
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcRangeDstPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: (String)
+                                type: string
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcRangeDstRangePortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        udp:
+                          description: |-
+                            (Boolean) User Datagram Protocol
+                            User Datagram Protocol
+                          type: boolean
+                        udpDstPortList:
+                          description: (Attributes Set) List of Destination udp ports
+                            without port operator (see below for nested schema)
+                          items:
+                            properties:
+                              port:
+                                description: |-
+                                  (String) Destination TCP port number
+                                  Destination udp port number
+                                type: string
+                            type: object
+                          type: array
+                        udpDstPortListOp:
+                          description: (Attributes Set) List of Destination udp ports
+                            with port operator (see below for nested schema)
+                          items:
+                            properties:
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+                                  Port operator - equal to/lesser than/greater than
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              port:
+                                description: |-
+                                  (String) Destination TCP port number
+                                  Destination udp port number
+                                type: string
+                            type: object
+                          type: array
+                        udpDstPortRanges:
+                          description: (Attributes Set) Match only packets in the
+                            range of port numbers (see below for nested schema)
+                          items:
+                            properties:
+                              maxPort:
+                                description: (String)
+                                type: string
+                              minPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcDstPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: |-
+                                  (String)
+                                  Destination port value
+                                type: string
+                              srcPort:
+                                description: |-
+                                  (String)
+                                  Source port value
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcDstPortListDstOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+                                  Destination port operator
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              dstPort:
+                                description: |-
+                                  (String)
+                                  Destination port value
+                                type: string
+                              srcPort:
+                                description: |-
+                                  (String)
+                                  Source port value
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcDstPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+                                  Destination port operator
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              dstPort:
+                                description: |-
+                                  (String)
+                                  Destination port value
+                                type: string
+                              srcOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+                                  Source port operator
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: |-
+                                  (String)
+                                  Source port value
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcDstPortListSrcOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: |-
+                                  (String)
+                                  Destination port value
+                                type: string
+                              srcOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+                                  Source port operator
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: |-
+                                  (String)
+                                  Source port value
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcDstRangePortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcDstRangePortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              port:
+                                description: (String) Destination TCP port number
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              port:
+                                description: (String) Destination TCP port number
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcPortRanges:
+                          description: (Attributes Set) Match only packets in the
+                            range of port numbers (see below for nested schema)
+                          items:
+                            properties:
+                              maxPort:
+                                description: (String)
+                                type: string
+                              minPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcRangeDstPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: (String)
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcRangeDstPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: (String)
+                                type: string
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcRangeDstRangePortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: ObjectGroupStatus defines the observed state of ObjectGroup.
+            properties:
+              atProvider:
+                properties:
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  fqdn:
+                    description: group type (see below for nested schema)
+                    items:
+                      properties:
+                        description:
+                          description: |-
+                            (String) Description for FQDN OG
+                            Description for FQDN OG
+                          type: string
+                        groupObjects:
+                          description: (Attributes Set) List of nested FQDN Groups
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              groupName:
+                                description: |-
+                                  (String) FQDN group name
+                                  FQDN group name
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) Name of FQDN OG
+                            Name of FQDN OG
+                          type: string
+                        patterns:
+                          description: (Attributes Set) List of reg exp FQDN patterns
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              fqdnPattern:
+                                description: |-
+                                  (String) FQDN pattern
+                                  FQDN pattern
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  id:
+                    description: (String) The path of the object.
+                    type: string
+                  network:
+                    description: (Attributes List) network group (see below for nested
+                      schema)
+                    items:
+                      properties:
+                        addressRanges:
+                          description: (Attributes Set) List of IPv4 address ranges
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              end:
+                                description: |-
+                                  (String) Ending IPv4 Address
+                                  Ending IPv4 Address
+                                type: string
+                              start:
+                                description: |-
+                                  (String) Starting IPv4 Address
+                                  Starting IPv4 Address
+                                type: string
+                            type: object
+                          type: array
+                        description:
+                          description: |-
+                            (String) Description for FQDN OG
+                            Network object group description
+                          type: string
+                        groupObjects:
+                          description: (Attributes Set) List of nested FQDN Groups
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              groupName:
+                                description: |-
+                                  (String) FQDN group name
+                                  Nested network object group name
+                                type: string
+                            type: object
+                          type: array
+                        hosts:
+                          description: group member (see below for nested schema)
+                          items:
+                            properties:
+                              ipv4Host:
+                                description: |-
+                                  group member
+                                  Host address of the object-group member
+                                type: string
+                            type: object
+                          type: array
+                        name:
+                          description: |-
+                            (String) Name of FQDN OG
+                            WORD;;object-group name
+                          type: string
+                        networkAddresses:
+                          description: (Attributes Set) (see below for nested schema)
+                          items:
+                            properties:
+                              ipv4Address:
+                                description: |-
+                                  (String) A.B.C.D;;Network address of the group members
+                                  A.B.C.D;;Network address of the group members
+                                type: string
+                              ipv4Mask:
+                                description: |-
+                                  (String) A.B.C.D;;Network mask
+                                  A.B.C.D;;Network mask
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  service:
+                    description: (Attributes List) service group (see below for nested
+                      schema)
+                    items:
+                      properties:
+                        ahp:
+                          description: |-
+                            (Boolean) Authentication Header Protocol
+                            Authentication Header Protocol
+                          type: boolean
+                        description:
+                          description: |-
+                            (String) Description for FQDN OG
+                            Service object group description
+                          type: string
+                        eigrp:
+                          description: |-
+                            (Boolean) Cisco's EIGRP routing protocol
+                            Cisco's EIGRP routing protocol
+                          type: boolean
+                        esp:
+                          description: |-
+                            (Boolean) Encapsulation Security Payload
+                            Encapsulation Security Payload
+                          type: boolean
+                        gre:
+                          description: |-
+                            (Boolean) Cisco's GRE tunneling
+                            Cisco's GRE tunneling
+                          type: boolean
+                        groupObjects:
+                          description: (Attributes Set) List of nested FQDN Groups
+                            (see below for nested schema)
+                          items:
+                            properties:
+                              groupName:
+                                description: |-
+                                  (String) FQDN group name
+                                  Nested service object group name
+                                type: string
+                            type: object
+                          type: array
+                        icmp:
+                          description: |-
+                            (Boolean) Internet Control Message Protocol
+                            Internet Control Message Protocol
+                          type: boolean
+                        icmpAlternateAddress:
+                          description: |-
+                            (Boolean) Alternate address
+                            Alternate address
+                          type: boolean
+                        icmpConversionError:
+                          description: |-
+                            (Boolean) Datagram conversion
+                            Datagram conversion
+                          type: boolean
+                        icmpEcho:
+                          description: |-
+                            (Boolean) Echo (ping)
+                            Echo (ping)
+                          type: boolean
+                        icmpEchoReply:
+                          description: |-
+                            (Boolean) Echo reply
+                            Echo reply
+                          type: boolean
+                        icmpInformationReply:
+                          description: |-
+                            (Boolean) Information replies
+                            Information replies
+                          type: boolean
+                        icmpInformationRequest:
+                          description: |-
+                            (Boolean) Information requests
+                            Information requests
+                          type: boolean
+                        icmpMaskReply:
+                          description: |-
+                            (Boolean) Mask replies
+                            Mask replies
+                          type: boolean
+                        icmpMaskRequest:
+                          description: |-
+                            (Boolean) Mask requests
+                            Mask requests
+                          type: boolean
+                        icmpMobileRedirect:
+                          description: |-
+                            (Boolean) Mobile host redirect
+                            Mobile host redirect
+                          type: boolean
+                        icmpParameterProblem:
+                          description: |-
+                            (Boolean) All parameter problems
+                            All parameter problems
+                          type: boolean
+                        icmpPortNumber:
+                          description: |-
+                            Range: 0-255
+
+                            - Range: `0`-`255`
+                          type: number
+                        icmpRedirect:
+                          description: |-
+                            (Boolean) All redirects
+                            All redirects
+                          type: boolean
+                        icmpRouterAdvertisement:
+                          description: |-
+                            (Boolean) Router discovery advertisements
+                            Router discovery advertisements
+                          type: boolean
+                        icmpRouterSolicitation:
+                          description: |-
+                            (Boolean) Router discovery solicitations
+                            Router discovery solicitations
+                          type: boolean
+                        icmpSourceQuench:
+                          description: |-
+                            (Boolean) Source quenches
+                            Source quenches
+                          type: boolean
+                        icmpTimeExceeded:
+                          description: |-
+                            (Boolean) All time exceeded
+                            All time exceeded
+                          type: boolean
+                        icmpTimestampReply:
+                          description: |-
+                            (Boolean) Timestamp replies
+                            Timestamp replies
+                          type: boolean
+                        icmpTimestampRequest:
+                          description: |-
+                            (Boolean) Timestamp requests
+                            Timestamp requests
+                          type: boolean
+                        icmpTraceroute:
+                          description: |-
+                            (Boolean) Traceroute
+                            Traceroute
+                          type: boolean
+                        icmpUnreachable:
+                          description: |-
+                            (Boolean) All unreachables
+                            All unreachables
+                          type: boolean
+                        igmp:
+                          description: |-
+                            (Boolean) Internet Gateway Message Protocol
+                            Internet Gateway Message Protocol
+                          type: boolean
+                        ip:
+                          description: |-
+                            (Boolean) Any Internet Protocol
+                            Any Internet Protocol
+                          type: boolean
+                        ipinip:
+                          description: |-
+                            (Boolean) IP in IP tunneling
+                            IP in IP tunneling
+                          type: boolean
+                        name:
+                          description: (String) Name of FQDN OG
+                          type: string
+                        nos:
+                          description: |-
+                            (Boolean) KA9Q NOS compatible IP over IP tunneling
+                            KA9Q NOS compatible IP over IP tunneling
+                          type: boolean
+                        ospf:
+                          description: |-
+                            (Boolean) OSPF routing protocol
+                            OSPF routing protocol
+                          type: boolean
+                        pcp:
+                          description: |-
+                            (Boolean) Payload Compression Protocol
+                            Payload Compression Protocol
+                          type: boolean
+                        pim:
+                          description: |-
+                            (Boolean) Protocol Independent Multicast
+                            Protocol Independent Multicast
+                          type: boolean
+                        protocolNumbers:
+                          description: |-
+                            (Set of Number) An IP protocol number
+                            An IP protocol number
+                          items:
+                            type: number
+                          type: array
+                          x-kubernetes-list-type: set
+                        tcp:
+                          description: |-
+                            (Boolean) Transmission Control Protocol
+                            Transmission Control Protocol
+                          type: boolean
+                        tcpDstPortList:
+                          description: (Attributes Set) List of Destination TCP ports
+                            without port operator (see below for nested schema)
+                          items:
+                            properties:
+                              port:
+                                description: |-
+                                  (String) Destination TCP port number
+                                  Destination TCP port number
+                                type: string
+                            type: object
+                          type: array
+                        tcpDstPortListOp:
+                          description: (Attributes Set) List of Destination TCP ports
+                            with port operator (see below for nested schema)
+                          items:
+                            properties:
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+                                  Port operator - equal to/lesser than/greater than
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              port:
+                                description: |-
+                                  (String) Destination TCP port number
+                                  Destination TCP port number
+                                type: string
+                            type: object
+                          type: array
+                        tcpDstPortRanges:
+                          description: (Attributes Set) Match only packets in the
+                            range of port numbers (see below for nested schema)
+                          items:
+                            properties:
+                              maxPort:
+                                description: (String)
+                                type: string
+                              minPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcDstPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: (String)
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcDstPortListDstOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              dstPort:
+                                description: (String)
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcDstPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              dstPort:
+                                description: (String)
+                                type: string
+                              srcOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcDstPortListSrcOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: (String)
+                                type: string
+                              srcOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcDstRangePortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcDstRangePortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              port:
+                                description: (String) Destination TCP port number
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              port:
+                                description: (String) Destination TCP port number
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcPortRanges:
+                          description: (Attributes Set) Match only packets in the
+                            range of port numbers (see below for nested schema)
+                          items:
+                            properties:
+                              maxPort:
+                                description: (String)
+                                type: string
+                              minPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcRangeDstPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: (String)
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcRangeDstPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: (String)
+                                type: string
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpSrcRangeDstRangePortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpDstPortList:
+                          description: udp ports without port operator (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              port:
+                                description: |-
+                                  (String) Destination TCP port number
+                                  Destination tcp-udp port number
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpDstPortListOp:
+                          description: udp ports with port operator (see below for
+                            nested schema)
+                          items:
+                            properties:
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+                                  Port operator - equal to/lesser than/greater than
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              port:
+                                description: |-
+                                  (String) Destination TCP port number
+                                  Destination tcp-udp port number
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpDstPortRanges:
+                          description: (Attributes Set) Match only packets in the
+                            range of port numbers (see below for nested schema)
+                          items:
+                            properties:
+                              maxPort:
+                                description: (String)
+                                type: string
+                              minPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcDstPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: |-
+                                  (String)
+                                  Destination port value
+                                type: string
+                              srcPort:
+                                description: |-
+                                  (String)
+                                  Source port value
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcDstPortListDstOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+                                  Destination port operator
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              dstPort:
+                                description: |-
+                                  (String)
+                                  Destination port value
+                                type: string
+                              srcPort:
+                                description: |-
+                                  (String)
+                                  Source port operator
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcDstPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+                                  Destination port operator
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              dstPort:
+                                description: |-
+                                  (String)
+                                  Destination port value
+                                type: string
+                              srcOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+                                  Source port operator
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: |-
+                                  (String)
+                                  Source port value
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcDstPortListSrcOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: |-
+                                  (String)
+                                  Destination port value
+                                type: string
+                              srcOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+                                  Source port operator
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: |-
+                                  (String)
+                                  Source port value
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcDstRangePortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcDstRangePortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              port:
+                                description: (String) Destination TCP port number
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              port:
+                                description: (String) Destination TCP port number
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcPortRanges:
+                          description: (Attributes Set) Match only packets in the
+                            range of port numbers (see below for nested schema)
+                          items:
+                            properties:
+                              maxPort:
+                                description: (String)
+                                type: string
+                              minPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcRangeDstPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: (String)
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcRangeDstPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: (String)
+                                type: string
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        tcpUdpSrcRangeDstRangePortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        udp:
+                          description: |-
+                            (Boolean) User Datagram Protocol
+                            User Datagram Protocol
+                          type: boolean
+                        udpDstPortList:
+                          description: (Attributes Set) List of Destination udp ports
+                            without port operator (see below for nested schema)
+                          items:
+                            properties:
+                              port:
+                                description: |-
+                                  (String) Destination TCP port number
+                                  Destination udp port number
+                                type: string
+                            type: object
+                          type: array
+                        udpDstPortListOp:
+                          description: (Attributes Set) List of Destination udp ports
+                            with port operator (see below for nested schema)
+                          items:
+                            properties:
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+                                  Port operator - equal to/lesser than/greater than
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              port:
+                                description: |-
+                                  (String) Destination TCP port number
+                                  Destination udp port number
+                                type: string
+                            type: object
+                          type: array
+                        udpDstPortRanges:
+                          description: (Attributes Set) Match only packets in the
+                            range of port numbers (see below for nested schema)
+                          items:
+                            properties:
+                              maxPort:
+                                description: (String)
+                                type: string
+                              minPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcDstPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: |-
+                                  (String)
+                                  Destination port value
+                                type: string
+                              srcPort:
+                                description: |-
+                                  (String)
+                                  Source port value
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcDstPortListDstOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+                                  Destination port operator
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              dstPort:
+                                description: |-
+                                  (String)
+                                  Destination port value
+                                type: string
+                              srcPort:
+                                description: |-
+                                  (String)
+                                  Source port value
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcDstPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+                                  Destination port operator
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              dstPort:
+                                description: |-
+                                  (String)
+                                  Destination port value
+                                type: string
+                              srcOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+                                  Source port operator
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: |-
+                                  (String)
+                                  Source port value
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcDstPortListSrcOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: |-
+                                  (String)
+                                  Destination port value
+                                type: string
+                              srcOperator:
+                                description: |-
+                                  Choices: eq, gt, lt
+                                  Source port operator
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: |-
+                                  (String)
+                                  Source port value
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcDstRangePortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcDstRangePortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              port:
+                                description: (String) Destination TCP port number
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              port:
+                                description: (String) Destination TCP port number
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcPortRanges:
+                          description: (Attributes Set) Match only packets in the
+                            range of port numbers (see below for nested schema)
+                          items:
+                            properties:
+                              maxPort:
+                                description: (String)
+                                type: string
+                              minPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcRangeDstPortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: (String)
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcRangeDstPortListOp:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstPort:
+                                description: (String)
+                                type: string
+                              operator:
+                                description: |-
+                                  equal to/lesser than/greater than
+
+                                  - Choices: `eq`, `gt`, `lt`
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                        udpSrcRangeDstRangePortList:
+                          description: (Attributes Set) Source port number (see below
+                            for nested schema)
+                          items:
+                            properties:
+                              dstMaxPort:
+                                description: (String)
+                                type: string
+                              dstMinPort:
+                                description: (String)
+                                type: string
+                              srcMaxPort:
+                                description: (String)
+                                type: string
+                              srcMinPort:
+                                description: (String)
+                                type: string
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              lastHandledReconcileAt:
+                description: |-
+                  LastHandledReconcileAt holds the value of the most recent
+                  reconcile-requested-at annotation token that the controller has
+                  processed. Users can compare this to the annotation to determine
+                  whether a reconcile request has been handled.
+                type: string
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

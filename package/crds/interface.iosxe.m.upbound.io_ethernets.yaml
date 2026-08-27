@@ -1,0 +1,3155 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: ethernets.interface.iosxe.m.upbound.io
+spec:
+  group: interface.iosxe.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - iosxe
+    kind: Ethernet
+    listKind: EthernetList
+    plural: ethernets
+    singular: ethernet
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Ethernet is the Schema for the Ethernets API. This resource can
+          manage the Interface Ethernet configuration.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: EthernetSpec defines the desired state of Ethernet
+            properties:
+              forProvider:
+                properties:
+                  arpTimeout:
+                    description: |-
+                      (Number) Set ARP cache timeout
+                      Set ARP cache timeout
+                      - Range: `0`-`2147483`
+                    type: number
+                  authenticationEventFailActionAuthorizeVlan:
+                    description: |-
+                      (Number) Configure Authentication Fail vlan
+                      Configure Authentication Fail vlan
+                      - Range: `1`-`4094`
+                    type: number
+                  authenticationEventFailActionNextMethod:
+                    description: |-
+                      (Boolean) Move to next authentication method
+                      Move to next authentication method
+                    type: boolean
+                  authenticationEventLinksecFailActionNextMethod:
+                    description: |-
+                      (Boolean) Move to next authentication method
+                      Move to next authentication method
+                    type: boolean
+                  authenticationEventNoResponseActionAuthorizeVlan:
+                    description: |-
+                      (Number) Configure Guest vlan
+                      Configure Guest vlan
+                      - Range: `1`-`4094`
+                    type: number
+                  authenticationEventServerAliveActionReinitialize:
+                    description: |-
+                      (Boolean) Reinitialize all authorized clients
+                      Reinitialize all authorized clients
+                    type: boolean
+                  authenticationEventServerDeadActionAuthorize:
+                    description: |-
+                      (Boolean) Authorize the port
+                      Authorize the port
+                    type: boolean
+                  authenticationEventServerDeadActionAuthorizeVlan:
+                    description: |-
+                      (Number) Configure Critical Authorization VLAN
+                      Configure Critical Authorization VLAN
+                      - Range: `1`-`4094`
+                    type: number
+                  authenticationEventServerDeadActionAuthorizeVoice:
+                    description: |-
+                      (Boolean) Authorize the port for VOICE traffic
+                      Authorize the port for VOICE traffic
+                    type: boolean
+                  authenticationEventServerDeadActionReinitializeVlan:
+                    description: |-
+                      (Number) Configure Critical Authorization VLAN
+                      Configure Critical Authorization VLAN
+                      - Range: `1`-`4094`
+                    type: number
+                  authenticationHostMode:
+                    description: |-
+                      (String) Set the Host mode for authentication on this interface
+                      Set the Host mode for authentication on this interface
+                      - Choices: `multi-auth`, `multi-domain`, `multi-host`, `single-host`
+                    type: string
+                  authenticationOrderDot1X:
+                    description: |-
+                      (Boolean) Authentication method dot1x allowed
+                      Authentication method dot1x allowed
+                    type: boolean
+                  authenticationOrderDot1XMab:
+                    description: |-
+                      (Boolean) Authentication method mab allowed
+                      Authentication method mab allowed
+                    type: boolean
+                  authenticationOrderDot1XWebauth:
+                    description: |-
+                      (Boolean) Authentication method webauth allowed
+                      Authentication method webauth allowed
+                    type: boolean
+                  authenticationOrderMab:
+                    description: |-
+                      (Boolean) Authentication method mab allowed
+                      Authentication method mab allowed
+                    type: boolean
+                  authenticationOrderMabDot1X:
+                    description: |-
+                      (Boolean) Authentication method dot1x allowed
+                      Authentication method dot1x allowed
+                    type: boolean
+                  authenticationOrderMabWebauth:
+                    description: |-
+                      (Boolean) Authentication method webauth allowed
+                      Authentication method webauth allowed
+                    type: boolean
+                  authenticationOrderWebauth:
+                    description: |-
+                      (Boolean) Authentication method webauth allowed
+                      Authentication method webauth allowed
+                    type: boolean
+                  authenticationPeriodic:
+                    description: |-
+                      (Boolean) Enable or Disable Reauthentication for this port
+                      Enable or Disable Reauthentication for this port
+                    type: boolean
+                  authenticationPortControl:
+                    description: |-
+                      control value
+                      set the port-control value
+                      - Choices: `auto`, `force-authorized`, `force-unauthorized`
+                    type: string
+                  authenticationPriorityDot1X:
+                    description: |-
+                      (Boolean) Authentication method dot1x allowed
+                      Authentication method dot1x allowed
+                    type: boolean
+                  authenticationPriorityDot1XMab:
+                    description: |-
+                      (Boolean) Authentication method mab allowed
+                      Authentication method mab allowed
+                    type: boolean
+                  authenticationPriorityDot1XWebauth:
+                    description: |-
+                      (Boolean) Authentication method webauth allowed
+                      Authentication method webauth allowed
+                    type: boolean
+                  authenticationPriorityMab:
+                    description: |-
+                      (Boolean) Authentication method mab allowed
+                      Authentication method mab allowed
+                    type: boolean
+                  authenticationPriorityMabDot1X:
+                    description: |-
+                      (Boolean) Authentication method dot1x allowed
+                      Authentication method dot1x allowed
+                    type: boolean
+                  authenticationPriorityMabWebauth:
+                    description: |-
+                      (Boolean) Authentication method webauth allowed
+                      Authentication method webauth allowed
+                    type: boolean
+                  authenticationPriorityWebauth:
+                    description: |-
+                      (Boolean) Authentication method webauth allowed
+                      Authentication method webauth allowed
+                    type: boolean
+                  authenticationTimerReauthenticate:
+                    description: |-
+                      (Number) Enter a value between 1 and 1073741823
+                      Enter a value between 1 and 1073741823
+                      - Range: `1`-`1073741823`
+                    type: number
+                  authenticationTimerReauthenticateServer:
+                    description: |-
+                      authentication timeout value from the server
+                      Obtain re-authentication timeout value from the server
+                    type: boolean
+                  autoQosClassify:
+                    description: |-
+                      (Boolean) Configure classification for untrusted devices
+                      Configure classification for untrusted devices
+                    type: boolean
+                  autoQosClassifyPolice:
+                    description: |-
+                      (Boolean) Configure QoS policing for untrusted devices
+                      Configure QoS policing for untrusted devices
+                    type: boolean
+                  autoQosTrust:
+                    description: |-
+                      (Boolean) Trust the DSCP/CoS marking
+                      Trust the DSCP/CoS marking
+                    type: boolean
+                  autoQosTrustCos:
+                    description: |-
+                      (Boolean) Trust the CoS marking
+                      Trust the CoS marking
+                    type: boolean
+                  autoQosTrustDscp:
+                    description: |-
+                      (Boolean) Trust the DSCP marking
+                      Trust the DSCP marking
+                    type: boolean
+                  autoQosVideoCts:
+                    description: |-
+                      (Boolean) Trust the QoS marking of the Cisco Telepresence System
+                      Trust the QoS marking of the Cisco Telepresence System
+                    type: boolean
+                  autoQosVideoIpCamera:
+                    description: |-
+                      (Boolean) Trust the QoS marking of the Ip Video Surveillance camera
+                      Trust the QoS marking of the Ip Video Surveillance camera
+                    type: boolean
+                  autoQosVideoMediaPlayer:
+                    description: |-
+                      (Boolean) Trust the Qos marking of the Cisco Media Player
+                      Trust the Qos marking of the Cisco Media Player
+                    type: boolean
+                  autoQosVoipCiscoPhone:
+                    description: |-
+                      (Boolean) Trust the QoS marking of Cisco IP Phone
+                      Trust the QoS marking of Cisco IP Phone
+                    type: boolean
+                  autoQosVoipCiscoSoftphone:
+                    description: |-
+                      (Boolean) Trust the QoS marking of Cisco IP SoftPhone
+                      Trust the QoS marking of Cisco IP SoftPhone
+                    type: boolean
+                  autoQosVoipTrust:
+                    description: |-
+                      (Boolean) Trust the DSCP/CoS marking
+                      Trust the DSCP/CoS marking
+                    type: boolean
+                  bandwidth:
+                    description: |-
+                      Range: 1-200000000
+
+                      - Range: `1`-`200000000`
+                    type: number
+                  bfdEcho:
+                    description: |-
+                      (Boolean) Use echo adjunct as bfd detection mechanism
+                      Use echo adjunct as bfd detection mechanism
+                    type: boolean
+                  bfdEnable:
+                    description: |-
+                      (Boolean) Enable BFD under the interface
+                      Enable BFD under the interface
+                    type: boolean
+                  bfdInterval:
+                    description: |-
+                      Range: 50-9999
+
+                      - Range: `50`-`9999`
+                    type: number
+                  bfdIntervalMinRx:
+                    description: |-
+                      (Number) Minimum receive interval capability
+                      Minimum receive interval capability
+                      - Range: `50`-`9999`
+                    type: number
+                  bfdIntervalMultiplier:
+                    description: |-
+                      (Number) Multiplier value used to compute holddown
+                      Multiplier value used to compute holddown
+                      - Range: `3`-`50`
+                    type: number
+                  bfdLocalAddress:
+                    description: |-
+                      (String) The Source IP address to be used for BFD sessions over this interface.
+                      The Source IP address to be used for BFD sessions over this interface.
+                    type: string
+                  bfdTemplate:
+                    description: |-
+                      (String) BFD template
+                      BFD template
+                    type: string
+                  bpduguardDisable:
+                    description: |-
+                      (Boolean) Disable BPDU guard for this interface
+                      Disable BPDU guard for this interface
+                    type: boolean
+                  bpduguardEnable:
+                    description: |-
+                      (Boolean) Enable BPDU guard for this interface
+                      Enable BPDU guard for this interface
+                    type: boolean
+                  carrierDelayMsec:
+                    description: |-
+                      (Number) delay specified in milliseconds
+                      delay specified in milliseconds
+                      - Range: `0`-`1000`
+                    type: number
+                  cdpEnable:
+                    description: |-
+                      (Boolean) Enable CDP on interface
+                      Enable CDP on interface
+                    type: boolean
+                  cdpTlvApp:
+                    description: |-
+                      (Boolean) Enable/Configure Application TLV
+                      Enable/Configure Application TLV
+                    type: boolean
+                  cdpTlvLocation:
+                    description: |-
+                      (Boolean) Exchange location information
+                      Exchange location information
+                    type: boolean
+                  cdpTlvServerLocation:
+                    description: |-
+                      (Boolean) Enable CDP location server on interface
+                      Enable CDP location server on interface
+                    type: boolean
+                  channelGroupMode:
+                    description: |-
+                      (String) Etherchannel Mode of the interface
+                      Etherchannel Mode of the interface
+                      - Choices: `active`, `auto`, `desirable`, `on`, `passive`
+                    type: string
+                  channelGroupNumber:
+                    description: |-
+                      Range: 1-512
+
+                      - Range: `1`-`512`
+                    type: number
+                  description:
+                    description: |-
+                      (String) Interface specific description
+                      Interface specific description
+                    type: string
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  deviceTracking:
+                    description: |-
+                      tracking on the interface
+                      Configure device-tracking on the interface
+                    type: boolean
+                  deviceTrackingAttachedPolicies:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: |-
+                            (String)
+                            Apply a policy for feature device-tracking
+                          type: string
+                      type: object
+                    type: array
+                  dot1xMaxReauthReq:
+                    description: |-
+                      (Number) Max No. of Reauthentication Attempts
+                      Max No. of Reauthentication Attempts
+                      - Range: `1`-`10`
+                    type: number
+                  dot1xMaxReq:
+                    description: |-
+                      (Number) Max No. of Retries
+                      Max No. of Retries
+                      - Range: `1`-`10`
+                    type: number
+                  dot1xPae:
+                    description: |-
+                      (String) Set 802.1x interface pae type
+                      Set 802.1x interface pae type
+                      - Choices: `authenticator`, `both`, `supplicant`
+                    type: string
+                  dot1xTimeoutAuthPeriod:
+                    description: |-
+                      (Number) Timeout for authenticator reply
+                      Timeout for authenticator reply
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutHeldPeriod:
+                    description: |-
+                      (Number) Timeout for authentication retries
+                      Timeout for authentication retries
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutQuietPeriod:
+                    description: |-
+                      (Number) QuietPeriod in Seconds
+                      QuietPeriod in Seconds
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutRatelimitPeriod:
+                    description: |-
+                      (Number) Ratelimit Period in seconds
+                      Ratelimit Period in seconds
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutServerTimeout:
+                    description: |-
+                      (Number) Timeout for Radius Retries
+                      Timeout for Radius Retries
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutStartPeriod:
+                    description: |-
+                      start retries
+                      Timeout for EAPOL-start retries
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutSuppTimeout:
+                    description: |-
+                      (Number) Timeout for supplicant reply
+                      Timeout for supplicant reply
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutTxPeriod:
+                    description: |-
+                      (Number) Timeout for supplicant retries
+                      Timeout for supplicant retries
+                      - Range: `1`-`65535`
+                    type: number
+                  encapsulationDot1QVlanId:
+                    description: |-
+                      Range: 1-4094
+
+                      - Range: `1`-`4094`
+                    type: number
+                  evpnEthernetSegments:
+                    description: (Attributes List) Ethernet segment local discriminator
+                      value (see below for nested schema)
+                    items:
+                      properties:
+                        esValue:
+                          description: |-
+                            (Number) Ethernet segment local discriminator value
+                            Ethernet segment local discriminator value
+                            - Range: `1`-`65535`
+                          type: number
+                      type: object
+                    type: array
+                  helperAddresses:
+                    description: (Attributes List) Specify a destination address for
+                      UDP broadcasts (see below for nested schema)
+                    items:
+                      properties:
+                        address:
+                          description: |-
+                            (String) IP destination address
+                            IP destination address
+                          type: string
+                        global:
+                          description: |-
+                            address is global
+                            Helper-address is global
+                          type: boolean
+                        vrf:
+                          description: |-
+                            address (if different from interface VRF)
+                            VRF name for helper-address (if different from interface VRF)
+                          type: string
+                      type: object
+                    type: array
+                  holdQueues:
+                    description: (Attributes List) Set hold queue depth (see below
+                      for nested schema)
+                    items:
+                      properties:
+                        direction:
+                          description: |-
+                            Choices: in, out
+
+                            - Choices: `in`, `out`
+                          type: string
+                        queueLength:
+                          description: |-
+                            Range: 0-240000
+
+                            - Range: `0`-`240000`
+                          type: number
+                      type: object
+                    type: array
+                  ipAccessGroupIn:
+                    description: (String)
+                    type: string
+                  ipAccessGroupInEnable:
+                    description: |-
+                      (Boolean) inbound packets
+                      inbound packets
+                    type: boolean
+                  ipAccessGroupOut:
+                    description: (String)
+                    type: string
+                  ipAccessGroupOutEnable:
+                    description: |-
+                      (Boolean) outbound packets
+                      outbound packets
+                    type: boolean
+                  ipArpInspectionLimitRate:
+                    description: |-
+                      (Number) Rate Limit
+                      Rate Limit
+                      - Range: `0`-`4294967295`
+                    type: number
+                  ipArpInspectionTrust:
+                    description: |-
+                      (Boolean) Configure Trust state
+                      Configure Trust state
+                    type: boolean
+                  ipDhcpRelayInformationOptionVpnId:
+                    description: |-
+                      id support on this interface
+                      Enable vpn-id support on this interface
+                    type: boolean
+                  ipDhcpRelaySourceInterface:
+                    description: |-
+                      (String) Set source interface for relayed messages
+                      Set source interface for relayed messages
+                    type: string
+                  ipDhcpSnoopingTrust:
+                    description: |-
+                      (Boolean) DHCP Snooping trust config
+                      DHCP Snooping trust config
+                    type: boolean
+                  ipFlowMonitors:
+                    description: (Attributes List) Apply a Flow Monitor (see below
+                      for nested schema)
+                    items:
+                      properties:
+                        direction:
+                          description: |-
+                            Choices: in, out
+
+                            - Choices: `input`, `output`
+                          type: string
+                        name:
+                          description: |-
+                            (String)
+                            User defined
+                          type: string
+                      type: object
+                    type: array
+                  ipIgmpVersion:
+                    description: |-
+                      (Number) IGMP version
+                      IGMP version
+                      - Range: `1`-`3`
+                    type: number
+                  ipNatInside:
+                    description: |-
+                      (Boolean) Inside interface for address translation
+                      Inside interface for address translation
+                    type: boolean
+                  ipNatOutside:
+                    description: |-
+                      (Boolean) Outside interface for address translation
+                      Outside interface for address translation
+                    type: boolean
+                  ipNbarProtocolDiscovery:
+                    description: |-
+                      (Boolean) Enable protocol discovery for both ipv4 and ipv6
+                      Enable protocol discovery for both ipv4 and ipv6
+                    type: boolean
+                  ipProxyArp:
+                    description: |-
+                      (Boolean) Enable proxy ARP
+                      Enable proxy ARP
+                    type: boolean
+                  ipRedirects:
+                    description: |-
+                      (Boolean) Enable sending ICMP Redirect messages
+                      Enable sending ICMP Redirect messages
+                    type: boolean
+                  ipRouterIsis:
+                    description: (String)
+                    type: string
+                  ipUnreachables:
+                    description: |-
+                      (Boolean) Enable sending ICMP Unreachable messages
+                      Enable sending ICMP Unreachable messages
+                    type: boolean
+                  ipVerifyUnicastSourceAllowDefault:
+                    description: |-
+                      (Boolean) Allow default route to match when checking source address
+                      Allow default route to match when checking source address
+                    type: boolean
+                  ipVerifyUnicastSourceAllowSelfPing:
+                    description: |-
+                      (Boolean) Allow router to ping itself (opens vulnerability in verification)
+                      Allow router to ping itself (opens vulnerability in verification)
+                    type: boolean
+                  ipVerifyUnicastSourceReachableVia:
+                    description: |-
+                      (String) Specify reachability check to apply to the source address
+                      Specify reachability check to apply to the source address
+                      - Choices: `any`, `rx`
+                    type: string
+                  ipv4Address:
+                    description: |-
+                      (String) Ip address
+                      Ip address
+                    type: string
+                  ipv4AddressDhcp:
+                    description: |-
+                      (Boolean) IP Address negotiated via DHCP
+                      IP Address negotiated via DHCP
+                    type: boolean
+                  ipv4AddressMask:
+                    description: |-
+                      (String) Ip subnet mask
+                      Ip subnet mask
+                    type: string
+                  ipv6AddressAutoconfigDefault:
+                    description: |-
+                      (Boolean) Insert default route
+                      Insert default route
+                    type: boolean
+                  ipv6AddressDhcp:
+                    description: |-
+                      (Boolean) Obtain IPv6 address from DHCP server
+                      Obtain IPv6 address from DHCP server
+                    type: boolean
+                  ipv6Addresses:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        eui64:
+                          description: |-
+                            64 interface identifier
+                            Use eui-64 interface identifier
+                          type: boolean
+                        prefix:
+                          description: |-
+                            (String) IPv6 prefix
+                            IPv6 prefix
+                          type: string
+                      type: object
+                    type: array
+                  ipv6DhcpClientPd:
+                    description: |-
+                      delegation name
+                      IPv6 DHCP client prefix-delegation name
+                    type: string
+                  ipv6DhcpClientPdRapidCommit:
+                    description: |-
+                      Commit for prefix-delegation
+                      Enable Rapid-Commit for prefix-delegation
+                    type: boolean
+                  ipv6DhcpRelayDestinations:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        address:
+                          description: |-
+                            (String) IP destination address
+                            Relay destination IPv6 address
+                          type: string
+                        interface:
+                          description: |-
+                            (List of String) Interface for relay address
+                            Interface for relay address
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                  ipv6DhcpRelayOptionVpn:
+                    description: |-
+                      Forward Messages
+                      Insert VSS option in Relay-Forward Messages
+                    type: boolean
+                  ipv6DhcpRelayTrust:
+                    description: |-
+                      replies
+                      Interface is trusted to process relay-replies
+                    type: boolean
+                  ipv6DhcpServers:
+                    description: (Attributes List) Act as an IPv6 DHCP server (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        allowHint:
+                          description: |-
+                            (Boolean) Allow hint from client
+                            Allow hint from client
+                          type: boolean
+                        poolName:
+                          description: |-
+                            (String) DHCP pool name
+                            DHCP pool name
+                          type: string
+                        preference:
+                          description: |-
+                            (Number) Server preference value
+                            Server preference value
+                            - Range: `0`-`255`
+                          type: number
+                        rapidCommit:
+                          description: |-
+                            Commit
+                            Enable Rapid-Commit
+                          type: boolean
+                      type: object
+                    type: array
+                  ipv6Enable:
+                    description: |-
+                      (Boolean) Enable IPv6 on interface
+                      Enable IPv6 on interface
+                    type: boolean
+                  ipv6FlowMonitors:
+                    description: (Attributes List) Apply a Flow Monitor (see below
+                      for nested schema)
+                    items:
+                      properties:
+                        direction:
+                          description: |-
+                            Choices: in, out
+
+                            - Choices: `input`, `output`
+                          type: string
+                        name:
+                          description: |-
+                            (String)
+                            User defined
+                          type: string
+                      type: object
+                    type: array
+                  ipv6LinkLocalAddresses:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        address:
+                          description: (String) IP destination address
+                          type: string
+                        linkLocal:
+                          description: |-
+                            local address
+                            Use link-local address
+                          type: boolean
+                      type: object
+                    type: array
+                  ipv6Mtu:
+                    description: |-
+                      (Number) Set IPv6 Maximum Transmission Unit
+                      Set IPv6 Maximum Transmission Unit
+                      - Range: `1280`-`9976`
+                    type: number
+                  ipv6NdRaSuppressAll:
+                    description: |-
+                      (Boolean) Suppress all IPv6 RA
+                      Suppress all IPv6 RA
+                    type: boolean
+                  loadInterval:
+                    description: |-
+                      (Number) Specify interval for load calculation for an interface
+                      Specify interval for load calculation for an interface
+                      - Range: `30`-`600`
+                    type: number
+                  loggingEventLinkStatusEnable:
+                    description: |-
+                      (Boolean) UPDOWN and CHANGE messages
+                      UPDOWN and CHANGE messages
+                    type: boolean
+                  mab:
+                    description: |-
+                      (Boolean) MAC Authentication Bypass Interface Config Commands
+                      MAC Authentication Bypass Interface Config Commands
+                    type: boolean
+                  mabEap:
+                    description: |-
+                      (Boolean) Use EAP authentication for MAC Auth Bypass
+                      Use EAP authentication for MAC Auth Bypass
+                    type: boolean
+                  mediaType:
+                    description: |-
+                      (String) Media type
+                      Media type
+                      - Choices: `auto-select`, `rj45`, `sfp`
+                    type: string
+                  mtu:
+                    description: |-
+                      (Number) Set the interface Maximum Transmission Unit (MTU)
+                      Set the interface Maximum Transmission Unit (MTU)
+                      - Range: `64`-`18000`
+                    type: number
+                  name:
+                    description: (String)
+                    type: string
+                  negotiationAuto:
+                    description: |-
+                      (Boolean) Enable link autonegotiation
+                      Enable link autonegotiation
+                    type: boolean
+                  serviceInstances:
+                    description: (Attributes List) Configure Ether Service Instance
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        encapsulationUntagged:
+                          description: |-
+                            (Boolean) Untagged encapsulation
+                            Untagged encapsulation
+                          type: boolean
+                        ethernet:
+                          description: |-
+                            (Boolean) Configure an Ethernet Instance
+                            Configure an Ethernet Instance
+                          type: boolean
+                        id:
+                          description: |-
+                            (String) The path of the object.
+
+                            - Range: `1`-`8000`
+                          type: number
+                      type: object
+                    type: array
+                  servicePolicyInput:
+                    description: |-
+                      map to the input of an interface
+                      Assign policy-map to the input of an interface
+                    type: string
+                  servicePolicyOutput:
+                    description: |-
+                      map to the output of an interface
+                      Assign policy-map to the output of an interface
+                    type: string
+                  shutdown:
+                    description: |-
+                      (Boolean) Shutdown the selected interface
+                      Shutdown the selected interface
+                    type: boolean
+                  snmpTrapLinkStatus:
+                    description: |-
+                      (Boolean) Allow SNMP LINKUP and LINKDOWN traps
+                      Allow SNMP LINKUP and LINKDOWN traps
+                    type: boolean
+                  sourceTemplate:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        merge:
+                          description: |-
+                            (Boolean) merge option of binding
+                            merge option of binding
+                          type: boolean
+                        templateName:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  spanningTreeGuard:
+                    description: |-
+                      (String) Change an interface's spanning tree guard mode
+                      Change an interface's spanning tree guard mode
+                      - Choices: `loop`, `none`, `root`
+                    type: string
+                  spanningTreeLinkType:
+                    description: |-
+                      (String) Specify a link type for spanning tree tree protocol use
+                      Specify a link type for spanning tree tree protocol use
+                      - Choices: `point-to-point`, `shared`
+                    type: string
+                  spanningTreePortfast:
+                    description: |-
+                      (Boolean) (DEPRECATED) Spanning tree portfast options
+                      (DEPRECATED) Spanning tree portfast options
+                    type: boolean
+                  spanningTreePortfastDisable:
+                    description: |-
+                      (Boolean) (DEPRECATED) Disable portfast for this interface
+                      (DEPRECATED) Disable portfast for this interface
+                    type: boolean
+                  spanningTreePortfastEdge:
+                    description: |-
+                      (Boolean) (DEPRECATED) Enable portfast edge on the interface
+                      (DEPRECATED) Enable portfast edge on the interface
+                    type: boolean
+                  spanningTreePortfastTrunk:
+                    description: |-
+                      (Boolean) (DEPRECATED) Enable portfast on the interface even in trunk mode
+                      (DEPRECATED) Enable portfast on the interface even in trunk mode
+                    type: boolean
+                  speed100:
+                    description: |-
+                      (Boolean) 100 Mbps operation
+                      100 Mbps operation
+                    type: boolean
+                  speed1000:
+                    description: |-
+                      (Boolean) 1000 Mbps operation
+                      1000 Mbps operation
+                    type: boolean
+                  speed2500:
+                    description: |-
+                      (Boolean) 2500 Mbps operation
+                      2500 Mbps operation
+                    type: boolean
+                  speed5000:
+                    description: |-
+                      (Boolean) 5000 Mbps operation
+                      5000 Mbps operation
+                    type: boolean
+                  speed10000:
+                    description: |-
+                      (Boolean) 10000 Mbps operation
+                      10000 Mbps operation
+                    type: boolean
+                  speed25000:
+                    description: |-
+                      (Boolean) 25000 Mbps operation
+                      25000 Mbps operation
+                    type: boolean
+                  speed40000:
+                    description: |-
+                      (Boolean) 40000 Mbps operation
+                      40000 Mbps operation
+                    type: boolean
+                  speed100000:
+                    description: |-
+                      (Boolean) 100000 Mbps operation
+                      100000 Mbps operation
+                    type: boolean
+                  speedNonegotiate:
+                    description: (Boolean)
+                    type: boolean
+                  switchport:
+                    description: (Boolean)
+                    type: boolean
+                  trustDevice:
+                    description: |-
+                      (String) trusted device class
+                      trusted device class
+                      - Choices: `cisco-phone`, `cts`, `ip-camera`, `media-player`
+                    type: string
+                  type:
+                    description: |-
+                      (String) Interface type
+                      Interface type
+                      - Choices: `GigabitEthernet`, `TwoGigabitEthernet`, `FiveGigabitEthernet`, `TenGigabitEthernet`, `TwentyFiveGigE`, `FortyGigabitEthernet`, `FiftyGigabitEthernet`, `HundredGigE`, `TwoHundredGigE`, `FourHundredGigE`
+                    type: string
+                  unnumbered:
+                    description: |-
+                      (String) Enable IP processing without an explicit address
+                      Enable IP processing without an explicit address
+                    type: string
+                  vrfForwarding:
+                    description: |-
+                      (String) Configure forwarding table
+                      Configure forwarding table
+                    type: string
+                  vrfForwardingRef:
+                    description: Reference to a VRF in routing to populate vrfForwarding.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  vrfForwardingSelector:
+                    description: Selector for a VRF in routing to populate vrfForwarding.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  zoneMemberSecurity:
+                    description: |-
+                      (String) Security zone
+                      Security zone
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  arpTimeout:
+                    description: |-
+                      (Number) Set ARP cache timeout
+                      Set ARP cache timeout
+                      - Range: `0`-`2147483`
+                    type: number
+                  authenticationEventFailActionAuthorizeVlan:
+                    description: |-
+                      (Number) Configure Authentication Fail vlan
+                      Configure Authentication Fail vlan
+                      - Range: `1`-`4094`
+                    type: number
+                  authenticationEventFailActionNextMethod:
+                    description: |-
+                      (Boolean) Move to next authentication method
+                      Move to next authentication method
+                    type: boolean
+                  authenticationEventLinksecFailActionNextMethod:
+                    description: |-
+                      (Boolean) Move to next authentication method
+                      Move to next authentication method
+                    type: boolean
+                  authenticationEventNoResponseActionAuthorizeVlan:
+                    description: |-
+                      (Number) Configure Guest vlan
+                      Configure Guest vlan
+                      - Range: `1`-`4094`
+                    type: number
+                  authenticationEventServerAliveActionReinitialize:
+                    description: |-
+                      (Boolean) Reinitialize all authorized clients
+                      Reinitialize all authorized clients
+                    type: boolean
+                  authenticationEventServerDeadActionAuthorize:
+                    description: |-
+                      (Boolean) Authorize the port
+                      Authorize the port
+                    type: boolean
+                  authenticationEventServerDeadActionAuthorizeVlan:
+                    description: |-
+                      (Number) Configure Critical Authorization VLAN
+                      Configure Critical Authorization VLAN
+                      - Range: `1`-`4094`
+                    type: number
+                  authenticationEventServerDeadActionAuthorizeVoice:
+                    description: |-
+                      (Boolean) Authorize the port for VOICE traffic
+                      Authorize the port for VOICE traffic
+                    type: boolean
+                  authenticationEventServerDeadActionReinitializeVlan:
+                    description: |-
+                      (Number) Configure Critical Authorization VLAN
+                      Configure Critical Authorization VLAN
+                      - Range: `1`-`4094`
+                    type: number
+                  authenticationHostMode:
+                    description: |-
+                      (String) Set the Host mode for authentication on this interface
+                      Set the Host mode for authentication on this interface
+                      - Choices: `multi-auth`, `multi-domain`, `multi-host`, `single-host`
+                    type: string
+                  authenticationOrderDot1X:
+                    description: |-
+                      (Boolean) Authentication method dot1x allowed
+                      Authentication method dot1x allowed
+                    type: boolean
+                  authenticationOrderDot1XMab:
+                    description: |-
+                      (Boolean) Authentication method mab allowed
+                      Authentication method mab allowed
+                    type: boolean
+                  authenticationOrderDot1XWebauth:
+                    description: |-
+                      (Boolean) Authentication method webauth allowed
+                      Authentication method webauth allowed
+                    type: boolean
+                  authenticationOrderMab:
+                    description: |-
+                      (Boolean) Authentication method mab allowed
+                      Authentication method mab allowed
+                    type: boolean
+                  authenticationOrderMabDot1X:
+                    description: |-
+                      (Boolean) Authentication method dot1x allowed
+                      Authentication method dot1x allowed
+                    type: boolean
+                  authenticationOrderMabWebauth:
+                    description: |-
+                      (Boolean) Authentication method webauth allowed
+                      Authentication method webauth allowed
+                    type: boolean
+                  authenticationOrderWebauth:
+                    description: |-
+                      (Boolean) Authentication method webauth allowed
+                      Authentication method webauth allowed
+                    type: boolean
+                  authenticationPeriodic:
+                    description: |-
+                      (Boolean) Enable or Disable Reauthentication for this port
+                      Enable or Disable Reauthentication for this port
+                    type: boolean
+                  authenticationPortControl:
+                    description: |-
+                      control value
+                      set the port-control value
+                      - Choices: `auto`, `force-authorized`, `force-unauthorized`
+                    type: string
+                  authenticationPriorityDot1X:
+                    description: |-
+                      (Boolean) Authentication method dot1x allowed
+                      Authentication method dot1x allowed
+                    type: boolean
+                  authenticationPriorityDot1XMab:
+                    description: |-
+                      (Boolean) Authentication method mab allowed
+                      Authentication method mab allowed
+                    type: boolean
+                  authenticationPriorityDot1XWebauth:
+                    description: |-
+                      (Boolean) Authentication method webauth allowed
+                      Authentication method webauth allowed
+                    type: boolean
+                  authenticationPriorityMab:
+                    description: |-
+                      (Boolean) Authentication method mab allowed
+                      Authentication method mab allowed
+                    type: boolean
+                  authenticationPriorityMabDot1X:
+                    description: |-
+                      (Boolean) Authentication method dot1x allowed
+                      Authentication method dot1x allowed
+                    type: boolean
+                  authenticationPriorityMabWebauth:
+                    description: |-
+                      (Boolean) Authentication method webauth allowed
+                      Authentication method webauth allowed
+                    type: boolean
+                  authenticationPriorityWebauth:
+                    description: |-
+                      (Boolean) Authentication method webauth allowed
+                      Authentication method webauth allowed
+                    type: boolean
+                  authenticationTimerReauthenticate:
+                    description: |-
+                      (Number) Enter a value between 1 and 1073741823
+                      Enter a value between 1 and 1073741823
+                      - Range: `1`-`1073741823`
+                    type: number
+                  authenticationTimerReauthenticateServer:
+                    description: |-
+                      authentication timeout value from the server
+                      Obtain re-authentication timeout value from the server
+                    type: boolean
+                  autoQosClassify:
+                    description: |-
+                      (Boolean) Configure classification for untrusted devices
+                      Configure classification for untrusted devices
+                    type: boolean
+                  autoQosClassifyPolice:
+                    description: |-
+                      (Boolean) Configure QoS policing for untrusted devices
+                      Configure QoS policing for untrusted devices
+                    type: boolean
+                  autoQosTrust:
+                    description: |-
+                      (Boolean) Trust the DSCP/CoS marking
+                      Trust the DSCP/CoS marking
+                    type: boolean
+                  autoQosTrustCos:
+                    description: |-
+                      (Boolean) Trust the CoS marking
+                      Trust the CoS marking
+                    type: boolean
+                  autoQosTrustDscp:
+                    description: |-
+                      (Boolean) Trust the DSCP marking
+                      Trust the DSCP marking
+                    type: boolean
+                  autoQosVideoCts:
+                    description: |-
+                      (Boolean) Trust the QoS marking of the Cisco Telepresence System
+                      Trust the QoS marking of the Cisco Telepresence System
+                    type: boolean
+                  autoQosVideoIpCamera:
+                    description: |-
+                      (Boolean) Trust the QoS marking of the Ip Video Surveillance camera
+                      Trust the QoS marking of the Ip Video Surveillance camera
+                    type: boolean
+                  autoQosVideoMediaPlayer:
+                    description: |-
+                      (Boolean) Trust the Qos marking of the Cisco Media Player
+                      Trust the Qos marking of the Cisco Media Player
+                    type: boolean
+                  autoQosVoipCiscoPhone:
+                    description: |-
+                      (Boolean) Trust the QoS marking of Cisco IP Phone
+                      Trust the QoS marking of Cisco IP Phone
+                    type: boolean
+                  autoQosVoipCiscoSoftphone:
+                    description: |-
+                      (Boolean) Trust the QoS marking of Cisco IP SoftPhone
+                      Trust the QoS marking of Cisco IP SoftPhone
+                    type: boolean
+                  autoQosVoipTrust:
+                    description: |-
+                      (Boolean) Trust the DSCP/CoS marking
+                      Trust the DSCP/CoS marking
+                    type: boolean
+                  bandwidth:
+                    description: |-
+                      Range: 1-200000000
+
+                      - Range: `1`-`200000000`
+                    type: number
+                  bfdEcho:
+                    description: |-
+                      (Boolean) Use echo adjunct as bfd detection mechanism
+                      Use echo adjunct as bfd detection mechanism
+                    type: boolean
+                  bfdEnable:
+                    description: |-
+                      (Boolean) Enable BFD under the interface
+                      Enable BFD under the interface
+                    type: boolean
+                  bfdInterval:
+                    description: |-
+                      Range: 50-9999
+
+                      - Range: `50`-`9999`
+                    type: number
+                  bfdIntervalMinRx:
+                    description: |-
+                      (Number) Minimum receive interval capability
+                      Minimum receive interval capability
+                      - Range: `50`-`9999`
+                    type: number
+                  bfdIntervalMultiplier:
+                    description: |-
+                      (Number) Multiplier value used to compute holddown
+                      Multiplier value used to compute holddown
+                      - Range: `3`-`50`
+                    type: number
+                  bfdLocalAddress:
+                    description: |-
+                      (String) The Source IP address to be used for BFD sessions over this interface.
+                      The Source IP address to be used for BFD sessions over this interface.
+                    type: string
+                  bfdTemplate:
+                    description: |-
+                      (String) BFD template
+                      BFD template
+                    type: string
+                  bpduguardDisable:
+                    description: |-
+                      (Boolean) Disable BPDU guard for this interface
+                      Disable BPDU guard for this interface
+                    type: boolean
+                  bpduguardEnable:
+                    description: |-
+                      (Boolean) Enable BPDU guard for this interface
+                      Enable BPDU guard for this interface
+                    type: boolean
+                  carrierDelayMsec:
+                    description: |-
+                      (Number) delay specified in milliseconds
+                      delay specified in milliseconds
+                      - Range: `0`-`1000`
+                    type: number
+                  cdpEnable:
+                    description: |-
+                      (Boolean) Enable CDP on interface
+                      Enable CDP on interface
+                    type: boolean
+                  cdpTlvApp:
+                    description: |-
+                      (Boolean) Enable/Configure Application TLV
+                      Enable/Configure Application TLV
+                    type: boolean
+                  cdpTlvLocation:
+                    description: |-
+                      (Boolean) Exchange location information
+                      Exchange location information
+                    type: boolean
+                  cdpTlvServerLocation:
+                    description: |-
+                      (Boolean) Enable CDP location server on interface
+                      Enable CDP location server on interface
+                    type: boolean
+                  channelGroupMode:
+                    description: |-
+                      (String) Etherchannel Mode of the interface
+                      Etherchannel Mode of the interface
+                      - Choices: `active`, `auto`, `desirable`, `on`, `passive`
+                    type: string
+                  channelGroupNumber:
+                    description: |-
+                      Range: 1-512
+
+                      - Range: `1`-`512`
+                    type: number
+                  description:
+                    description: |-
+                      (String) Interface specific description
+                      Interface specific description
+                    type: string
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  deviceTracking:
+                    description: |-
+                      tracking on the interface
+                      Configure device-tracking on the interface
+                    type: boolean
+                  deviceTrackingAttachedPolicies:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: |-
+                            (String)
+                            Apply a policy for feature device-tracking
+                          type: string
+                      type: object
+                    type: array
+                  dot1xMaxReauthReq:
+                    description: |-
+                      (Number) Max No. of Reauthentication Attempts
+                      Max No. of Reauthentication Attempts
+                      - Range: `1`-`10`
+                    type: number
+                  dot1xMaxReq:
+                    description: |-
+                      (Number) Max No. of Retries
+                      Max No. of Retries
+                      - Range: `1`-`10`
+                    type: number
+                  dot1xPae:
+                    description: |-
+                      (String) Set 802.1x interface pae type
+                      Set 802.1x interface pae type
+                      - Choices: `authenticator`, `both`, `supplicant`
+                    type: string
+                  dot1xTimeoutAuthPeriod:
+                    description: |-
+                      (Number) Timeout for authenticator reply
+                      Timeout for authenticator reply
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutHeldPeriod:
+                    description: |-
+                      (Number) Timeout for authentication retries
+                      Timeout for authentication retries
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutQuietPeriod:
+                    description: |-
+                      (Number) QuietPeriod in Seconds
+                      QuietPeriod in Seconds
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutRatelimitPeriod:
+                    description: |-
+                      (Number) Ratelimit Period in seconds
+                      Ratelimit Period in seconds
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutServerTimeout:
+                    description: |-
+                      (Number) Timeout for Radius Retries
+                      Timeout for Radius Retries
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutStartPeriod:
+                    description: |-
+                      start retries
+                      Timeout for EAPOL-start retries
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutSuppTimeout:
+                    description: |-
+                      (Number) Timeout for supplicant reply
+                      Timeout for supplicant reply
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutTxPeriod:
+                    description: |-
+                      (Number) Timeout for supplicant retries
+                      Timeout for supplicant retries
+                      - Range: `1`-`65535`
+                    type: number
+                  encapsulationDot1QVlanId:
+                    description: |-
+                      Range: 1-4094
+
+                      - Range: `1`-`4094`
+                    type: number
+                  evpnEthernetSegments:
+                    description: (Attributes List) Ethernet segment local discriminator
+                      value (see below for nested schema)
+                    items:
+                      properties:
+                        esValue:
+                          description: |-
+                            (Number) Ethernet segment local discriminator value
+                            Ethernet segment local discriminator value
+                            - Range: `1`-`65535`
+                          type: number
+                      type: object
+                    type: array
+                  helperAddresses:
+                    description: (Attributes List) Specify a destination address for
+                      UDP broadcasts (see below for nested schema)
+                    items:
+                      properties:
+                        address:
+                          description: |-
+                            (String) IP destination address
+                            IP destination address
+                          type: string
+                        global:
+                          description: |-
+                            address is global
+                            Helper-address is global
+                          type: boolean
+                        vrf:
+                          description: |-
+                            address (if different from interface VRF)
+                            VRF name for helper-address (if different from interface VRF)
+                          type: string
+                      type: object
+                    type: array
+                  holdQueues:
+                    description: (Attributes List) Set hold queue depth (see below
+                      for nested schema)
+                    items:
+                      properties:
+                        direction:
+                          description: |-
+                            Choices: in, out
+
+                            - Choices: `in`, `out`
+                          type: string
+                        queueLength:
+                          description: |-
+                            Range: 0-240000
+
+                            - Range: `0`-`240000`
+                          type: number
+                      type: object
+                    type: array
+                  ipAccessGroupIn:
+                    description: (String)
+                    type: string
+                  ipAccessGroupInEnable:
+                    description: |-
+                      (Boolean) inbound packets
+                      inbound packets
+                    type: boolean
+                  ipAccessGroupOut:
+                    description: (String)
+                    type: string
+                  ipAccessGroupOutEnable:
+                    description: |-
+                      (Boolean) outbound packets
+                      outbound packets
+                    type: boolean
+                  ipArpInspectionLimitRate:
+                    description: |-
+                      (Number) Rate Limit
+                      Rate Limit
+                      - Range: `0`-`4294967295`
+                    type: number
+                  ipArpInspectionTrust:
+                    description: |-
+                      (Boolean) Configure Trust state
+                      Configure Trust state
+                    type: boolean
+                  ipDhcpRelayInformationOptionVpnId:
+                    description: |-
+                      id support on this interface
+                      Enable vpn-id support on this interface
+                    type: boolean
+                  ipDhcpRelaySourceInterface:
+                    description: |-
+                      (String) Set source interface for relayed messages
+                      Set source interface for relayed messages
+                    type: string
+                  ipDhcpSnoopingTrust:
+                    description: |-
+                      (Boolean) DHCP Snooping trust config
+                      DHCP Snooping trust config
+                    type: boolean
+                  ipFlowMonitors:
+                    description: (Attributes List) Apply a Flow Monitor (see below
+                      for nested schema)
+                    items:
+                      properties:
+                        direction:
+                          description: |-
+                            Choices: in, out
+
+                            - Choices: `input`, `output`
+                          type: string
+                        name:
+                          description: |-
+                            (String)
+                            User defined
+                          type: string
+                      type: object
+                    type: array
+                  ipIgmpVersion:
+                    description: |-
+                      (Number) IGMP version
+                      IGMP version
+                      - Range: `1`-`3`
+                    type: number
+                  ipNatInside:
+                    description: |-
+                      (Boolean) Inside interface for address translation
+                      Inside interface for address translation
+                    type: boolean
+                  ipNatOutside:
+                    description: |-
+                      (Boolean) Outside interface for address translation
+                      Outside interface for address translation
+                    type: boolean
+                  ipNbarProtocolDiscovery:
+                    description: |-
+                      (Boolean) Enable protocol discovery for both ipv4 and ipv6
+                      Enable protocol discovery for both ipv4 and ipv6
+                    type: boolean
+                  ipProxyArp:
+                    description: |-
+                      (Boolean) Enable proxy ARP
+                      Enable proxy ARP
+                    type: boolean
+                  ipRedirects:
+                    description: |-
+                      (Boolean) Enable sending ICMP Redirect messages
+                      Enable sending ICMP Redirect messages
+                    type: boolean
+                  ipRouterIsis:
+                    description: (String)
+                    type: string
+                  ipUnreachables:
+                    description: |-
+                      (Boolean) Enable sending ICMP Unreachable messages
+                      Enable sending ICMP Unreachable messages
+                    type: boolean
+                  ipVerifyUnicastSourceAllowDefault:
+                    description: |-
+                      (Boolean) Allow default route to match when checking source address
+                      Allow default route to match when checking source address
+                    type: boolean
+                  ipVerifyUnicastSourceAllowSelfPing:
+                    description: |-
+                      (Boolean) Allow router to ping itself (opens vulnerability in verification)
+                      Allow router to ping itself (opens vulnerability in verification)
+                    type: boolean
+                  ipVerifyUnicastSourceReachableVia:
+                    description: |-
+                      (String) Specify reachability check to apply to the source address
+                      Specify reachability check to apply to the source address
+                      - Choices: `any`, `rx`
+                    type: string
+                  ipv4Address:
+                    description: |-
+                      (String) Ip address
+                      Ip address
+                    type: string
+                  ipv4AddressDhcp:
+                    description: |-
+                      (Boolean) IP Address negotiated via DHCP
+                      IP Address negotiated via DHCP
+                    type: boolean
+                  ipv4AddressMask:
+                    description: |-
+                      (String) Ip subnet mask
+                      Ip subnet mask
+                    type: string
+                  ipv6AddressAutoconfigDefault:
+                    description: |-
+                      (Boolean) Insert default route
+                      Insert default route
+                    type: boolean
+                  ipv6AddressDhcp:
+                    description: |-
+                      (Boolean) Obtain IPv6 address from DHCP server
+                      Obtain IPv6 address from DHCP server
+                    type: boolean
+                  ipv6Addresses:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        eui64:
+                          description: |-
+                            64 interface identifier
+                            Use eui-64 interface identifier
+                          type: boolean
+                        prefix:
+                          description: |-
+                            (String) IPv6 prefix
+                            IPv6 prefix
+                          type: string
+                      type: object
+                    type: array
+                  ipv6DhcpClientPd:
+                    description: |-
+                      delegation name
+                      IPv6 DHCP client prefix-delegation name
+                    type: string
+                  ipv6DhcpClientPdRapidCommit:
+                    description: |-
+                      Commit for prefix-delegation
+                      Enable Rapid-Commit for prefix-delegation
+                    type: boolean
+                  ipv6DhcpRelayDestinations:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        address:
+                          description: |-
+                            (String) IP destination address
+                            Relay destination IPv6 address
+                          type: string
+                        interface:
+                          description: |-
+                            (List of String) Interface for relay address
+                            Interface for relay address
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                  ipv6DhcpRelayOptionVpn:
+                    description: |-
+                      Forward Messages
+                      Insert VSS option in Relay-Forward Messages
+                    type: boolean
+                  ipv6DhcpRelayTrust:
+                    description: |-
+                      replies
+                      Interface is trusted to process relay-replies
+                    type: boolean
+                  ipv6DhcpServers:
+                    description: (Attributes List) Act as an IPv6 DHCP server (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        allowHint:
+                          description: |-
+                            (Boolean) Allow hint from client
+                            Allow hint from client
+                          type: boolean
+                        poolName:
+                          description: |-
+                            (String) DHCP pool name
+                            DHCP pool name
+                          type: string
+                        preference:
+                          description: |-
+                            (Number) Server preference value
+                            Server preference value
+                            - Range: `0`-`255`
+                          type: number
+                        rapidCommit:
+                          description: |-
+                            Commit
+                            Enable Rapid-Commit
+                          type: boolean
+                      type: object
+                    type: array
+                  ipv6Enable:
+                    description: |-
+                      (Boolean) Enable IPv6 on interface
+                      Enable IPv6 on interface
+                    type: boolean
+                  ipv6FlowMonitors:
+                    description: (Attributes List) Apply a Flow Monitor (see below
+                      for nested schema)
+                    items:
+                      properties:
+                        direction:
+                          description: |-
+                            Choices: in, out
+
+                            - Choices: `input`, `output`
+                          type: string
+                        name:
+                          description: |-
+                            (String)
+                            User defined
+                          type: string
+                      type: object
+                    type: array
+                  ipv6LinkLocalAddresses:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        address:
+                          description: (String) IP destination address
+                          type: string
+                        linkLocal:
+                          description: |-
+                            local address
+                            Use link-local address
+                          type: boolean
+                      type: object
+                    type: array
+                  ipv6Mtu:
+                    description: |-
+                      (Number) Set IPv6 Maximum Transmission Unit
+                      Set IPv6 Maximum Transmission Unit
+                      - Range: `1280`-`9976`
+                    type: number
+                  ipv6NdRaSuppressAll:
+                    description: |-
+                      (Boolean) Suppress all IPv6 RA
+                      Suppress all IPv6 RA
+                    type: boolean
+                  loadInterval:
+                    description: |-
+                      (Number) Specify interval for load calculation for an interface
+                      Specify interval for load calculation for an interface
+                      - Range: `30`-`600`
+                    type: number
+                  loggingEventLinkStatusEnable:
+                    description: |-
+                      (Boolean) UPDOWN and CHANGE messages
+                      UPDOWN and CHANGE messages
+                    type: boolean
+                  mab:
+                    description: |-
+                      (Boolean) MAC Authentication Bypass Interface Config Commands
+                      MAC Authentication Bypass Interface Config Commands
+                    type: boolean
+                  mabEap:
+                    description: |-
+                      (Boolean) Use EAP authentication for MAC Auth Bypass
+                      Use EAP authentication for MAC Auth Bypass
+                    type: boolean
+                  mediaType:
+                    description: |-
+                      (String) Media type
+                      Media type
+                      - Choices: `auto-select`, `rj45`, `sfp`
+                    type: string
+                  mtu:
+                    description: |-
+                      (Number) Set the interface Maximum Transmission Unit (MTU)
+                      Set the interface Maximum Transmission Unit (MTU)
+                      - Range: `64`-`18000`
+                    type: number
+                  name:
+                    description: (String)
+                    type: string
+                  negotiationAuto:
+                    description: |-
+                      (Boolean) Enable link autonegotiation
+                      Enable link autonegotiation
+                    type: boolean
+                  serviceInstances:
+                    description: (Attributes List) Configure Ether Service Instance
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        encapsulationUntagged:
+                          description: |-
+                            (Boolean) Untagged encapsulation
+                            Untagged encapsulation
+                          type: boolean
+                        ethernet:
+                          description: |-
+                            (Boolean) Configure an Ethernet Instance
+                            Configure an Ethernet Instance
+                          type: boolean
+                        id:
+                          description: |-
+                            (String) The path of the object.
+
+                            - Range: `1`-`8000`
+                          type: number
+                      type: object
+                    type: array
+                  servicePolicyInput:
+                    description: |-
+                      map to the input of an interface
+                      Assign policy-map to the input of an interface
+                    type: string
+                  servicePolicyOutput:
+                    description: |-
+                      map to the output of an interface
+                      Assign policy-map to the output of an interface
+                    type: string
+                  shutdown:
+                    description: |-
+                      (Boolean) Shutdown the selected interface
+                      Shutdown the selected interface
+                    type: boolean
+                  snmpTrapLinkStatus:
+                    description: |-
+                      (Boolean) Allow SNMP LINKUP and LINKDOWN traps
+                      Allow SNMP LINKUP and LINKDOWN traps
+                    type: boolean
+                  sourceTemplate:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        merge:
+                          description: |-
+                            (Boolean) merge option of binding
+                            merge option of binding
+                          type: boolean
+                        templateName:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  spanningTreeGuard:
+                    description: |-
+                      (String) Change an interface's spanning tree guard mode
+                      Change an interface's spanning tree guard mode
+                      - Choices: `loop`, `none`, `root`
+                    type: string
+                  spanningTreeLinkType:
+                    description: |-
+                      (String) Specify a link type for spanning tree tree protocol use
+                      Specify a link type for spanning tree tree protocol use
+                      - Choices: `point-to-point`, `shared`
+                    type: string
+                  spanningTreePortfast:
+                    description: |-
+                      (Boolean) (DEPRECATED) Spanning tree portfast options
+                      (DEPRECATED) Spanning tree portfast options
+                    type: boolean
+                  spanningTreePortfastDisable:
+                    description: |-
+                      (Boolean) (DEPRECATED) Disable portfast for this interface
+                      (DEPRECATED) Disable portfast for this interface
+                    type: boolean
+                  spanningTreePortfastEdge:
+                    description: |-
+                      (Boolean) (DEPRECATED) Enable portfast edge on the interface
+                      (DEPRECATED) Enable portfast edge on the interface
+                    type: boolean
+                  spanningTreePortfastTrunk:
+                    description: |-
+                      (Boolean) (DEPRECATED) Enable portfast on the interface even in trunk mode
+                      (DEPRECATED) Enable portfast on the interface even in trunk mode
+                    type: boolean
+                  speed100:
+                    description: |-
+                      (Boolean) 100 Mbps operation
+                      100 Mbps operation
+                    type: boolean
+                  speed1000:
+                    description: |-
+                      (Boolean) 1000 Mbps operation
+                      1000 Mbps operation
+                    type: boolean
+                  speed2500:
+                    description: |-
+                      (Boolean) 2500 Mbps operation
+                      2500 Mbps operation
+                    type: boolean
+                  speed5000:
+                    description: |-
+                      (Boolean) 5000 Mbps operation
+                      5000 Mbps operation
+                    type: boolean
+                  speed10000:
+                    description: |-
+                      (Boolean) 10000 Mbps operation
+                      10000 Mbps operation
+                    type: boolean
+                  speed25000:
+                    description: |-
+                      (Boolean) 25000 Mbps operation
+                      25000 Mbps operation
+                    type: boolean
+                  speed40000:
+                    description: |-
+                      (Boolean) 40000 Mbps operation
+                      40000 Mbps operation
+                    type: boolean
+                  speed100000:
+                    description: |-
+                      (Boolean) 100000 Mbps operation
+                      100000 Mbps operation
+                    type: boolean
+                  speedNonegotiate:
+                    description: (Boolean)
+                    type: boolean
+                  switchport:
+                    description: (Boolean)
+                    type: boolean
+                  trustDevice:
+                    description: |-
+                      (String) trusted device class
+                      trusted device class
+                      - Choices: `cisco-phone`, `cts`, `ip-camera`, `media-player`
+                    type: string
+                  type:
+                    description: |-
+                      (String) Interface type
+                      Interface type
+                      - Choices: `GigabitEthernet`, `TwoGigabitEthernet`, `FiveGigabitEthernet`, `TenGigabitEthernet`, `TwentyFiveGigE`, `FortyGigabitEthernet`, `FiftyGigabitEthernet`, `HundredGigE`, `TwoHundredGigE`, `FourHundredGigE`
+                    type: string
+                  unnumbered:
+                    description: |-
+                      (String) Enable IP processing without an explicit address
+                      Enable IP processing without an explicit address
+                    type: string
+                  vrfForwarding:
+                    description: |-
+                      (String) Configure forwarding table
+                      Configure forwarding table
+                    type: string
+                  vrfForwardingRef:
+                    description: Reference to a VRF in routing to populate vrfForwarding.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  vrfForwardingSelector:
+                    description: Selector for a VRF in routing to populate vrfForwarding.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  zoneMemberSecurity:
+                    description: |-
+                      (String) Security zone
+                      Security zone
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+            - message: spec.forProvider.type is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.type)
+                || (has(self.initProvider) && has(self.initProvider.type))'
+          status:
+            description: EthernetStatus defines the observed state of Ethernet.
+            properties:
+              atProvider:
+                properties:
+                  arpTimeout:
+                    description: |-
+                      (Number) Set ARP cache timeout
+                      Set ARP cache timeout
+                      - Range: `0`-`2147483`
+                    type: number
+                  authenticationEventFailActionAuthorizeVlan:
+                    description: |-
+                      (Number) Configure Authentication Fail vlan
+                      Configure Authentication Fail vlan
+                      - Range: `1`-`4094`
+                    type: number
+                  authenticationEventFailActionNextMethod:
+                    description: |-
+                      (Boolean) Move to next authentication method
+                      Move to next authentication method
+                    type: boolean
+                  authenticationEventLinksecFailActionNextMethod:
+                    description: |-
+                      (Boolean) Move to next authentication method
+                      Move to next authentication method
+                    type: boolean
+                  authenticationEventNoResponseActionAuthorizeVlan:
+                    description: |-
+                      (Number) Configure Guest vlan
+                      Configure Guest vlan
+                      - Range: `1`-`4094`
+                    type: number
+                  authenticationEventServerAliveActionReinitialize:
+                    description: |-
+                      (Boolean) Reinitialize all authorized clients
+                      Reinitialize all authorized clients
+                    type: boolean
+                  authenticationEventServerDeadActionAuthorize:
+                    description: |-
+                      (Boolean) Authorize the port
+                      Authorize the port
+                    type: boolean
+                  authenticationEventServerDeadActionAuthorizeVlan:
+                    description: |-
+                      (Number) Configure Critical Authorization VLAN
+                      Configure Critical Authorization VLAN
+                      - Range: `1`-`4094`
+                    type: number
+                  authenticationEventServerDeadActionAuthorizeVoice:
+                    description: |-
+                      (Boolean) Authorize the port for VOICE traffic
+                      Authorize the port for VOICE traffic
+                    type: boolean
+                  authenticationEventServerDeadActionReinitializeVlan:
+                    description: |-
+                      (Number) Configure Critical Authorization VLAN
+                      Configure Critical Authorization VLAN
+                      - Range: `1`-`4094`
+                    type: number
+                  authenticationHostMode:
+                    description: |-
+                      (String) Set the Host mode for authentication on this interface
+                      Set the Host mode for authentication on this interface
+                      - Choices: `multi-auth`, `multi-domain`, `multi-host`, `single-host`
+                    type: string
+                  authenticationOrderDot1X:
+                    description: |-
+                      (Boolean) Authentication method dot1x allowed
+                      Authentication method dot1x allowed
+                    type: boolean
+                  authenticationOrderDot1XMab:
+                    description: |-
+                      (Boolean) Authentication method mab allowed
+                      Authentication method mab allowed
+                    type: boolean
+                  authenticationOrderDot1XWebauth:
+                    description: |-
+                      (Boolean) Authentication method webauth allowed
+                      Authentication method webauth allowed
+                    type: boolean
+                  authenticationOrderMab:
+                    description: |-
+                      (Boolean) Authentication method mab allowed
+                      Authentication method mab allowed
+                    type: boolean
+                  authenticationOrderMabDot1X:
+                    description: |-
+                      (Boolean) Authentication method dot1x allowed
+                      Authentication method dot1x allowed
+                    type: boolean
+                  authenticationOrderMabWebauth:
+                    description: |-
+                      (Boolean) Authentication method webauth allowed
+                      Authentication method webauth allowed
+                    type: boolean
+                  authenticationOrderWebauth:
+                    description: |-
+                      (Boolean) Authentication method webauth allowed
+                      Authentication method webauth allowed
+                    type: boolean
+                  authenticationPeriodic:
+                    description: |-
+                      (Boolean) Enable or Disable Reauthentication for this port
+                      Enable or Disable Reauthentication for this port
+                    type: boolean
+                  authenticationPortControl:
+                    description: |-
+                      control value
+                      set the port-control value
+                      - Choices: `auto`, `force-authorized`, `force-unauthorized`
+                    type: string
+                  authenticationPriorityDot1X:
+                    description: |-
+                      (Boolean) Authentication method dot1x allowed
+                      Authentication method dot1x allowed
+                    type: boolean
+                  authenticationPriorityDot1XMab:
+                    description: |-
+                      (Boolean) Authentication method mab allowed
+                      Authentication method mab allowed
+                    type: boolean
+                  authenticationPriorityDot1XWebauth:
+                    description: |-
+                      (Boolean) Authentication method webauth allowed
+                      Authentication method webauth allowed
+                    type: boolean
+                  authenticationPriorityMab:
+                    description: |-
+                      (Boolean) Authentication method mab allowed
+                      Authentication method mab allowed
+                    type: boolean
+                  authenticationPriorityMabDot1X:
+                    description: |-
+                      (Boolean) Authentication method dot1x allowed
+                      Authentication method dot1x allowed
+                    type: boolean
+                  authenticationPriorityMabWebauth:
+                    description: |-
+                      (Boolean) Authentication method webauth allowed
+                      Authentication method webauth allowed
+                    type: boolean
+                  authenticationPriorityWebauth:
+                    description: |-
+                      (Boolean) Authentication method webauth allowed
+                      Authentication method webauth allowed
+                    type: boolean
+                  authenticationTimerReauthenticate:
+                    description: |-
+                      (Number) Enter a value between 1 and 1073741823
+                      Enter a value between 1 and 1073741823
+                      - Range: `1`-`1073741823`
+                    type: number
+                  authenticationTimerReauthenticateServer:
+                    description: |-
+                      authentication timeout value from the server
+                      Obtain re-authentication timeout value from the server
+                    type: boolean
+                  autoQosClassify:
+                    description: |-
+                      (Boolean) Configure classification for untrusted devices
+                      Configure classification for untrusted devices
+                    type: boolean
+                  autoQosClassifyPolice:
+                    description: |-
+                      (Boolean) Configure QoS policing for untrusted devices
+                      Configure QoS policing for untrusted devices
+                    type: boolean
+                  autoQosTrust:
+                    description: |-
+                      (Boolean) Trust the DSCP/CoS marking
+                      Trust the DSCP/CoS marking
+                    type: boolean
+                  autoQosTrustCos:
+                    description: |-
+                      (Boolean) Trust the CoS marking
+                      Trust the CoS marking
+                    type: boolean
+                  autoQosTrustDscp:
+                    description: |-
+                      (Boolean) Trust the DSCP marking
+                      Trust the DSCP marking
+                    type: boolean
+                  autoQosVideoCts:
+                    description: |-
+                      (Boolean) Trust the QoS marking of the Cisco Telepresence System
+                      Trust the QoS marking of the Cisco Telepresence System
+                    type: boolean
+                  autoQosVideoIpCamera:
+                    description: |-
+                      (Boolean) Trust the QoS marking of the Ip Video Surveillance camera
+                      Trust the QoS marking of the Ip Video Surveillance camera
+                    type: boolean
+                  autoQosVideoMediaPlayer:
+                    description: |-
+                      (Boolean) Trust the Qos marking of the Cisco Media Player
+                      Trust the Qos marking of the Cisco Media Player
+                    type: boolean
+                  autoQosVoipCiscoPhone:
+                    description: |-
+                      (Boolean) Trust the QoS marking of Cisco IP Phone
+                      Trust the QoS marking of Cisco IP Phone
+                    type: boolean
+                  autoQosVoipCiscoSoftphone:
+                    description: |-
+                      (Boolean) Trust the QoS marking of Cisco IP SoftPhone
+                      Trust the QoS marking of Cisco IP SoftPhone
+                    type: boolean
+                  autoQosVoipTrust:
+                    description: |-
+                      (Boolean) Trust the DSCP/CoS marking
+                      Trust the DSCP/CoS marking
+                    type: boolean
+                  bandwidth:
+                    description: |-
+                      Range: 1-200000000
+
+                      - Range: `1`-`200000000`
+                    type: number
+                  bfdEcho:
+                    description: |-
+                      (Boolean) Use echo adjunct as bfd detection mechanism
+                      Use echo adjunct as bfd detection mechanism
+                    type: boolean
+                  bfdEnable:
+                    description: |-
+                      (Boolean) Enable BFD under the interface
+                      Enable BFD under the interface
+                    type: boolean
+                  bfdInterval:
+                    description: |-
+                      Range: 50-9999
+
+                      - Range: `50`-`9999`
+                    type: number
+                  bfdIntervalMinRx:
+                    description: |-
+                      (Number) Minimum receive interval capability
+                      Minimum receive interval capability
+                      - Range: `50`-`9999`
+                    type: number
+                  bfdIntervalMultiplier:
+                    description: |-
+                      (Number) Multiplier value used to compute holddown
+                      Multiplier value used to compute holddown
+                      - Range: `3`-`50`
+                    type: number
+                  bfdLocalAddress:
+                    description: |-
+                      (String) The Source IP address to be used for BFD sessions over this interface.
+                      The Source IP address to be used for BFD sessions over this interface.
+                    type: string
+                  bfdTemplate:
+                    description: |-
+                      (String) BFD template
+                      BFD template
+                    type: string
+                  bpduguardDisable:
+                    description: |-
+                      (Boolean) Disable BPDU guard for this interface
+                      Disable BPDU guard for this interface
+                    type: boolean
+                  bpduguardEnable:
+                    description: |-
+                      (Boolean) Enable BPDU guard for this interface
+                      Enable BPDU guard for this interface
+                    type: boolean
+                  carrierDelayMsec:
+                    description: |-
+                      (Number) delay specified in milliseconds
+                      delay specified in milliseconds
+                      - Range: `0`-`1000`
+                    type: number
+                  cdpEnable:
+                    description: |-
+                      (Boolean) Enable CDP on interface
+                      Enable CDP on interface
+                    type: boolean
+                  cdpTlvApp:
+                    description: |-
+                      (Boolean) Enable/Configure Application TLV
+                      Enable/Configure Application TLV
+                    type: boolean
+                  cdpTlvLocation:
+                    description: |-
+                      (Boolean) Exchange location information
+                      Exchange location information
+                    type: boolean
+                  cdpTlvServerLocation:
+                    description: |-
+                      (Boolean) Enable CDP location server on interface
+                      Enable CDP location server on interface
+                    type: boolean
+                  channelGroupMode:
+                    description: |-
+                      (String) Etherchannel Mode of the interface
+                      Etherchannel Mode of the interface
+                      - Choices: `active`, `auto`, `desirable`, `on`, `passive`
+                    type: string
+                  channelGroupNumber:
+                    description: |-
+                      Range: 1-512
+
+                      - Range: `1`-`512`
+                    type: number
+                  description:
+                    description: |-
+                      (String) Interface specific description
+                      Interface specific description
+                    type: string
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  deviceTracking:
+                    description: |-
+                      tracking on the interface
+                      Configure device-tracking on the interface
+                    type: boolean
+                  deviceTrackingAttachedPolicies:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: |-
+                            (String)
+                            Apply a policy for feature device-tracking
+                          type: string
+                      type: object
+                    type: array
+                  dot1xMaxReauthReq:
+                    description: |-
+                      (Number) Max No. of Reauthentication Attempts
+                      Max No. of Reauthentication Attempts
+                      - Range: `1`-`10`
+                    type: number
+                  dot1xMaxReq:
+                    description: |-
+                      (Number) Max No. of Retries
+                      Max No. of Retries
+                      - Range: `1`-`10`
+                    type: number
+                  dot1xPae:
+                    description: |-
+                      (String) Set 802.1x interface pae type
+                      Set 802.1x interface pae type
+                      - Choices: `authenticator`, `both`, `supplicant`
+                    type: string
+                  dot1xTimeoutAuthPeriod:
+                    description: |-
+                      (Number) Timeout for authenticator reply
+                      Timeout for authenticator reply
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutHeldPeriod:
+                    description: |-
+                      (Number) Timeout for authentication retries
+                      Timeout for authentication retries
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutQuietPeriod:
+                    description: |-
+                      (Number) QuietPeriod in Seconds
+                      QuietPeriod in Seconds
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutRatelimitPeriod:
+                    description: |-
+                      (Number) Ratelimit Period in seconds
+                      Ratelimit Period in seconds
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutServerTimeout:
+                    description: |-
+                      (Number) Timeout for Radius Retries
+                      Timeout for Radius Retries
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutStartPeriod:
+                    description: |-
+                      start retries
+                      Timeout for EAPOL-start retries
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutSuppTimeout:
+                    description: |-
+                      (Number) Timeout for supplicant reply
+                      Timeout for supplicant reply
+                      - Range: `1`-`65535`
+                    type: number
+                  dot1xTimeoutTxPeriod:
+                    description: |-
+                      (Number) Timeout for supplicant retries
+                      Timeout for supplicant retries
+                      - Range: `1`-`65535`
+                    type: number
+                  encapsulationDot1QVlanId:
+                    description: |-
+                      Range: 1-4094
+
+                      - Range: `1`-`4094`
+                    type: number
+                  evpnEthernetSegments:
+                    description: (Attributes List) Ethernet segment local discriminator
+                      value (see below for nested schema)
+                    items:
+                      properties:
+                        esValue:
+                          description: |-
+                            (Number) Ethernet segment local discriminator value
+                            Ethernet segment local discriminator value
+                            - Range: `1`-`65535`
+                          type: number
+                      type: object
+                    type: array
+                  helperAddresses:
+                    description: (Attributes List) Specify a destination address for
+                      UDP broadcasts (see below for nested schema)
+                    items:
+                      properties:
+                        address:
+                          description: |-
+                            (String) IP destination address
+                            IP destination address
+                          type: string
+                        global:
+                          description: |-
+                            address is global
+                            Helper-address is global
+                          type: boolean
+                        vrf:
+                          description: |-
+                            address (if different from interface VRF)
+                            VRF name for helper-address (if different from interface VRF)
+                          type: string
+                      type: object
+                    type: array
+                  holdQueues:
+                    description: (Attributes List) Set hold queue depth (see below
+                      for nested schema)
+                    items:
+                      properties:
+                        direction:
+                          description: |-
+                            Choices: in, out
+
+                            - Choices: `in`, `out`
+                          type: string
+                        queueLength:
+                          description: |-
+                            Range: 0-240000
+
+                            - Range: `0`-`240000`
+                          type: number
+                      type: object
+                    type: array
+                  id:
+                    description: (String) The path of the object.
+                    type: string
+                  ipAccessGroupIn:
+                    description: (String)
+                    type: string
+                  ipAccessGroupInEnable:
+                    description: |-
+                      (Boolean) inbound packets
+                      inbound packets
+                    type: boolean
+                  ipAccessGroupOut:
+                    description: (String)
+                    type: string
+                  ipAccessGroupOutEnable:
+                    description: |-
+                      (Boolean) outbound packets
+                      outbound packets
+                    type: boolean
+                  ipArpInspectionLimitRate:
+                    description: |-
+                      (Number) Rate Limit
+                      Rate Limit
+                      - Range: `0`-`4294967295`
+                    type: number
+                  ipArpInspectionTrust:
+                    description: |-
+                      (Boolean) Configure Trust state
+                      Configure Trust state
+                    type: boolean
+                  ipDhcpRelayInformationOptionVpnId:
+                    description: |-
+                      id support on this interface
+                      Enable vpn-id support on this interface
+                    type: boolean
+                  ipDhcpRelaySourceInterface:
+                    description: |-
+                      (String) Set source interface for relayed messages
+                      Set source interface for relayed messages
+                    type: string
+                  ipDhcpSnoopingTrust:
+                    description: |-
+                      (Boolean) DHCP Snooping trust config
+                      DHCP Snooping trust config
+                    type: boolean
+                  ipFlowMonitors:
+                    description: (Attributes List) Apply a Flow Monitor (see below
+                      for nested schema)
+                    items:
+                      properties:
+                        direction:
+                          description: |-
+                            Choices: in, out
+
+                            - Choices: `input`, `output`
+                          type: string
+                        name:
+                          description: |-
+                            (String)
+                            User defined
+                          type: string
+                      type: object
+                    type: array
+                  ipIgmpVersion:
+                    description: |-
+                      (Number) IGMP version
+                      IGMP version
+                      - Range: `1`-`3`
+                    type: number
+                  ipNatInside:
+                    description: |-
+                      (Boolean) Inside interface for address translation
+                      Inside interface for address translation
+                    type: boolean
+                  ipNatOutside:
+                    description: |-
+                      (Boolean) Outside interface for address translation
+                      Outside interface for address translation
+                    type: boolean
+                  ipNbarProtocolDiscovery:
+                    description: |-
+                      (Boolean) Enable protocol discovery for both ipv4 and ipv6
+                      Enable protocol discovery for both ipv4 and ipv6
+                    type: boolean
+                  ipProxyArp:
+                    description: |-
+                      (Boolean) Enable proxy ARP
+                      Enable proxy ARP
+                    type: boolean
+                  ipRedirects:
+                    description: |-
+                      (Boolean) Enable sending ICMP Redirect messages
+                      Enable sending ICMP Redirect messages
+                    type: boolean
+                  ipRouterIsis:
+                    description: (String)
+                    type: string
+                  ipUnreachables:
+                    description: |-
+                      (Boolean) Enable sending ICMP Unreachable messages
+                      Enable sending ICMP Unreachable messages
+                    type: boolean
+                  ipVerifyUnicastSourceAllowDefault:
+                    description: |-
+                      (Boolean) Allow default route to match when checking source address
+                      Allow default route to match when checking source address
+                    type: boolean
+                  ipVerifyUnicastSourceAllowSelfPing:
+                    description: |-
+                      (Boolean) Allow router to ping itself (opens vulnerability in verification)
+                      Allow router to ping itself (opens vulnerability in verification)
+                    type: boolean
+                  ipVerifyUnicastSourceReachableVia:
+                    description: |-
+                      (String) Specify reachability check to apply to the source address
+                      Specify reachability check to apply to the source address
+                      - Choices: `any`, `rx`
+                    type: string
+                  ipv4Address:
+                    description: |-
+                      (String) Ip address
+                      Ip address
+                    type: string
+                  ipv4AddressDhcp:
+                    description: |-
+                      (Boolean) IP Address negotiated via DHCP
+                      IP Address negotiated via DHCP
+                    type: boolean
+                  ipv4AddressMask:
+                    description: |-
+                      (String) Ip subnet mask
+                      Ip subnet mask
+                    type: string
+                  ipv6AddressAutoconfigDefault:
+                    description: |-
+                      (Boolean) Insert default route
+                      Insert default route
+                    type: boolean
+                  ipv6AddressDhcp:
+                    description: |-
+                      (Boolean) Obtain IPv6 address from DHCP server
+                      Obtain IPv6 address from DHCP server
+                    type: boolean
+                  ipv6Addresses:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        eui64:
+                          description: |-
+                            64 interface identifier
+                            Use eui-64 interface identifier
+                          type: boolean
+                        prefix:
+                          description: |-
+                            (String) IPv6 prefix
+                            IPv6 prefix
+                          type: string
+                      type: object
+                    type: array
+                  ipv6DhcpClientPd:
+                    description: |-
+                      delegation name
+                      IPv6 DHCP client prefix-delegation name
+                    type: string
+                  ipv6DhcpClientPdRapidCommit:
+                    description: |-
+                      Commit for prefix-delegation
+                      Enable Rapid-Commit for prefix-delegation
+                    type: boolean
+                  ipv6DhcpRelayDestinations:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        address:
+                          description: |-
+                            (String) IP destination address
+                            Relay destination IPv6 address
+                          type: string
+                        interface:
+                          description: |-
+                            (List of String) Interface for relay address
+                            Interface for relay address
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
+                  ipv6DhcpRelayOptionVpn:
+                    description: |-
+                      Forward Messages
+                      Insert VSS option in Relay-Forward Messages
+                    type: boolean
+                  ipv6DhcpRelayTrust:
+                    description: |-
+                      replies
+                      Interface is trusted to process relay-replies
+                    type: boolean
+                  ipv6DhcpServers:
+                    description: (Attributes List) Act as an IPv6 DHCP server (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        allowHint:
+                          description: |-
+                            (Boolean) Allow hint from client
+                            Allow hint from client
+                          type: boolean
+                        poolName:
+                          description: |-
+                            (String) DHCP pool name
+                            DHCP pool name
+                          type: string
+                        preference:
+                          description: |-
+                            (Number) Server preference value
+                            Server preference value
+                            - Range: `0`-`255`
+                          type: number
+                        rapidCommit:
+                          description: |-
+                            Commit
+                            Enable Rapid-Commit
+                          type: boolean
+                      type: object
+                    type: array
+                  ipv6Enable:
+                    description: |-
+                      (Boolean) Enable IPv6 on interface
+                      Enable IPv6 on interface
+                    type: boolean
+                  ipv6FlowMonitors:
+                    description: (Attributes List) Apply a Flow Monitor (see below
+                      for nested schema)
+                    items:
+                      properties:
+                        direction:
+                          description: |-
+                            Choices: in, out
+
+                            - Choices: `input`, `output`
+                          type: string
+                        name:
+                          description: |-
+                            (String)
+                            User defined
+                          type: string
+                      type: object
+                    type: array
+                  ipv6LinkLocalAddresses:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        address:
+                          description: (String) IP destination address
+                          type: string
+                        linkLocal:
+                          description: |-
+                            local address
+                            Use link-local address
+                          type: boolean
+                      type: object
+                    type: array
+                  ipv6Mtu:
+                    description: |-
+                      (Number) Set IPv6 Maximum Transmission Unit
+                      Set IPv6 Maximum Transmission Unit
+                      - Range: `1280`-`9976`
+                    type: number
+                  ipv6NdRaSuppressAll:
+                    description: |-
+                      (Boolean) Suppress all IPv6 RA
+                      Suppress all IPv6 RA
+                    type: boolean
+                  loadInterval:
+                    description: |-
+                      (Number) Specify interval for load calculation for an interface
+                      Specify interval for load calculation for an interface
+                      - Range: `30`-`600`
+                    type: number
+                  loggingEventLinkStatusEnable:
+                    description: |-
+                      (Boolean) UPDOWN and CHANGE messages
+                      UPDOWN and CHANGE messages
+                    type: boolean
+                  mab:
+                    description: |-
+                      (Boolean) MAC Authentication Bypass Interface Config Commands
+                      MAC Authentication Bypass Interface Config Commands
+                    type: boolean
+                  mabEap:
+                    description: |-
+                      (Boolean) Use EAP authentication for MAC Auth Bypass
+                      Use EAP authentication for MAC Auth Bypass
+                    type: boolean
+                  mediaType:
+                    description: |-
+                      (String) Media type
+                      Media type
+                      - Choices: `auto-select`, `rj45`, `sfp`
+                    type: string
+                  mtu:
+                    description: |-
+                      (Number) Set the interface Maximum Transmission Unit (MTU)
+                      Set the interface Maximum Transmission Unit (MTU)
+                      - Range: `64`-`18000`
+                    type: number
+                  name:
+                    description: (String)
+                    type: string
+                  negotiationAuto:
+                    description: |-
+                      (Boolean) Enable link autonegotiation
+                      Enable link autonegotiation
+                    type: boolean
+                  serviceInstances:
+                    description: (Attributes List) Configure Ether Service Instance
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        encapsulationUntagged:
+                          description: |-
+                            (Boolean) Untagged encapsulation
+                            Untagged encapsulation
+                          type: boolean
+                        ethernet:
+                          description: |-
+                            (Boolean) Configure an Ethernet Instance
+                            Configure an Ethernet Instance
+                          type: boolean
+                        id:
+                          description: |-
+                            (String) The path of the object.
+
+                            - Range: `1`-`8000`
+                          type: number
+                      type: object
+                    type: array
+                  servicePolicyInput:
+                    description: |-
+                      map to the input of an interface
+                      Assign policy-map to the input of an interface
+                    type: string
+                  servicePolicyOutput:
+                    description: |-
+                      map to the output of an interface
+                      Assign policy-map to the output of an interface
+                    type: string
+                  shutdown:
+                    description: |-
+                      (Boolean) Shutdown the selected interface
+                      Shutdown the selected interface
+                    type: boolean
+                  snmpTrapLinkStatus:
+                    description: |-
+                      (Boolean) Allow SNMP LINKUP and LINKDOWN traps
+                      Allow SNMP LINKUP and LINKDOWN traps
+                    type: boolean
+                  sourceTemplate:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        merge:
+                          description: |-
+                            (Boolean) merge option of binding
+                            merge option of binding
+                          type: boolean
+                        templateName:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  spanningTreeGuard:
+                    description: |-
+                      (String) Change an interface's spanning tree guard mode
+                      Change an interface's spanning tree guard mode
+                      - Choices: `loop`, `none`, `root`
+                    type: string
+                  spanningTreeLinkType:
+                    description: |-
+                      (String) Specify a link type for spanning tree tree protocol use
+                      Specify a link type for spanning tree tree protocol use
+                      - Choices: `point-to-point`, `shared`
+                    type: string
+                  spanningTreePortfast:
+                    description: |-
+                      (Boolean) (DEPRECATED) Spanning tree portfast options
+                      (DEPRECATED) Spanning tree portfast options
+                    type: boolean
+                  spanningTreePortfastDisable:
+                    description: |-
+                      (Boolean) (DEPRECATED) Disable portfast for this interface
+                      (DEPRECATED) Disable portfast for this interface
+                    type: boolean
+                  spanningTreePortfastEdge:
+                    description: |-
+                      (Boolean) (DEPRECATED) Enable portfast edge on the interface
+                      (DEPRECATED) Enable portfast edge on the interface
+                    type: boolean
+                  spanningTreePortfastTrunk:
+                    description: |-
+                      (Boolean) (DEPRECATED) Enable portfast on the interface even in trunk mode
+                      (DEPRECATED) Enable portfast on the interface even in trunk mode
+                    type: boolean
+                  speed100:
+                    description: |-
+                      (Boolean) 100 Mbps operation
+                      100 Mbps operation
+                    type: boolean
+                  speed1000:
+                    description: |-
+                      (Boolean) 1000 Mbps operation
+                      1000 Mbps operation
+                    type: boolean
+                  speed2500:
+                    description: |-
+                      (Boolean) 2500 Mbps operation
+                      2500 Mbps operation
+                    type: boolean
+                  speed5000:
+                    description: |-
+                      (Boolean) 5000 Mbps operation
+                      5000 Mbps operation
+                    type: boolean
+                  speed10000:
+                    description: |-
+                      (Boolean) 10000 Mbps operation
+                      10000 Mbps operation
+                    type: boolean
+                  speed25000:
+                    description: |-
+                      (Boolean) 25000 Mbps operation
+                      25000 Mbps operation
+                    type: boolean
+                  speed40000:
+                    description: |-
+                      (Boolean) 40000 Mbps operation
+                      40000 Mbps operation
+                    type: boolean
+                  speed100000:
+                    description: |-
+                      (Boolean) 100000 Mbps operation
+                      100000 Mbps operation
+                    type: boolean
+                  speedNonegotiate:
+                    description: (Boolean)
+                    type: boolean
+                  switchport:
+                    description: (Boolean)
+                    type: boolean
+                  trustDevice:
+                    description: |-
+                      (String) trusted device class
+                      trusted device class
+                      - Choices: `cisco-phone`, `cts`, `ip-camera`, `media-player`
+                    type: string
+                  type:
+                    description: |-
+                      (String) Interface type
+                      Interface type
+                      - Choices: `GigabitEthernet`, `TwoGigabitEthernet`, `FiveGigabitEthernet`, `TenGigabitEthernet`, `TwentyFiveGigE`, `FortyGigabitEthernet`, `FiftyGigabitEthernet`, `HundredGigE`, `TwoHundredGigE`, `FourHundredGigE`
+                    type: string
+                  unnumbered:
+                    description: |-
+                      (String) Enable IP processing without an explicit address
+                      Enable IP processing without an explicit address
+                    type: string
+                  vrfForwarding:
+                    description: |-
+                      (String) Configure forwarding table
+                      Configure forwarding table
+                    type: string
+                  zoneMemberSecurity:
+                    description: |-
+                      (String) Security zone
+                      Security zone
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              lastHandledReconcileAt:
+                description: |-
+                  LastHandledReconcileAt holds the value of the most recent
+                  reconcile-requested-at annotation token that the controller has
+                  processed. Users can compare this to the annotation to determine
+                  whether a reconcile request has been handled.
+                type: string
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

@@ -1,0 +1,17 @@
+apiVersion: evpn.iosxe.m.upbound.io/v1alpha1
+kind: L2VFI
+metadata:
+  annotations:
+    meta.upbound.io/example-id: evpn/v1alpha1/l2vfi
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    mode: manual
+    name: TENANT-A
+    neighbors:
+    - encapsulation: mpls
+      ipAddress: 172.16.255.2
+    vpnId: 20001

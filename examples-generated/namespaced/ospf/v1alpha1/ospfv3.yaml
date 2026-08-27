@@ -1,0 +1,18 @@
+apiVersion: ospf.iosxe.m.upbound.io/v1alpha1
+kind: OSPFv3
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ospf/v1alpha1/ospfv3
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    autoCostReferenceBandwidth: 40000
+    bfdAllInterfaces: true
+    logAdjacencyChanges: true
+    logAdjacencyChangesDetail: true
+    processId: 1
+    routerId: 1.2.3.4
+    shutdown: false

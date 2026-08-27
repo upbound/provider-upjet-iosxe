@@ -1,0 +1,24 @@
+apiVersion: routing.iosxe.m.upbound.io/v1alpha1
+kind: VRFStaticRoutes
+metadata:
+  annotations:
+    meta.upbound.io/example-id: routing/v1alpha1/vrfstaticroutes
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    routes:
+    - mask: 255.255.255.255
+      nextHops:
+      - distance: 10
+        global: false
+        name: Route1
+        nextHop: 7.7.7.7
+        permanent: true
+        tag: 100
+      prefix: 6.6.6.6
+    vrfSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

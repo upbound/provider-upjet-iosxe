@@ -1,0 +1,18 @@
+apiVersion: interface.iosxe.m.upbound.io/v1alpha1
+kind: Loopback
+metadata:
+  annotations:
+    meta.upbound.io/example-id: interface/v1alpha1/loopback
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: "100"
+    description: Managed by Crossplane
+    ipv4Address: 192.0.2.1
+    ipv4AddressMask: 255.255.255.255
+    shutdown: false
+  providerConfigRef:
+    name: default

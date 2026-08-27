@@ -1,0 +1,13 @@
+apiVersion: system.iosxe.upbound.io/v1alpha1
+kind: LLDP
+metadata:
+  annotations:
+    meta.upbound.io/example-id: system/v1alpha1/lldp
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    holdtime: 60
+    run: true
+    timer: 60

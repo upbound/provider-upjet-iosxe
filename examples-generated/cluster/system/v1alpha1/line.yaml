@@ -1,0 +1,43 @@
+apiVersion: system.iosxe.upbound.io/v1alpha1
+kind: Line
+metadata:
+  annotations:
+    meta.upbound.io/example-id: system/v1alpha1/line
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    console:
+    - execTimeoutMinutes: 45
+      execTimeoutSeconds: 25
+      first: "0"
+      loggingSynchronous: true
+      passwordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      passwordType: "0"
+      privilegeLevel: 15
+      stopbits: "1"
+    vty:
+    - accessClasses:
+      - accessList: "2"
+        direction: in
+        vrfAlso: true
+      authorizationExecDefault: true
+      escapeCharacter: BREAK
+      execTimeoutMinutes: 45
+      execTimeoutSeconds: 25
+      first: 10
+      last: 27
+      loggingSynchronous: true
+      monitor: true
+      passwordSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+      passwordType: "0"
+      transportInput:
+      - ssh
+      transportPreferredProtocol: none

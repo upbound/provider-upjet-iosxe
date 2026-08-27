@@ -1,0 +1,26 @@
+apiVersion: crypto.iosxe.m.upbound.io/v1alpha1
+kind: IKEv2Keyring
+metadata:
+  annotations:
+    meta.upbound.io/example-id: crypto/v1alpha1/ikev2keyring
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    name: keyring1
+    peers:
+    - description: My description
+      identityKeyId: key1
+      ipv4Address: 1.2.3.4
+      ipv4Mask: 255.255.255.248
+      name: peer1
+      preSharedKeyLocalEncryption: "6"
+      preSharedKeyLocalSecretRef:
+        key: example-key
+        name: example-secret
+      preSharedKeyRemoteEncryption: "6"
+      preSharedKeyRemoteSecretRef:
+        key: example-key
+        name: example-secret

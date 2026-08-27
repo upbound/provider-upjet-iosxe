@@ -4,42 +4,27 @@ import (
 	"github.com/crossplane/upjet/v2/pkg/config"
 )
 
-// ExternalNameConfigs contains all external name configurations for this
-// provider.
-var ExternalNameConfigs = map[string]config.ExternalName{
-	// Import requires using a randomly generated ID from provider: nl-2e21sda
-	"null_resource": idWithStub(),
-}
+// externalNameOverrides holds the external name configuration of the resources
+// that deviate from the provider-wide default.
+//
+// Every Cisco IOS-XE resource manages a YANG object and is identified by the
+// path of that object, e.g.
+// "Cisco-IOS-XE-native:native/vrf/definition=VRF1". The Terraform provider
+// computes that path from the resource arguments and reports it in the "id"
+// attribute, which is also what "terraform import" consumes. That makes
+// config.IdentifierFromProvider the correct configuration for all of them, and
+// this map is expected to stay empty unless a resource starts deviating from
+// that convention.
+var externalNameOverrides = map[string]config.ExternalName{}
 
-func idWithStub() config.ExternalName {
-	e := config.IdentifierFromProvider
-	e.GetExternalNameFn = func(tfstate map[string]any) (string, error) {
-		en, _ := config.IDAsExternalName(tfstate)
-		return en, nil
-	}
-	return e
-}
-
-// ExternalNameConfigurations applies all external name configs listed in the
-// table ExternalNameConfigs and sets the version of those resources to v1beta1
-// assuming they will be tested.
+// ExternalNameConfigurations returns a ResourceOption that sets the external
+// name configuration of every supported resource.
 func ExternalNameConfigurations() config.ResourceOption {
 	return func(r *config.Resource) {
-		if e, ok := ExternalNameConfigs[r.Name]; ok {
+		if e, ok := externalNameOverrides[r.Name]; ok {
 			r.ExternalName = e
+			return
 		}
+		r.ExternalName = config.IdentifierFromProvider
 	}
-}
-
-// ExternalNameConfigured returns the list of all resources whose external name
-// is configured manually.
-func ExternalNameConfigured() []string {
-	l := make([]string, len(ExternalNameConfigs))
-	i := 0
-	for name := range ExternalNameConfigs {
-		// $ is added to match the exact string since the format is regex.
-		l[i] = name + "$"
-		i++
-	}
-	return l
 }

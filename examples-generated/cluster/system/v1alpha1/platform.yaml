@@ -1,0 +1,14 @@
+apiVersion: system.iosxe.upbound.io/v1alpha1
+kind: Platform
+metadata:
+  annotations:
+    meta.upbound.io/example-id: system/v1alpha1/platform
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    puntKeepaliveDisableKernelCore: true
+    puntKeepaliveSettingsFatalCount: 15
+    puntKeepaliveSettingsTransmitInterval: 15
+    puntKeepaliveSettingsWarningCount: 15

@@ -1,0 +1,14 @@
+apiVersion: routing.iosxe.upbound.io/v1alpha1
+kind: ASPathAccessList
+metadata:
+  annotations:
+    meta.upbound.io/example-id: routing/v1alpha1/aspathaccesslist
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    entries:
+    - action: permit
+      regex: ^100$
+    name: 10

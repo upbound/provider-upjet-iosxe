@@ -1,0 +1,13 @@
+apiVersion: routing.iosxe.upbound.io/v1alpha1
+kind: IPv6LocalPool
+metadata:
+  annotations:
+    meta.upbound.io/example-id: routing/v1alpha1/ipv6localpool
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    name: DHCPv6-PD
+    prefixLength: 64
+    startAddress: 2001:db8::/48

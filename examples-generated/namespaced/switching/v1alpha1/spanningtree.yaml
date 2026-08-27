@@ -1,0 +1,24 @@
+apiVersion: switching.iosxe.m.upbound.io/v1alpha1
+kind: SpanningTree
+metadata:
+  annotations:
+    meta.upbound.io/example-id: switching/v1alpha1/spanningtree
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    extendSystemId: true
+    logging: true
+    loopguardDefault: true
+    mode: mst
+    mstInstances:
+    - id: 1
+      vlanIds:
+      - 10
+    portfastBpduguardDefault: true
+    portfastDefault: true
+    vlans:
+    - id: "10"
+      priority: 32768

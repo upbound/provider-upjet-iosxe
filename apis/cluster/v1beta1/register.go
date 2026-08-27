@@ -10,7 +10,7 @@ import (
 
 // Package type metadata.
 const (
-	Group   = "template.crossplane.io"
+	Group   = "iosxe.upbound.io"
 	Version = "v1beta1"
 )
 

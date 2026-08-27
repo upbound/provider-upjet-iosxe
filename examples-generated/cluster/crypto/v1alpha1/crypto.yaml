@@ -1,0 +1,11 @@
+apiVersion: crypto.iosxe.upbound.io/v1alpha1
+kind: Crypto
+metadata:
+  annotations:
+    meta.upbound.io/example-id: crypto/v1alpha1/crypto
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    engineComplianceShieldDisable: true

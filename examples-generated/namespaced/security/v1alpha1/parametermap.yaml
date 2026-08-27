@@ -1,0 +1,16 @@
+apiVersion: security.iosxe.m.upbound.io/v1alpha1
+kind: ParameterMap
+metadata:
+  annotations:
+    meta.upbound.io/example-id: security/v1alpha1/parametermap
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    icmpIdleTime: 10
+    name: PM_INSPECT1
+    sessionsMaximum: 10000
+    tcpIdleTime: 3600
+    tcpMaxIncompleteHost: 100

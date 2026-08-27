@@ -1,0 +1,19 @@
+apiVersion: aaa.iosxe.upbound.io/v1alpha1
+kind: RADIUSServer
+metadata:
+  annotations:
+    meta.upbound.io/example-id: aaa/v1alpha1/radiusserver
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    attributes:
+    - attribute31Parameters:
+      - callingStationId: mac
+        idMacFormat: ietf
+        idMacLuCase: lower-case
+      number: "31"
+    deadCriteriaTime: 5
+    deadCriteriaTries: 3
+    deadtime: 3

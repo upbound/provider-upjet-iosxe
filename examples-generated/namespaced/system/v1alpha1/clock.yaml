@@ -1,0 +1,26 @@
+apiVersion: system.iosxe.m.upbound.io/v1alpha1
+kind: Clock
+metadata:
+  annotations:
+    meta.upbound.io/example-id: system/v1alpha1/clock
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    calendarValid: true
+    summerTimeRecurring: true
+    summerTimeRecurringEndMonth: Dec
+    summerTimeRecurringEndTime: "00:00"
+    summerTimeRecurringEndWeek: "1"
+    summerTimeRecurringEndWeekday: Mon
+    summerTimeRecurringOffset: 60
+    summerTimeRecurringStartMonth: Jan
+    summerTimeRecurringStartTime: "00:00"
+    summerTimeRecurringStartWeek: "1"
+    summerTimeRecurringStartWeekday: Mon
+    summerTimeZone: CET
+    timezone: CET
+    timezoneOffsetHours: 1
+    timezoneOffsetMinutes: 0

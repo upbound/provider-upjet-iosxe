@@ -1,0 +1,33 @@
+apiVersion: flow.iosxe.upbound.io/v1alpha1
+kind: Record
+metadata:
+  annotations:
+    meta.upbound.io/example-id: flow/v1alpha1/record
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    collectCounterBytesLong: true
+    collectCounterPacketsLong: true
+    collectInterfaceOutput: true
+    collectTimestampAbsoluteFirst: true
+    collectTimestampAbsoluteLast: true
+    collectTransportTcpFlags: true
+    description: My flow record
+    matchDatalinkMacDestinationAddressInput: true
+    matchDatalinkMacSourceAddressInput: true
+    matchFlowCtsDestinationGroupTag: true
+    matchFlowCtsSourceGroupTag: true
+    matchFlowDirection: true
+    matchInterfaceInput: true
+    matchIpv4DestinationAddress: true
+    matchIpv4Protocol: true
+    matchIpv4SourceAddress: true
+    matchIpv4Tos: true
+    matchIpv4Ttl: true
+    matchRoutingVrfInput: true
+    matchTransportDestinationPort: true
+    matchTransportSourcePort: true
+    matchVxlanVnid: true
+    name: FNF1

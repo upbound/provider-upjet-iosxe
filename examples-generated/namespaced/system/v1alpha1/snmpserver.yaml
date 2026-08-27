@@ -1,0 +1,141 @@
+apiVersion: system.iosxe.m.upbound.io/v1alpha1
+kind: SNMPServer
+metadata:
+  annotations:
+    meta.upbound.io/example-id: system/v1alpha1/snmpserver
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    chassisId: R1
+    contact: Contact1
+    contexts:
+    - name: CON1
+    enableLoggingGetop: true
+    enableTraps: true
+    enableTrapsAaaServer: true
+    enableTrapsAuthFrameworkSecViolation: true
+    enableTrapsBfd: true
+    enableTrapsBulkstatCollection: true
+    enableTrapsBulkstatTransfer: true
+    enableTrapsCallHomeMessageSendFail: true
+    enableTrapsCallHomeServerFail: true
+    enableTrapsConfig: true
+    enableTrapsConfigCopy: true
+    enableTrapsConfigCtid: true
+    enableTrapsCpuThreshold: true
+    enableTrapsDhcp: true
+    enableTrapsEigrp: true
+    enableTrapsEntity: true
+    enableTrapsEntityPerfThroughputNotif: true
+    enableTrapsEventManager: true
+    enableTrapsFlashInsertion: true
+    enableTrapsFlashLowspace: true
+    enableTrapsFlashRemoval: true
+    enableTrapsFlowmon: true
+    enableTrapsFruCtrl: true
+    enableTrapsIkePolicyAdd: true
+    enableTrapsIkePolicyDelete: true
+    enableTrapsIkeTunnelStart: true
+    enableTrapsIkeTunnelStop: true
+    enableTrapsIpmulticast: true
+    enableTrapsIpsecCryptomapAdd: true
+    enableTrapsIpsecCryptomapAttach: true
+    enableTrapsIpsecCryptomapDelete: true
+    enableTrapsIpsecCryptomapDetach: true
+    enableTrapsIpsecTooManySas: true
+    enableTrapsIpsecTunnelStart: true
+    enableTrapsIpsecTunnelStop: true
+    enableTrapsIpsla: true
+    enableTrapsMemoryBufferpeak: true
+    enableTrapsMsdp: true
+    enableTrapsOspfConfigErrors: true
+    enableTrapsOspfConfigLsa: true
+    enableTrapsOspfConfigRetransmit: true
+    enableTrapsOspfConfigStateChange: true
+    enableTrapsOspfErrorsEnable: true
+    enableTrapsOspfLsaEnable: true
+    enableTrapsOspfNssaTransChange: true
+    enableTrapsOspfRetransmitEnable: true
+    enableTrapsOspfShamlinkInterface: true
+    enableTrapsOspfShamlinkNeighbor: true
+    enableTrapsOspfv3ConfigErrors: true
+    enableTrapsOspfv3ConfigStateChange: true
+    enableTrapsPimInvalidPimMessage: true
+    enableTrapsPimNeighborChange: true
+    enableTrapsPimRpMappingChange: true
+    enableTrapsPortSecurity: true
+    enableTrapsPwVc: true
+    enableTrapsRf: true
+    enableTrapsSmartLicense: true
+    enableTrapsSnmpAuthentication: true
+    enableTrapsSnmpColdstart: true
+    enableTrapsSnmpLinkdown: true
+    enableTrapsSnmpLinkup: true
+    enableTrapsSnmpWarmstart: true
+    enableTrapsSyslog: true
+    enableTrapsTransceiverAll: true
+    enableTrapsTty: true
+    enableTrapsVlancreate: true
+    enableTrapsVlandelete: true
+    enableTrapsVrfmibVnetTrunkDown: true
+    enableTrapsVrfmibVnetTrunkUp: true
+    enableTrapsVrfmibVrfDown: true
+    enableTrapsVrfmibVrfUp: true
+    enableTrapsVtp: true
+    groups:
+    - name: GROUP1
+      v3Security:
+      - accessIpv6Acl: V6ACL1
+        contextNode: CON1
+        notifyNode: VIEW3
+        readNode: VIEW1
+        securityLevel: priv
+        writeNode: VIEW2
+    hosts:
+    - communityOrUserSecretRef:
+        key: example-key
+        name: example-secret
+      encryption: "7"
+      ipAddress: 11.1.1.1
+      version: 2c
+    location: Location1
+    packetsize: 2000
+    queueLength: 100
+    snmpCommunities:
+    - accessListName: "1"
+      ipv6: ACL1
+      nameSecretRef:
+        key: example-key
+        name: example-secret
+      permission: ro
+      view: VIEW1
+    sourceInterfaceInformsLoopback: 1
+    systemShutdown: true
+    users:
+    - grpname: GROUP1
+      username: USER1
+      v3AuthAlgorithm: sha
+      v3AuthPasswordSecretRef:
+        key: example-key
+        name: example-secret
+      v3AuthPrivAesAccessAclName: ACL123
+      v3AuthPrivAesAccessIpv6Acl: V6ACL1
+      v3AuthPrivAesAlgorithm: "128"
+      v3AuthPrivAesPasswordSecretRef:
+        key: example-key
+        name: example-secret
+    views:
+    - incExl: included
+      mib: interfaces
+      name: VIEW1
+    vrfHosts:
+    - communityOrUserSecretRef:
+        key: example-key
+        name: example-secret
+      encryption: "7"
+      ipAddress: 11.1.1.1
+      version: 2c
+      vrf: VRF1

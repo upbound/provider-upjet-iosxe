@@ -1,0 +1,21 @@
+apiVersion: bfd.iosxe.m.upbound.io/v1alpha1
+kind: TemplateMultiHop
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bfd/v1alpha1/templatemultihop
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    authenticationMd5Keychain: KEYNAME
+    dampeningHalfTime: 21
+    dampeningMaxSuppressingTime: 70
+    dampeningSuppressTime: 1900
+    dampeningUnsuppressTime: 1800
+    echo: true
+    intervalMillisecondsMinRx: 5500
+    intervalMillisecondsMinTx: 4500
+    intervalMillisecondsMultiplier: 40
+    name: T11

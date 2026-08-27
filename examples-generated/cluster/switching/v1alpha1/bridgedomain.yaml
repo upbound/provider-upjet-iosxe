@@ -1,0 +1,16 @@
+apiVersion: switching.iosxe.upbound.io/v1alpha1
+kind: BridgeDomain
+metadata:
+  annotations:
+    meta.upbound.io/example-id: switching/v1alpha1/bridgedomain
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    bridgeDomainId: 836
+    memberInterfaces:
+    - interface: GigabitEthernet2
+      serviceInstances:
+      - instanceId: 836
+    memberVni: 10800

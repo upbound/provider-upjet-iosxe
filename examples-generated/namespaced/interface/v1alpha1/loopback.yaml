@@ -1,0 +1,41 @@
+apiVersion: interface.iosxe.m.upbound.io/v1alpha1
+kind: Loopback
+metadata:
+  annotations:
+    meta.upbound.io/example-id: interface/v1alpha1/loopback
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    arpTimeout: 2147
+    description: My Interface Description
+    ipAccessGroupIn: "1"
+    ipAccessGroupInEnable: true
+    ipAccessGroupOut: "1"
+    ipAccessGroupOutEnable: true
+    ipIgmpVersion: 3
+    ipMtu: 1400
+    ipProxyArp: false
+    ipRedirects: false
+    ipUnreachables: false
+    ipVerifyUnicastSourceAllowDefault: true
+    ipVerifyUnicastSourceAllowSelfPing: true
+    ipVerifyUnicastSourceReachableVia: rx
+    ipv4Address: 200.1.1.1
+    ipv4AddressMask: 255.255.255.255
+    ipv6AddressDhcp: true
+    ipv6Addresses:
+    - eui64: true
+      prefix: 2002:DB8::/32
+    ipv6Enable: true
+    ipv6LinkLocalAddresses:
+    - address: fe80::9656:d028:8652:66b7
+      linkLocal: true
+    ipv6Mtu: 1300
+    name: 201
+    shutdown: false
+    vrfForwardingSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

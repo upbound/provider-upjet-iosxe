@@ -1,0 +1,14 @@
+apiVersion: system.iosxe.upbound.io/v1alpha1
+kind: Banner
+metadata:
+  annotations:
+    meta.upbound.io/example-id: system/v1alpha1/banner
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    execBanner: My Exec Banner
+    loginBanner: My Login Banner
+    motdBanner: My MOTD Banner
+    promptTimeoutBanner: My Prompt-Timeout Banner

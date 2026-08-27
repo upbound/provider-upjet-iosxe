@@ -1,0 +1,22 @@
+apiVersion: system.iosxe.m.upbound.io/v1alpha1
+kind: CDP
+metadata:
+  annotations:
+    meta.upbound.io/example-id: system/v1alpha1/cdp
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    filterTlvList: TLIST
+    holdtime: 15
+    run: true
+    timer: 5
+    tlvLists:
+    - cos: true
+      duplex: true
+      name: TLIST
+      trust: true
+      version: true
+      vtpMgmtDomain: true

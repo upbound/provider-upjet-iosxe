@@ -1,0 +1,14 @@
+apiVersion: crypto.iosxe.upbound.io/v1alpha1
+kind: IPSecTransformSet
+metadata:
+  annotations:
+    meta.upbound.io/example-id: crypto/v1alpha1/ipsectransformset
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    esp: esp-aes
+    espHmac: esp-sha-hmac
+    modeTunnel: true
+    name: TEST

@@ -1,0 +1,53 @@
+apiVersion: interface.iosxe.upbound.io/v1alpha1
+kind: VLAN
+metadata:
+  annotations:
+    meta.upbound.io/example-id: interface/v1alpha1/vlan
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    autostate: false
+    bfdEnable: true
+    bfdLocalAddress: 1.2.3.4
+    bfdTemplate: bfd_template1
+    description: My Interface Description
+    helperAddresses:
+    - address: 10.10.10.10
+      global: false
+      vrf: VRF1
+    ipAccessGroupIn: "1"
+    ipAccessGroupInEnable: true
+    ipAccessGroupOut: "1"
+    ipAccessGroupOutEnable: true
+    ipDhcpRelayInformationOptionVpnId: true
+    ipDhcpRelaySourceInterface: Loopback100
+    ipIgmpVersion: 3
+    ipLocalProxyArp: false
+    ipMtu: 1400
+    ipProxyArp: false
+    ipRedirects: false
+    ipUnreachables: false
+    ipVerifyUnicastSourceAllowDefault: true
+    ipVerifyUnicastSourceAllowSelfPing: true
+    ipVerifyUnicastSourceReachableVia: rx
+    ipv4Address: 10.1.1.1
+    ipv4AddressMask: 255.255.255.0
+    ipv6AddressDhcp: true
+    ipv6Addresses:
+    - eui64: true
+      prefix: 2006:DB8::/32
+    ipv6Enable: true
+    ipv6LinkLocalAddresses:
+    - address: fe80::9656:d028:8652:66bb
+      linkLocal: true
+    ipv6Mtu: 1300
+    ipv6NdRaSuppressAll: true
+    loadInterval: 30
+    macAddress: 0000.dead.beef
+    name: 10
+    shutdown: false
+    vrfForwardingSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

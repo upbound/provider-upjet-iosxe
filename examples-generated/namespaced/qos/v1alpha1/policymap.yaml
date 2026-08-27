@@ -1,0 +1,18 @@
+apiVersion: qos.iosxe.m.upbound.io/v1alpha1
+kind: PolicyMap
+metadata:
+  annotations:
+    meta.upbound.io/example-id: qos/v1alpha1/policymap
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    classes:
+    - actions:
+      - bandwidthPercent: 10
+        type: bandwidth
+      name: CLASS1
+    description: My first policy-map
+    name: POLICY1

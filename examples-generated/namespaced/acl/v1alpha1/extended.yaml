@@ -1,0 +1,31 @@
+apiVersion: acl.iosxe.m.upbound.io/v1alpha1
+kind: Extended
+metadata:
+  annotations:
+    meta.upbound.io/example-id: acl/v1alpha1/extended
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    entries:
+    - aceRuleAction: permit
+      aceRuleProtocol: tcp
+      ack: true
+      destinationHost: 10.1.1.1
+      destinationPortRangeFrom: "1000"
+      destinationPortRangeTo: "2000"
+      dscp: "46"
+      fin: true
+      log: true
+      psh: true
+      remark: Description
+      rst: true
+      sequence: 10
+      sourcePortEqual: "1000"
+      sourcePrefix: 10.0.0.0
+      sourcePrefixMask: 0.0.0.255
+      syn: true
+      urg: true
+    name: EACL1

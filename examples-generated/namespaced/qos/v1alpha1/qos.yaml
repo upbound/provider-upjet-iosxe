@@ -1,0 +1,11 @@
+apiVersion: qos.iosxe.m.upbound.io/v1alpha1
+kind: QOS
+metadata:
+  annotations:
+    meta.upbound.io/example-id: qos/v1alpha1/qos
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider: {}

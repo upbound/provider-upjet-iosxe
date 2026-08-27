@@ -1,0 +1,35 @@
+apiVersion: system.iosxe.upbound.io/v1alpha1
+kind: Service
+metadata:
+  annotations:
+    meta.upbound.io/example-id: system/v1alpha1/service
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    callHome: true
+    compressConfig: true
+    dhcp: true
+    dhcpConfig: true
+    pad: true
+    passwordEncryption: true
+    passwordRecovery: true
+    sequenceNumbers: true
+    tcpKeepalivesIn: true
+    tcpKeepalivesOut: true
+    timestamps: true
+    timestampsDebug: true
+    timestampsDebugDatetime: true
+    timestampsDebugDatetimeLocaltime: true
+    timestampsDebugDatetimeMsec: true
+    timestampsDebugDatetimeShowTimezone: true
+    timestampsDebugDatetimeYear: true
+    timestampsDebugUptime: true
+    timestampsLog: true
+    timestampsLogDatetime: true
+    timestampsLogDatetimeLocaltime: true
+    timestampsLogDatetimeMsec: true
+    timestampsLogDatetimeShowTimezone: true
+    timestampsLogDatetimeYear: true
+    timestampsLogUptime: true

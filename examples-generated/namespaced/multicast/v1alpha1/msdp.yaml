@@ -1,0 +1,35 @@
+apiVersion: multicast.iosxe.m.upbound.io/v1alpha1
+kind: MSDP
+metadata:
+  annotations:
+    meta.upbound.io/example-id: multicast/v1alpha1/msdp
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    originatorId: Loopback100
+    passwords:
+    - addr: 10.1.1.1
+      encryption: 0
+      passwordSecretRef:
+        key: example-key
+        name: example-secret
+    peers:
+    - addr: 10.1.1.1
+      connectSourceLoopback: 100
+      remoteAs: 65000
+    vrfs:
+    - originatorId: Loopback200
+      passwords:
+      - addr: 10.1.1.1
+        encryption: 0
+        passwordSecretRef:
+          key: example-key
+          name: example-secret
+      peers:
+      - addr: 10.1.1.1
+        connectSourceLoopback: 200
+        remoteAs: 65000
+      vrf: VRF1

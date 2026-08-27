@@ -1,0 +1,2161 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: vrfs.ospf.iosxe.m.upbound.io
+spec:
+  group: ospf.iosxe.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - iosxe
+    kind: VRF
+    listKind: VRFList
+    plural: vrfs
+    singular: vrf
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: VRF is the Schema for the VRFs API. This resource can manage
+          the OSPF VRF configuration.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: VRFSpec defines the desired state of VRF
+            properties:
+              forProvider:
+                properties:
+                  areas:
+                    description: (Attributes List) OSPF area parameters (see below
+                      for nested schema)
+                    items:
+                      properties:
+                        areaId:
+                          description: |-
+                            (String) OSPF area ID
+                            OSPF area ID
+                          type: string
+                        authenticationMessageDigest:
+                          description: |-
+                            digest authentication
+                            Use message-digest authentication
+                          type: boolean
+                        nssa:
+                          description: |-
+                            (Boolean) Specify a NSSA area
+                            Specify a NSSA area
+                          type: boolean
+                        nssaDefaultInformationOriginate:
+                          description: |-
+                            (Boolean) Originate Type 7 default into NSSA area
+                            Originate Type 7 default into NSSA area
+                          type: boolean
+                        nssaDefaultInformationOriginateMetric:
+                          description: |-
+                            (Number) OSPF default metric
+                            OSPF default metric
+                            - Range: `0`-`16777214`
+                          type: number
+                        nssaDefaultInformationOriginateMetricType:
+                          description: |-
+                            (Number) OSPF metric type for default routes
+                            OSPF metric type for default routes
+                            - Range: `1`-`2`
+                          type: number
+                        nssaNoRedistribution:
+                          description: |-
+                            (Boolean) No redistribution into this NSSA area
+                            No redistribution into this NSSA area
+                          type: boolean
+                        nssaNoSummary:
+                          description: |-
+                            (Boolean) Do not send summary LSA into NSSA
+                            Do not send summary LSA into NSSA
+                          type: boolean
+                      type: object
+                    type: array
+                  autoCostReferenceBandwidth:
+                    description: |-
+                      (Number) Use reference bandwidth method to assign OSPF cost
+                      Use reference bandwidth method to assign OSPF cost
+                      - Range: `1`-`4294967`
+                    type: number
+                  bfdAllInterfaces:
+                    description: |-
+                      (Boolean) Enable BFD on all interfaces
+                      Enable BFD on all interfaces
+                    type: boolean
+                  defaultInformationOriginate:
+                    description: |-
+                      (Boolean) Distribute a default route
+                      Distribute a default route
+                    type: boolean
+                  defaultInformationOriginateAlways:
+                    description: |-
+                      (Boolean) Always advertise default route
+                      Always advertise default route
+                    type: boolean
+                  defaultInformationOriginateMetric:
+                    description: |-
+                      (Number) OSPF default metric
+                      OSPF default metric
+                      - Range: `1`-`16777214`
+                    type: number
+                  defaultInformationOriginateMetricType:
+                    description: |-
+                      (Number) OSPF metric type for default routes
+                      OSPF metric type for default routes
+                      - Range: `1`-`2`
+                    type: number
+                  defaultInformationOriginateRouteMap:
+                    description: |-
+                      (String) Route map reference
+                      Route map reference
+                    type: string
+                  defaultMetric:
+                    description: |-
+                      (Number) Set metric of redistributed routes
+                      Set metric of redistributed routes
+                      - Range: `1`-`16777214`
+                    type: number
+                  deleteMode:
+                    description: |-
+                      is. Default value is all.
+                      Configure behavior when deleting/destroying the resource. Either delete the entire object (YANG container) being managed, or only delete the individual resource attributes configured explicitly and leave everything else as-is. Default value is `all`.
+                      - Choices: `all`, `attributes`
+                    type: string
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  distance:
+                    description: |-
+                      (Number) Administrative distance
+                      Administrative distance
+                      - Range: `1`-`255`
+                    type: number
+                  distributeListInAccessLists:
+                    description: (Attributes Set) (see below for nested schema)
+                    items:
+                      properties:
+                        accessList:
+                          description: (String)
+                          type: string
+                        in:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  distributeListOutAccessLists:
+                    description: (Attributes Set) (see below for nested schema)
+                    items:
+                      properties:
+                        accessList:
+                          description: (String)
+                          type: string
+                        out:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  domainTag:
+                    description: |-
+                      tag
+                      OSPF domain-tag
+                      - Range: `1`-`4294967295`
+                    type: number
+                  logAdjacencyChanges:
+                    description: |-
+                      (Boolean) Log changes in adjacency state
+                      Log changes in adjacency state
+                    type: boolean
+                  logAdjacencyChangesDetail:
+                    description: |-
+                      (Boolean) Log all state changes
+                      Log all state changes
+                    type: boolean
+                  maxMetricRouterLsa:
+                    description: |-
+                      originated router-LSAs
+                      Maximum metric in self-originated router-LSAs
+                    type: boolean
+                  maxMetricRouterLsaExternalLsaMetric:
+                    description: |-
+                      Range: 1-16777214
+
+                      - Range: `1`-`16777214`
+                    type: number
+                  maxMetricRouterLsaIncludeStub:
+                    description: |-
+                      LSAs
+                      Set maximum metric for stub links in router-LSAs
+                    type: boolean
+                  maxMetricRouterLsaOnStartupTime:
+                    description: |-
+                      Range: 5-86400
+
+                      - Range: `5`-`86400`
+                    type: number
+                  maxMetricRouterLsaOnStartupWaitForBgp:
+                    description: |-
+                      LSA with normal metric
+                      Let BGP decide when to originate router-LSA with normal metric
+                    type: boolean
+                  maxMetricRouterLsaSummaryLsaMetric:
+                    description: |-
+                      Range: 1-16777214
+
+                      - Range: `1`-`16777214`
+                    type: number
+                  mplsLdpAutoconfig:
+                    description: |-
+                      (Boolean) Configure LDP automatic configuration
+                      Configure LDP automatic configuration
+                    type: boolean
+                  mplsLdpSync:
+                    description: |-
+                      IGP Synchronization
+                      Configure LDP-IGP Synchronization
+                    type: boolean
+                  neighbor:
+                    description: (Attributes List) Specify a neighbor router (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        cost:
+                          description: |-
+                            to-multipoint neighbor
+                            OSPF cost for point-to-multipoint neighbor
+                            - Range: `1`-`65535`
+                          type: number
+                        ip:
+                          description: |-
+                            (String) Neighbor address
+                            Neighbor address
+                          type: string
+                        priority:
+                          description: |-
+                            (Number) OSPF topology priority
+                            OSPF priority of non-broadcast neighbor
+                            - Range: `0`-`255`
+                          type: number
+                      type: object
+                    type: array
+                  network:
+                    description: (Attributes List) Enable routing on an IP network
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        area:
+                          description: |-
+                            (String) Set the OSPF area ID
+                            Set the OSPF area ID
+                          type: string
+                        ip:
+                          description: |-
+                            (String) Neighbor address
+                            Network number
+                          type: string
+                        wildcard:
+                          description: |-
+                            (String) OSPF wild card bits
+                            OSPF wild card bits
+                          type: string
+                      type: object
+                    type: array
+                  nsfCisco:
+                    description: |-
+                      stop forwarding
+                      Cisco Non-stop forwarding
+                    type: boolean
+                  nsfCiscoEnforceGlobal:
+                    description: |-
+                      (Boolean) For the whole OSPF process
+                      For the whole OSPF process
+                    type: boolean
+                  nsfIetf:
+                    description: |-
+                      (Boolean) IETF graceful restart
+                      IETF graceful restart
+                    type: boolean
+                  nsfIetfRestartInterval:
+                    description: |-
+                      (Number) Graceful restart interval
+                      Graceful restart interval
+                      - Range: `1`-`1800`
+                    type: number
+                  passiveInterface:
+                    description: (List of String)
+                    items:
+                      type: string
+                    type: array
+                  passiveInterfaceDefault:
+                    description: |-
+                      (Boolean) Suppress routing updates on all interfaces
+                      Suppress routing updates on all interfaces
+                    type: boolean
+                  passiveInterfaceDisableFiveGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableFortyGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableFourHundredGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableHundredGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableLoopbacks:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisablePortChannelSubinterfaces:
+                    description: channel subinterfaces to exclude from passive-interface
+                      default. Requires IOS-XE >= 17.16.1. (see below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisablePortChannels:
+                    description: channel interfaces to exclude from passive-interface
+                      default. Requires IOS-XE >= 17.16.1. (see below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableTenGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableTunnels:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableTwentyFiveGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableTwoGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableTwoHundredGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableVlans:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  priority:
+                    description: |-
+                      (Number) OSPF topology priority
+                      OSPF topology priority
+                      - Range: `0`-`127`
+                    type: number
+                  processId:
+                    description: |-
+                      (Number) Process ID
+                      Process ID
+                      - Range: `1`-`65535`
+                    type: number
+                  redistributeConnectedMetric:
+                    description: |-
+                      (Number) Metric for redistributed routes
+                      Metric for redistributed routes
+                      - Range: `0`-`16777214`
+                    type: number
+                  redistributeConnectedMetricType:
+                    description: |-
+                      IS exterior metric type for redistributed routes
+                      OSPF/IS-IS exterior metric type for redistributed routes
+                      - Choices: `1`, `2`
+                    type: string
+                  redistributeConnectedNssaOnly:
+                    description: |-
+                      (Boolean) Limit redistributed routes to NSSA areas
+                      Limit redistributed routes to NSSA areas
+                    type: boolean
+                  redistributeConnectedRouteMap:
+                    description: |-
+                      (String) Route map reference
+                      Route map reference
+                    type: string
+                  redistributeConnectedSubnets:
+                    description: |-
+                      (Boolean) Consider subnets for redistribution into OSPF (Will be removed in the future)
+                      Consider subnets for redistribution into OSPF (Will be removed in the future)
+                    type: boolean
+                  redistributeConnectedTag:
+                    description: |-
+                      (Number) Set tag for routes redistributed into OSPF
+                      Set tag for routes redistributed into OSPF
+                      - Range: `0`-`4294967295`
+                    type: number
+                  redistributeOspf:
+                    description: (Attributes List) Open Shortest Path First (OSPF)
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        matchExternal1:
+                          description: |-
+                            (String) Redistribute OSPF external routes
+                            Redistribute OSPF external routes
+                            - Choices: `1`, `2`
+                          type: string
+                        matchExternal2:
+                          description: |-
+                            (String) Redistribute OSPF external routes
+                            Redistribute OSPF external routes
+                            - Choices: `1`, `2`
+                          type: string
+                        matchInternal:
+                          description: |-
+                            (Boolean) Redistribute OSPF internal routes
+                            Redistribute OSPF internal routes
+                          type: boolean
+                        matchNssaExternal1:
+                          description: |-
+                            (String) Redistribute OSPF NSSA external routes
+                            Redistribute OSPF NSSA external routes
+                            - Choices: `1`, `2`
+                          type: string
+                        matchNssaExternal2:
+                          description: |-
+                            (String) Redistribute OSPF NSSA external routes
+                            Redistribute OSPF NSSA external routes
+                            - Choices: `1`, `2`
+                          type: string
+                        metric:
+                          description: |-
+                            (Number) Metric for redistributed routes
+                            Metric for redistributed routes
+                            - Range: `0`-`16777214`
+                          type: number
+                        metricType:
+                          description: |-
+                            IS exterior metric type for redistributed routes
+                            OSPF/IS-IS exterior metric type for redistributed routes
+                            - Choices: `1`, `2`
+                          type: string
+                        nssaOnly:
+                          description: |-
+                            (Boolean) Limit redistributed routes to NSSA areas
+                            Limit redistributed routes to NSSA areas
+                          type: boolean
+                        processId:
+                          description: |-
+                            (Number) Process ID
+                            Process ID
+                            - Range: `1`-`65535`
+                          type: number
+                        routeMap:
+                          description: |-
+                            (String) Route map reference
+                            Route map reference
+                          type: string
+                        subnets:
+                          description: |-
+                            (Boolean) Consider subnets for redistribution into OSPF (Will be removed in the future)
+                            Consider subnets for redistribution into OSPF (Will be removed in the future)
+                          type: boolean
+                        tag:
+                          description: |-
+                            (Number) Set tag for routes redistributed into OSPF
+                            Set tag for routes redistributed into OSPF
+                            - Range: `0`-`4294967295`
+                          type: number
+                      type: object
+                    type: array
+                  redistributeStaticMetric:
+                    description: |-
+                      (Number) Metric for redistributed routes
+                      Metric for redistributed routes
+                      - Range: `0`-`16777214`
+                    type: number
+                  redistributeStaticMetricType:
+                    description: |-
+                      IS exterior metric type for redistributed routes
+                      OSPF/IS-IS exterior metric type for redistributed routes
+                      - Choices: `1`, `2`
+                    type: string
+                  redistributeStaticNssaOnly:
+                    description: |-
+                      (Boolean) Limit redistributed routes to NSSA areas
+                      Limit redistributed routes to NSSA areas
+                    type: boolean
+                  redistributeStaticRouteMap:
+                    description: |-
+                      (String) Route map reference
+                      Route map reference
+                    type: string
+                  redistributeStaticSubnets:
+                    description: |-
+                      (Boolean) Consider subnets for redistribution into OSPF (Will be removed in the future)
+                      Consider subnets for redistribution into OSPF (Will be removed in the future)
+                    type: boolean
+                  redistributeStaticTag:
+                    description: |-
+                      (Number) Set tag for routes redistributed into OSPF
+                      Set tag for routes redistributed into OSPF
+                      - Range: `0`-`4294967295`
+                    type: number
+                  routerId:
+                    description: |-
+                      id will take effect immediately (peers will reset)
+                      Configure router identifier. New router-id will take effect immediately (peers will reset)
+                    type: string
+                  shutdown:
+                    description: |-
+                      (Boolean) Shutdown the OSPF protocol under the current instance
+                      Shutdown the OSPF protocol under the current instance
+                    type: boolean
+                  summaryAddress:
+                    description: (Attributes List) Configure IP address summaries
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        ip:
+                          description: |-
+                            (String) Neighbor address
+                            IP summary address
+                          type: string
+                        mask:
+                          description: |-
+                            (String) Summary mask
+                            Summary mask
+                          type: string
+                      type: object
+                    type: array
+                  vrf:
+                    description: |-
+                      (String) VPN Routing/Forwarding Instance
+                      VPN Routing/Forwarding Instance
+                    type: string
+                  vrfRef:
+                    description: Reference to a VRF in routing to populate vrf.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  vrfSelector:
+                    description: Selector for a VRF in routing to populate vrf.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  areas:
+                    description: (Attributes List) OSPF area parameters (see below
+                      for nested schema)
+                    items:
+                      properties:
+                        areaId:
+                          description: |-
+                            (String) OSPF area ID
+                            OSPF area ID
+                          type: string
+                        authenticationMessageDigest:
+                          description: |-
+                            digest authentication
+                            Use message-digest authentication
+                          type: boolean
+                        nssa:
+                          description: |-
+                            (Boolean) Specify a NSSA area
+                            Specify a NSSA area
+                          type: boolean
+                        nssaDefaultInformationOriginate:
+                          description: |-
+                            (Boolean) Originate Type 7 default into NSSA area
+                            Originate Type 7 default into NSSA area
+                          type: boolean
+                        nssaDefaultInformationOriginateMetric:
+                          description: |-
+                            (Number) OSPF default metric
+                            OSPF default metric
+                            - Range: `0`-`16777214`
+                          type: number
+                        nssaDefaultInformationOriginateMetricType:
+                          description: |-
+                            (Number) OSPF metric type for default routes
+                            OSPF metric type for default routes
+                            - Range: `1`-`2`
+                          type: number
+                        nssaNoRedistribution:
+                          description: |-
+                            (Boolean) No redistribution into this NSSA area
+                            No redistribution into this NSSA area
+                          type: boolean
+                        nssaNoSummary:
+                          description: |-
+                            (Boolean) Do not send summary LSA into NSSA
+                            Do not send summary LSA into NSSA
+                          type: boolean
+                      type: object
+                    type: array
+                  autoCostReferenceBandwidth:
+                    description: |-
+                      (Number) Use reference bandwidth method to assign OSPF cost
+                      Use reference bandwidth method to assign OSPF cost
+                      - Range: `1`-`4294967`
+                    type: number
+                  bfdAllInterfaces:
+                    description: |-
+                      (Boolean) Enable BFD on all interfaces
+                      Enable BFD on all interfaces
+                    type: boolean
+                  defaultInformationOriginate:
+                    description: |-
+                      (Boolean) Distribute a default route
+                      Distribute a default route
+                    type: boolean
+                  defaultInformationOriginateAlways:
+                    description: |-
+                      (Boolean) Always advertise default route
+                      Always advertise default route
+                    type: boolean
+                  defaultInformationOriginateMetric:
+                    description: |-
+                      (Number) OSPF default metric
+                      OSPF default metric
+                      - Range: `1`-`16777214`
+                    type: number
+                  defaultInformationOriginateMetricType:
+                    description: |-
+                      (Number) OSPF metric type for default routes
+                      OSPF metric type for default routes
+                      - Range: `1`-`2`
+                    type: number
+                  defaultInformationOriginateRouteMap:
+                    description: |-
+                      (String) Route map reference
+                      Route map reference
+                    type: string
+                  defaultMetric:
+                    description: |-
+                      (Number) Set metric of redistributed routes
+                      Set metric of redistributed routes
+                      - Range: `1`-`16777214`
+                    type: number
+                  deleteMode:
+                    description: |-
+                      is. Default value is all.
+                      Configure behavior when deleting/destroying the resource. Either delete the entire object (YANG container) being managed, or only delete the individual resource attributes configured explicitly and leave everything else as-is. Default value is `all`.
+                      - Choices: `all`, `attributes`
+                    type: string
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  distance:
+                    description: |-
+                      (Number) Administrative distance
+                      Administrative distance
+                      - Range: `1`-`255`
+                    type: number
+                  distributeListInAccessLists:
+                    description: (Attributes Set) (see below for nested schema)
+                    items:
+                      properties:
+                        accessList:
+                          description: (String)
+                          type: string
+                        in:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  distributeListOutAccessLists:
+                    description: (Attributes Set) (see below for nested schema)
+                    items:
+                      properties:
+                        accessList:
+                          description: (String)
+                          type: string
+                        out:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  domainTag:
+                    description: |-
+                      tag
+                      OSPF domain-tag
+                      - Range: `1`-`4294967295`
+                    type: number
+                  logAdjacencyChanges:
+                    description: |-
+                      (Boolean) Log changes in adjacency state
+                      Log changes in adjacency state
+                    type: boolean
+                  logAdjacencyChangesDetail:
+                    description: |-
+                      (Boolean) Log all state changes
+                      Log all state changes
+                    type: boolean
+                  maxMetricRouterLsa:
+                    description: |-
+                      originated router-LSAs
+                      Maximum metric in self-originated router-LSAs
+                    type: boolean
+                  maxMetricRouterLsaExternalLsaMetric:
+                    description: |-
+                      Range: 1-16777214
+
+                      - Range: `1`-`16777214`
+                    type: number
+                  maxMetricRouterLsaIncludeStub:
+                    description: |-
+                      LSAs
+                      Set maximum metric for stub links in router-LSAs
+                    type: boolean
+                  maxMetricRouterLsaOnStartupTime:
+                    description: |-
+                      Range: 5-86400
+
+                      - Range: `5`-`86400`
+                    type: number
+                  maxMetricRouterLsaOnStartupWaitForBgp:
+                    description: |-
+                      LSA with normal metric
+                      Let BGP decide when to originate router-LSA with normal metric
+                    type: boolean
+                  maxMetricRouterLsaSummaryLsaMetric:
+                    description: |-
+                      Range: 1-16777214
+
+                      - Range: `1`-`16777214`
+                    type: number
+                  mplsLdpAutoconfig:
+                    description: |-
+                      (Boolean) Configure LDP automatic configuration
+                      Configure LDP automatic configuration
+                    type: boolean
+                  mplsLdpSync:
+                    description: |-
+                      IGP Synchronization
+                      Configure LDP-IGP Synchronization
+                    type: boolean
+                  neighbor:
+                    description: (Attributes List) Specify a neighbor router (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        cost:
+                          description: |-
+                            to-multipoint neighbor
+                            OSPF cost for point-to-multipoint neighbor
+                            - Range: `1`-`65535`
+                          type: number
+                        ip:
+                          description: |-
+                            (String) Neighbor address
+                            Neighbor address
+                          type: string
+                        priority:
+                          description: |-
+                            (Number) OSPF topology priority
+                            OSPF priority of non-broadcast neighbor
+                            - Range: `0`-`255`
+                          type: number
+                      type: object
+                    type: array
+                  network:
+                    description: (Attributes List) Enable routing on an IP network
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        area:
+                          description: |-
+                            (String) Set the OSPF area ID
+                            Set the OSPF area ID
+                          type: string
+                        ip:
+                          description: |-
+                            (String) Neighbor address
+                            Network number
+                          type: string
+                        wildcard:
+                          description: |-
+                            (String) OSPF wild card bits
+                            OSPF wild card bits
+                          type: string
+                      type: object
+                    type: array
+                  nsfCisco:
+                    description: |-
+                      stop forwarding
+                      Cisco Non-stop forwarding
+                    type: boolean
+                  nsfCiscoEnforceGlobal:
+                    description: |-
+                      (Boolean) For the whole OSPF process
+                      For the whole OSPF process
+                    type: boolean
+                  nsfIetf:
+                    description: |-
+                      (Boolean) IETF graceful restart
+                      IETF graceful restart
+                    type: boolean
+                  nsfIetfRestartInterval:
+                    description: |-
+                      (Number) Graceful restart interval
+                      Graceful restart interval
+                      - Range: `1`-`1800`
+                    type: number
+                  passiveInterface:
+                    description: (List of String)
+                    items:
+                      type: string
+                    type: array
+                  passiveInterfaceDefault:
+                    description: |-
+                      (Boolean) Suppress routing updates on all interfaces
+                      Suppress routing updates on all interfaces
+                    type: boolean
+                  passiveInterfaceDisableFiveGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableFortyGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableFourHundredGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableHundredGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableLoopbacks:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisablePortChannelSubinterfaces:
+                    description: channel subinterfaces to exclude from passive-interface
+                      default. Requires IOS-XE >= 17.16.1. (see below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisablePortChannels:
+                    description: channel interfaces to exclude from passive-interface
+                      default. Requires IOS-XE >= 17.16.1. (see below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableTenGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableTunnels:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableTwentyFiveGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableTwoGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableTwoHundredGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableVlans:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  priority:
+                    description: |-
+                      (Number) OSPF topology priority
+                      OSPF topology priority
+                      - Range: `0`-`127`
+                    type: number
+                  processId:
+                    description: |-
+                      (Number) Process ID
+                      Process ID
+                      - Range: `1`-`65535`
+                    type: number
+                  redistributeConnectedMetric:
+                    description: |-
+                      (Number) Metric for redistributed routes
+                      Metric for redistributed routes
+                      - Range: `0`-`16777214`
+                    type: number
+                  redistributeConnectedMetricType:
+                    description: |-
+                      IS exterior metric type for redistributed routes
+                      OSPF/IS-IS exterior metric type for redistributed routes
+                      - Choices: `1`, `2`
+                    type: string
+                  redistributeConnectedNssaOnly:
+                    description: |-
+                      (Boolean) Limit redistributed routes to NSSA areas
+                      Limit redistributed routes to NSSA areas
+                    type: boolean
+                  redistributeConnectedRouteMap:
+                    description: |-
+                      (String) Route map reference
+                      Route map reference
+                    type: string
+                  redistributeConnectedSubnets:
+                    description: |-
+                      (Boolean) Consider subnets for redistribution into OSPF (Will be removed in the future)
+                      Consider subnets for redistribution into OSPF (Will be removed in the future)
+                    type: boolean
+                  redistributeConnectedTag:
+                    description: |-
+                      (Number) Set tag for routes redistributed into OSPF
+                      Set tag for routes redistributed into OSPF
+                      - Range: `0`-`4294967295`
+                    type: number
+                  redistributeOspf:
+                    description: (Attributes List) Open Shortest Path First (OSPF)
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        matchExternal1:
+                          description: |-
+                            (String) Redistribute OSPF external routes
+                            Redistribute OSPF external routes
+                            - Choices: `1`, `2`
+                          type: string
+                        matchExternal2:
+                          description: |-
+                            (String) Redistribute OSPF external routes
+                            Redistribute OSPF external routes
+                            - Choices: `1`, `2`
+                          type: string
+                        matchInternal:
+                          description: |-
+                            (Boolean) Redistribute OSPF internal routes
+                            Redistribute OSPF internal routes
+                          type: boolean
+                        matchNssaExternal1:
+                          description: |-
+                            (String) Redistribute OSPF NSSA external routes
+                            Redistribute OSPF NSSA external routes
+                            - Choices: `1`, `2`
+                          type: string
+                        matchNssaExternal2:
+                          description: |-
+                            (String) Redistribute OSPF NSSA external routes
+                            Redistribute OSPF NSSA external routes
+                            - Choices: `1`, `2`
+                          type: string
+                        metric:
+                          description: |-
+                            (Number) Metric for redistributed routes
+                            Metric for redistributed routes
+                            - Range: `0`-`16777214`
+                          type: number
+                        metricType:
+                          description: |-
+                            IS exterior metric type for redistributed routes
+                            OSPF/IS-IS exterior metric type for redistributed routes
+                            - Choices: `1`, `2`
+                          type: string
+                        nssaOnly:
+                          description: |-
+                            (Boolean) Limit redistributed routes to NSSA areas
+                            Limit redistributed routes to NSSA areas
+                          type: boolean
+                        processId:
+                          description: |-
+                            (Number) Process ID
+                            Process ID
+                            - Range: `1`-`65535`
+                          type: number
+                        routeMap:
+                          description: |-
+                            (String) Route map reference
+                            Route map reference
+                          type: string
+                        subnets:
+                          description: |-
+                            (Boolean) Consider subnets for redistribution into OSPF (Will be removed in the future)
+                            Consider subnets for redistribution into OSPF (Will be removed in the future)
+                          type: boolean
+                        tag:
+                          description: |-
+                            (Number) Set tag for routes redistributed into OSPF
+                            Set tag for routes redistributed into OSPF
+                            - Range: `0`-`4294967295`
+                          type: number
+                      type: object
+                    type: array
+                  redistributeStaticMetric:
+                    description: |-
+                      (Number) Metric for redistributed routes
+                      Metric for redistributed routes
+                      - Range: `0`-`16777214`
+                    type: number
+                  redistributeStaticMetricType:
+                    description: |-
+                      IS exterior metric type for redistributed routes
+                      OSPF/IS-IS exterior metric type for redistributed routes
+                      - Choices: `1`, `2`
+                    type: string
+                  redistributeStaticNssaOnly:
+                    description: |-
+                      (Boolean) Limit redistributed routes to NSSA areas
+                      Limit redistributed routes to NSSA areas
+                    type: boolean
+                  redistributeStaticRouteMap:
+                    description: |-
+                      (String) Route map reference
+                      Route map reference
+                    type: string
+                  redistributeStaticSubnets:
+                    description: |-
+                      (Boolean) Consider subnets for redistribution into OSPF (Will be removed in the future)
+                      Consider subnets for redistribution into OSPF (Will be removed in the future)
+                    type: boolean
+                  redistributeStaticTag:
+                    description: |-
+                      (Number) Set tag for routes redistributed into OSPF
+                      Set tag for routes redistributed into OSPF
+                      - Range: `0`-`4294967295`
+                    type: number
+                  routerId:
+                    description: |-
+                      id will take effect immediately (peers will reset)
+                      Configure router identifier. New router-id will take effect immediately (peers will reset)
+                    type: string
+                  shutdown:
+                    description: |-
+                      (Boolean) Shutdown the OSPF protocol under the current instance
+                      Shutdown the OSPF protocol under the current instance
+                    type: boolean
+                  summaryAddress:
+                    description: (Attributes List) Configure IP address summaries
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        ip:
+                          description: |-
+                            (String) Neighbor address
+                            IP summary address
+                          type: string
+                        mask:
+                          description: |-
+                            (String) Summary mask
+                            Summary mask
+                          type: string
+                      type: object
+                    type: array
+                  vrf:
+                    description: |-
+                      (String) VPN Routing/Forwarding Instance
+                      VPN Routing/Forwarding Instance
+                    type: string
+                  vrfRef:
+                    description: Reference to a VRF in routing to populate vrf.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  vrfSelector:
+                    description: Selector for a VRF in routing to populate vrf.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.processId is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.processId)
+                || (has(self.initProvider) && has(self.initProvider.processId))'
+          status:
+            description: VRFStatus defines the observed state of VRF.
+            properties:
+              atProvider:
+                properties:
+                  areas:
+                    description: (Attributes List) OSPF area parameters (see below
+                      for nested schema)
+                    items:
+                      properties:
+                        areaId:
+                          description: |-
+                            (String) OSPF area ID
+                            OSPF area ID
+                          type: string
+                        authenticationMessageDigest:
+                          description: |-
+                            digest authentication
+                            Use message-digest authentication
+                          type: boolean
+                        nssa:
+                          description: |-
+                            (Boolean) Specify a NSSA area
+                            Specify a NSSA area
+                          type: boolean
+                        nssaDefaultInformationOriginate:
+                          description: |-
+                            (Boolean) Originate Type 7 default into NSSA area
+                            Originate Type 7 default into NSSA area
+                          type: boolean
+                        nssaDefaultInformationOriginateMetric:
+                          description: |-
+                            (Number) OSPF default metric
+                            OSPF default metric
+                            - Range: `0`-`16777214`
+                          type: number
+                        nssaDefaultInformationOriginateMetricType:
+                          description: |-
+                            (Number) OSPF metric type for default routes
+                            OSPF metric type for default routes
+                            - Range: `1`-`2`
+                          type: number
+                        nssaNoRedistribution:
+                          description: |-
+                            (Boolean) No redistribution into this NSSA area
+                            No redistribution into this NSSA area
+                          type: boolean
+                        nssaNoSummary:
+                          description: |-
+                            (Boolean) Do not send summary LSA into NSSA
+                            Do not send summary LSA into NSSA
+                          type: boolean
+                      type: object
+                    type: array
+                  autoCostReferenceBandwidth:
+                    description: |-
+                      (Number) Use reference bandwidth method to assign OSPF cost
+                      Use reference bandwidth method to assign OSPF cost
+                      - Range: `1`-`4294967`
+                    type: number
+                  bfdAllInterfaces:
+                    description: |-
+                      (Boolean) Enable BFD on all interfaces
+                      Enable BFD on all interfaces
+                    type: boolean
+                  defaultInformationOriginate:
+                    description: |-
+                      (Boolean) Distribute a default route
+                      Distribute a default route
+                    type: boolean
+                  defaultInformationOriginateAlways:
+                    description: |-
+                      (Boolean) Always advertise default route
+                      Always advertise default route
+                    type: boolean
+                  defaultInformationOriginateMetric:
+                    description: |-
+                      (Number) OSPF default metric
+                      OSPF default metric
+                      - Range: `1`-`16777214`
+                    type: number
+                  defaultInformationOriginateMetricType:
+                    description: |-
+                      (Number) OSPF metric type for default routes
+                      OSPF metric type for default routes
+                      - Range: `1`-`2`
+                    type: number
+                  defaultInformationOriginateRouteMap:
+                    description: |-
+                      (String) Route map reference
+                      Route map reference
+                    type: string
+                  defaultMetric:
+                    description: |-
+                      (Number) Set metric of redistributed routes
+                      Set metric of redistributed routes
+                      - Range: `1`-`16777214`
+                    type: number
+                  deleteMode:
+                    description: |-
+                      is. Default value is all.
+                      Configure behavior when deleting/destroying the resource. Either delete the entire object (YANG container) being managed, or only delete the individual resource attributes configured explicitly and leave everything else as-is. Default value is `all`.
+                      - Choices: `all`, `attributes`
+                    type: string
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  distance:
+                    description: |-
+                      (Number) Administrative distance
+                      Administrative distance
+                      - Range: `1`-`255`
+                    type: number
+                  distributeListInAccessLists:
+                    description: (Attributes Set) (see below for nested schema)
+                    items:
+                      properties:
+                        accessList:
+                          description: (String)
+                          type: string
+                        in:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  distributeListOutAccessLists:
+                    description: (Attributes Set) (see below for nested schema)
+                    items:
+                      properties:
+                        accessList:
+                          description: (String)
+                          type: string
+                        out:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  domainTag:
+                    description: |-
+                      tag
+                      OSPF domain-tag
+                      - Range: `1`-`4294967295`
+                    type: number
+                  id:
+                    description: (String) The path of the object.
+                    type: string
+                  logAdjacencyChanges:
+                    description: |-
+                      (Boolean) Log changes in adjacency state
+                      Log changes in adjacency state
+                    type: boolean
+                  logAdjacencyChangesDetail:
+                    description: |-
+                      (Boolean) Log all state changes
+                      Log all state changes
+                    type: boolean
+                  maxMetricRouterLsa:
+                    description: |-
+                      originated router-LSAs
+                      Maximum metric in self-originated router-LSAs
+                    type: boolean
+                  maxMetricRouterLsaExternalLsaMetric:
+                    description: |-
+                      Range: 1-16777214
+
+                      - Range: `1`-`16777214`
+                    type: number
+                  maxMetricRouterLsaIncludeStub:
+                    description: |-
+                      LSAs
+                      Set maximum metric for stub links in router-LSAs
+                    type: boolean
+                  maxMetricRouterLsaOnStartupTime:
+                    description: |-
+                      Range: 5-86400
+
+                      - Range: `5`-`86400`
+                    type: number
+                  maxMetricRouterLsaOnStartupWaitForBgp:
+                    description: |-
+                      LSA with normal metric
+                      Let BGP decide when to originate router-LSA with normal metric
+                    type: boolean
+                  maxMetricRouterLsaSummaryLsaMetric:
+                    description: |-
+                      Range: 1-16777214
+
+                      - Range: `1`-`16777214`
+                    type: number
+                  mplsLdpAutoconfig:
+                    description: |-
+                      (Boolean) Configure LDP automatic configuration
+                      Configure LDP automatic configuration
+                    type: boolean
+                  mplsLdpSync:
+                    description: |-
+                      IGP Synchronization
+                      Configure LDP-IGP Synchronization
+                    type: boolean
+                  neighbor:
+                    description: (Attributes List) Specify a neighbor router (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        cost:
+                          description: |-
+                            to-multipoint neighbor
+                            OSPF cost for point-to-multipoint neighbor
+                            - Range: `1`-`65535`
+                          type: number
+                        ip:
+                          description: |-
+                            (String) Neighbor address
+                            Neighbor address
+                          type: string
+                        priority:
+                          description: |-
+                            (Number) OSPF topology priority
+                            OSPF priority of non-broadcast neighbor
+                            - Range: `0`-`255`
+                          type: number
+                      type: object
+                    type: array
+                  network:
+                    description: (Attributes List) Enable routing on an IP network
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        area:
+                          description: |-
+                            (String) Set the OSPF area ID
+                            Set the OSPF area ID
+                          type: string
+                        ip:
+                          description: |-
+                            (String) Neighbor address
+                            Network number
+                          type: string
+                        wildcard:
+                          description: |-
+                            (String) OSPF wild card bits
+                            OSPF wild card bits
+                          type: string
+                      type: object
+                    type: array
+                  nsfCisco:
+                    description: |-
+                      stop forwarding
+                      Cisco Non-stop forwarding
+                    type: boolean
+                  nsfCiscoEnforceGlobal:
+                    description: |-
+                      (Boolean) For the whole OSPF process
+                      For the whole OSPF process
+                    type: boolean
+                  nsfIetf:
+                    description: |-
+                      (Boolean) IETF graceful restart
+                      IETF graceful restart
+                    type: boolean
+                  nsfIetfRestartInterval:
+                    description: |-
+                      (Number) Graceful restart interval
+                      Graceful restart interval
+                      - Range: `1`-`1800`
+                    type: number
+                  passiveInterface:
+                    description: (List of String)
+                    items:
+                      type: string
+                    type: array
+                  passiveInterfaceDefault:
+                    description: |-
+                      (Boolean) Suppress routing updates on all interfaces
+                      Suppress routing updates on all interfaces
+                    type: boolean
+                  passiveInterfaceDisableFiveGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableFortyGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableFourHundredGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableHundredGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableLoopbacks:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisablePortChannelSubinterfaces:
+                    description: channel subinterfaces to exclude from passive-interface
+                      default. Requires IOS-XE >= 17.16.1. (see below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisablePortChannels:
+                    description: channel interfaces to exclude from passive-interface
+                      default. Requires IOS-XE >= 17.16.1. (see below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableTenGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableTunnels:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableTwentyFiveGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableTwoGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableTwoHundredGigabitEthernets:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  passiveInterfaceDisableVlans:
+                    description: interface default. Requires IOS-XE >= 17.16.1. (see
+                      below for nested schema)
+                    items:
+                      properties:
+                        name:
+                          description: (String)
+                          type: string
+                      type: object
+                    type: array
+                  priority:
+                    description: |-
+                      (Number) OSPF topology priority
+                      OSPF topology priority
+                      - Range: `0`-`127`
+                    type: number
+                  processId:
+                    description: |-
+                      (Number) Process ID
+                      Process ID
+                      - Range: `1`-`65535`
+                    type: number
+                  redistributeConnectedMetric:
+                    description: |-
+                      (Number) Metric for redistributed routes
+                      Metric for redistributed routes
+                      - Range: `0`-`16777214`
+                    type: number
+                  redistributeConnectedMetricType:
+                    description: |-
+                      IS exterior metric type for redistributed routes
+                      OSPF/IS-IS exterior metric type for redistributed routes
+                      - Choices: `1`, `2`
+                    type: string
+                  redistributeConnectedNssaOnly:
+                    description: |-
+                      (Boolean) Limit redistributed routes to NSSA areas
+                      Limit redistributed routes to NSSA areas
+                    type: boolean
+                  redistributeConnectedRouteMap:
+                    description: |-
+                      (String) Route map reference
+                      Route map reference
+                    type: string
+                  redistributeConnectedSubnets:
+                    description: |-
+                      (Boolean) Consider subnets for redistribution into OSPF (Will be removed in the future)
+                      Consider subnets for redistribution into OSPF (Will be removed in the future)
+                    type: boolean
+                  redistributeConnectedTag:
+                    description: |-
+                      (Number) Set tag for routes redistributed into OSPF
+                      Set tag for routes redistributed into OSPF
+                      - Range: `0`-`4294967295`
+                    type: number
+                  redistributeOspf:
+                    description: (Attributes List) Open Shortest Path First (OSPF)
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        matchExternal1:
+                          description: |-
+                            (String) Redistribute OSPF external routes
+                            Redistribute OSPF external routes
+                            - Choices: `1`, `2`
+                          type: string
+                        matchExternal2:
+                          description: |-
+                            (String) Redistribute OSPF external routes
+                            Redistribute OSPF external routes
+                            - Choices: `1`, `2`
+                          type: string
+                        matchInternal:
+                          description: |-
+                            (Boolean) Redistribute OSPF internal routes
+                            Redistribute OSPF internal routes
+                          type: boolean
+                        matchNssaExternal1:
+                          description: |-
+                            (String) Redistribute OSPF NSSA external routes
+                            Redistribute OSPF NSSA external routes
+                            - Choices: `1`, `2`
+                          type: string
+                        matchNssaExternal2:
+                          description: |-
+                            (String) Redistribute OSPF NSSA external routes
+                            Redistribute OSPF NSSA external routes
+                            - Choices: `1`, `2`
+                          type: string
+                        metric:
+                          description: |-
+                            (Number) Metric for redistributed routes
+                            Metric for redistributed routes
+                            - Range: `0`-`16777214`
+                          type: number
+                        metricType:
+                          description: |-
+                            IS exterior metric type for redistributed routes
+                            OSPF/IS-IS exterior metric type for redistributed routes
+                            - Choices: `1`, `2`
+                          type: string
+                        nssaOnly:
+                          description: |-
+                            (Boolean) Limit redistributed routes to NSSA areas
+                            Limit redistributed routes to NSSA areas
+                          type: boolean
+                        processId:
+                          description: |-
+                            (Number) Process ID
+                            Process ID
+                            - Range: `1`-`65535`
+                          type: number
+                        routeMap:
+                          description: |-
+                            (String) Route map reference
+                            Route map reference
+                          type: string
+                        subnets:
+                          description: |-
+                            (Boolean) Consider subnets for redistribution into OSPF (Will be removed in the future)
+                            Consider subnets for redistribution into OSPF (Will be removed in the future)
+                          type: boolean
+                        tag:
+                          description: |-
+                            (Number) Set tag for routes redistributed into OSPF
+                            Set tag for routes redistributed into OSPF
+                            - Range: `0`-`4294967295`
+                          type: number
+                      type: object
+                    type: array
+                  redistributeStaticMetric:
+                    description: |-
+                      (Number) Metric for redistributed routes
+                      Metric for redistributed routes
+                      - Range: `0`-`16777214`
+                    type: number
+                  redistributeStaticMetricType:
+                    description: |-
+                      IS exterior metric type for redistributed routes
+                      OSPF/IS-IS exterior metric type for redistributed routes
+                      - Choices: `1`, `2`
+                    type: string
+                  redistributeStaticNssaOnly:
+                    description: |-
+                      (Boolean) Limit redistributed routes to NSSA areas
+                      Limit redistributed routes to NSSA areas
+                    type: boolean
+                  redistributeStaticRouteMap:
+                    description: |-
+                      (String) Route map reference
+                      Route map reference
+                    type: string
+                  redistributeStaticSubnets:
+                    description: |-
+                      (Boolean) Consider subnets for redistribution into OSPF (Will be removed in the future)
+                      Consider subnets for redistribution into OSPF (Will be removed in the future)
+                    type: boolean
+                  redistributeStaticTag:
+                    description: |-
+                      (Number) Set tag for routes redistributed into OSPF
+                      Set tag for routes redistributed into OSPF
+                      - Range: `0`-`4294967295`
+                    type: number
+                  routerId:
+                    description: |-
+                      id will take effect immediately (peers will reset)
+                      Configure router identifier. New router-id will take effect immediately (peers will reset)
+                    type: string
+                  shutdown:
+                    description: |-
+                      (Boolean) Shutdown the OSPF protocol under the current instance
+                      Shutdown the OSPF protocol under the current instance
+                    type: boolean
+                  summaryAddress:
+                    description: (Attributes List) Configure IP address summaries
+                      (see below for nested schema)
+                    items:
+                      properties:
+                        ip:
+                          description: |-
+                            (String) Neighbor address
+                            IP summary address
+                          type: string
+                        mask:
+                          description: |-
+                            (String) Summary mask
+                            Summary mask
+                          type: string
+                      type: object
+                    type: array
+                  vrf:
+                    description: |-
+                      (String) VPN Routing/Forwarding Instance
+                      VPN Routing/Forwarding Instance
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              lastHandledReconcileAt:
+                description: |-
+                  LastHandledReconcileAt holds the value of the most recent
+                  reconcile-requested-at annotation token that the controller has
+                  processed. Users can compare this to the annotation to determine
+                  whether a reconcile request has been handled.
+                type: string
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

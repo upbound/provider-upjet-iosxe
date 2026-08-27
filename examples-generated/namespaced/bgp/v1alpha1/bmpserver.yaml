@@ -1,0 +1,23 @@
+apiVersion: bgp.iosxe.m.upbound.io/v1alpha1
+kind: BMPServer
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bgp/v1alpha1/bmpserver
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    activate: true
+    address: 10.10.10.10
+    asnSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    failureRetryDelay: 30
+    flappingDelay: 60
+    initialDelay: 10
+    portNumber: 1790
+    serverId: 1
+    statsReportingPeriod: 30
+    updateSourceLoopback: 100

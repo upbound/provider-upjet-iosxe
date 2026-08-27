@@ -1,0 +1,1014 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: ipv6s.acl.iosxe.m.upbound.io
+spec:
+  group: acl.iosxe.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - iosxe
+    kind: IPv6
+    listKind: IPv6List
+    plural: ipv6s
+    singular: ipv6
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: IPv6 is the Schema for the IPv6s API. This resource can manage
+          the Access List IPv6 configuration.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: IPv6Spec defines the desired state of IPv6
+            properties:
+              forProvider:
+                properties:
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  entries:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        aceRuleAction:
+                          description: |-
+                            Choices: deny, permit
+
+                            - Choices: `deny`, `permit`
+                          type: string
+                        aceRuleProtocol:
+                          description: (String)
+                          type: string
+                        ack:
+                          description: |-
+                            (Boolean) Match on the ACK bit
+                            Match on the ACK bit
+                          type: boolean
+                        destinationAddress:
+                          description: (String)
+                          type: string
+                        destinationAny:
+                          description: (Boolean)
+                          type: boolean
+                        destinationFqdnGroup:
+                          description: |-
+                            (String) Destination FQDN group
+                            Destination FQDN group
+                          type: string
+                        destinationHost:
+                          description: (String)
+                          type: string
+                        destinationObjectGroup:
+                          description: |-
+                            (String) Destination IPv6 network object group
+                            Destination IPv6 network object group
+                          type: string
+                        destinationPortEqual:
+                          description: |-
+                            (String) Match only packets on a given port number up to 10 ports
+                            Match only packets on a given port number up to 10 ports
+                          type: string
+                        destinationPortEqual2:
+                          description: (String)
+                          type: string
+                        destinationPortEqual3:
+                          description: (String)
+                          type: string
+                        destinationPortEqual4:
+                          description: (String)
+                          type: string
+                        destinationPortEqual5:
+                          description: (String)
+                          type: string
+                        destinationPortEqual6:
+                          description: (String)
+                          type: string
+                        destinationPortEqual7:
+                          description: (String)
+                          type: string
+                        destinationPortEqual8:
+                          description: (String)
+                          type: string
+                        destinationPortEqual9:
+                          description: (String)
+                          type: string
+                        destinationPortEqual10:
+                          description: (String)
+                          type: string
+                        destinationPortGreaterThan:
+                          description: |-
+                            (String) Match only packets with a greater port number
+                            Match only packets with a greater port number
+                          type: string
+                        destinationPortLesserThan:
+                          description: |-
+                            (String) Match only packets with a lower port number
+                            Match only packets with a lower port number
+                          type: string
+                        destinationPortRangeFrom:
+                          description: |-
+                            (String) Match only packets in the range of port numbers
+                            Match only packets in the range of port numbers
+                          type: string
+                        destinationPortRangeTo:
+                          description: |-
+                            (String) Match only packets in the range of port numbers
+                            Match only packets in the range of port numbers
+                          type: string
+                        destinationPrefix:
+                          description: (String)
+                          type: string
+                        destinationWildcardBits:
+                          description: (String)
+                          type: string
+                        dscp:
+                          description: |-
+                            (String) Match packets with given dscp value
+                            Match packets with given dscp value
+                          type: string
+                        established:
+                          description: |-
+                            (Boolean) Match established connections
+                            Match established connections
+                          type: boolean
+                        fin:
+                          description: |-
+                            (Boolean) Match on the FIN bit
+                            Match on the FIN bit
+                          type: boolean
+                        fragments:
+                          description: |-
+                            initial fragments
+                            Check non-initial fragments
+                          type: boolean
+                        icmpMsgCode:
+                          description: |-
+                            Range: 0-255
+
+                            - Range: `0`-`255`
+                          type: number
+                        icmpMsgType:
+                          description: |-
+                            Range: 0-255
+
+                            - Range: `0`-`255`
+                          type: number
+                        icmpNamedMsgType:
+                          description: |-
+                            Choices: beyond-scope, destination-unreachable, dhaad-reply, dhaad-request, echo-reply, echo-request, header, hop-limit, mld-query, mld-reduction, mld-report, mpd-advertisement, mpd-solicitation, nd-na, nd-ns, next-header, no-admin, no-route, packet-too-big, parameter-option, parameter-problem, port-unreachable, reassembly-timeout, redirect, reject-route, renum-command, renum-result, renum-seq-number, router-advertisement, router-renumbering, router-solicitation, source-policy, time-exceeded, unreachable
+
+                            - Choices: `beyond-scope`, `destination-unreachable`, `dhaad-reply`, `dhaad-request`, `echo-reply`, `echo-request`, `header`, `hop-limit`, `mld-query`, `mld-reduction`, `mld-report`, `mpd-advertisement`, `mpd-solicitation`, `nd-na`, `nd-ns`, `next-header`, `no-admin`, `no-route`, `packet-too-big`, `parameter-option`, `parameter-problem`, `port-unreachable`, `reassembly-timeout`, `redirect`, `reject-route`, `renum-command`, `renum-result`, `renum-seq-number`, `router-advertisement`, `router-renumbering`, `router-solicitation`, `source-policy`, `time-exceeded`, `unreachable`
+                          type: string
+                        log:
+                          description: |-
+                            (Boolean) Log matches against this entry
+                            Log matches against this entry
+                          type: boolean
+                        logInput:
+                          description: |-
+                            (Boolean) Log matches against this entry, including input
+                            Log matches against this entry, including input
+                          type: boolean
+                        psh:
+                          description: |-
+                            (Boolean) Match on the PSH bit
+                            Match on the PSH bit
+                          type: boolean
+                        remark:
+                          description: |-
+                            (String) Access list entry comment
+                            Access list entry comment
+                          type: string
+                        rst:
+                          description: |-
+                            (Boolean) Match on the RST bit
+                            Match on the RST bit
+                          type: boolean
+                        sequence:
+                          description: |-
+                            (Number) Sequence number for this entry
+                            Sequence number for this entry
+                            - Range: `1`-`4294967294`
+                          type: number
+                        serviceObjectGroup:
+                          description: |-
+                            (String) Service object group name
+                            Service object group name
+                          type: string
+                        sourceAddress:
+                          description: (String)
+                          type: string
+                        sourceAny:
+                          description: (Boolean)
+                          type: boolean
+                        sourceFqdnGroup:
+                          description: |-
+                            (String) Source FQDN group
+                            Source FQDN group
+                          type: string
+                        sourceHost:
+                          description: (String)
+                          type: string
+                        sourceObjectGroup:
+                          description: |-
+                            (String) Source IPv6 network object group
+                            Source IPv6 network object group
+                          type: string
+                        sourcePortEqual:
+                          description: |-
+                            (String) Match only packets on a given port number up to 10 ports
+                            Match only packets on a given port number up to 10 ports
+                          type: string
+                        sourcePortEqual2:
+                          description: (String)
+                          type: string
+                        sourcePortEqual3:
+                          description: (String)
+                          type: string
+                        sourcePortEqual4:
+                          description: (String)
+                          type: string
+                        sourcePortEqual5:
+                          description: (String)
+                          type: string
+                        sourcePortEqual6:
+                          description: (String)
+                          type: string
+                        sourcePortEqual7:
+                          description: (String)
+                          type: string
+                        sourcePortEqual8:
+                          description: (String)
+                          type: string
+                        sourcePortEqual9:
+                          description: (String)
+                          type: string
+                        sourcePortEqual10:
+                          description: (String)
+                          type: string
+                        sourcePortGreaterThan:
+                          description: |-
+                            (String) Match only packets with a greater port number
+                            Match only packets with a greater port number
+                          type: string
+                        sourcePortLesserThan:
+                          description: |-
+                            (String) Match only packets with a lower port number
+                            Match only packets with a lower port number
+                          type: string
+                        sourcePortRangeFrom:
+                          description: |-
+                            (String) Match only packets in the range of port numbers
+                            Match only packets in the range of port numbers
+                          type: string
+                        sourcePortRangeTo:
+                          description: |-
+                            (String) Match only packets in the range of port numbers
+                            Match only packets in the range of port numbers
+                          type: string
+                        sourcePrefix:
+                          description: (String)
+                          type: string
+                        sourceWildcardBits:
+                          description: (String)
+                          type: string
+                        syn:
+                          description: |-
+                            (Boolean) Match on the SYN bit
+                            Match on the SYN bit
+                          type: boolean
+                        urg:
+                          description: |-
+                            (Boolean) Match on the URG bit
+                            Match on the URG bit
+                          type: boolean
+                      type: object
+                    type: array
+                  name:
+                    description: (String)
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  entries:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        aceRuleAction:
+                          description: |-
+                            Choices: deny, permit
+
+                            - Choices: `deny`, `permit`
+                          type: string
+                        aceRuleProtocol:
+                          description: (String)
+                          type: string
+                        ack:
+                          description: |-
+                            (Boolean) Match on the ACK bit
+                            Match on the ACK bit
+                          type: boolean
+                        destinationAddress:
+                          description: (String)
+                          type: string
+                        destinationAny:
+                          description: (Boolean)
+                          type: boolean
+                        destinationFqdnGroup:
+                          description: |-
+                            (String) Destination FQDN group
+                            Destination FQDN group
+                          type: string
+                        destinationHost:
+                          description: (String)
+                          type: string
+                        destinationObjectGroup:
+                          description: |-
+                            (String) Destination IPv6 network object group
+                            Destination IPv6 network object group
+                          type: string
+                        destinationPortEqual:
+                          description: |-
+                            (String) Match only packets on a given port number up to 10 ports
+                            Match only packets on a given port number up to 10 ports
+                          type: string
+                        destinationPortEqual2:
+                          description: (String)
+                          type: string
+                        destinationPortEqual3:
+                          description: (String)
+                          type: string
+                        destinationPortEqual4:
+                          description: (String)
+                          type: string
+                        destinationPortEqual5:
+                          description: (String)
+                          type: string
+                        destinationPortEqual6:
+                          description: (String)
+                          type: string
+                        destinationPortEqual7:
+                          description: (String)
+                          type: string
+                        destinationPortEqual8:
+                          description: (String)
+                          type: string
+                        destinationPortEqual9:
+                          description: (String)
+                          type: string
+                        destinationPortEqual10:
+                          description: (String)
+                          type: string
+                        destinationPortGreaterThan:
+                          description: |-
+                            (String) Match only packets with a greater port number
+                            Match only packets with a greater port number
+                          type: string
+                        destinationPortLesserThan:
+                          description: |-
+                            (String) Match only packets with a lower port number
+                            Match only packets with a lower port number
+                          type: string
+                        destinationPortRangeFrom:
+                          description: |-
+                            (String) Match only packets in the range of port numbers
+                            Match only packets in the range of port numbers
+                          type: string
+                        destinationPortRangeTo:
+                          description: |-
+                            (String) Match only packets in the range of port numbers
+                            Match only packets in the range of port numbers
+                          type: string
+                        destinationPrefix:
+                          description: (String)
+                          type: string
+                        destinationWildcardBits:
+                          description: (String)
+                          type: string
+                        dscp:
+                          description: |-
+                            (String) Match packets with given dscp value
+                            Match packets with given dscp value
+                          type: string
+                        established:
+                          description: |-
+                            (Boolean) Match established connections
+                            Match established connections
+                          type: boolean
+                        fin:
+                          description: |-
+                            (Boolean) Match on the FIN bit
+                            Match on the FIN bit
+                          type: boolean
+                        fragments:
+                          description: |-
+                            initial fragments
+                            Check non-initial fragments
+                          type: boolean
+                        icmpMsgCode:
+                          description: |-
+                            Range: 0-255
+
+                            - Range: `0`-`255`
+                          type: number
+                        icmpMsgType:
+                          description: |-
+                            Range: 0-255
+
+                            - Range: `0`-`255`
+                          type: number
+                        icmpNamedMsgType:
+                          description: |-
+                            Choices: beyond-scope, destination-unreachable, dhaad-reply, dhaad-request, echo-reply, echo-request, header, hop-limit, mld-query, mld-reduction, mld-report, mpd-advertisement, mpd-solicitation, nd-na, nd-ns, next-header, no-admin, no-route, packet-too-big, parameter-option, parameter-problem, port-unreachable, reassembly-timeout, redirect, reject-route, renum-command, renum-result, renum-seq-number, router-advertisement, router-renumbering, router-solicitation, source-policy, time-exceeded, unreachable
+
+                            - Choices: `beyond-scope`, `destination-unreachable`, `dhaad-reply`, `dhaad-request`, `echo-reply`, `echo-request`, `header`, `hop-limit`, `mld-query`, `mld-reduction`, `mld-report`, `mpd-advertisement`, `mpd-solicitation`, `nd-na`, `nd-ns`, `next-header`, `no-admin`, `no-route`, `packet-too-big`, `parameter-option`, `parameter-problem`, `port-unreachable`, `reassembly-timeout`, `redirect`, `reject-route`, `renum-command`, `renum-result`, `renum-seq-number`, `router-advertisement`, `router-renumbering`, `router-solicitation`, `source-policy`, `time-exceeded`, `unreachable`
+                          type: string
+                        log:
+                          description: |-
+                            (Boolean) Log matches against this entry
+                            Log matches against this entry
+                          type: boolean
+                        logInput:
+                          description: |-
+                            (Boolean) Log matches against this entry, including input
+                            Log matches against this entry, including input
+                          type: boolean
+                        psh:
+                          description: |-
+                            (Boolean) Match on the PSH bit
+                            Match on the PSH bit
+                          type: boolean
+                        remark:
+                          description: |-
+                            (String) Access list entry comment
+                            Access list entry comment
+                          type: string
+                        rst:
+                          description: |-
+                            (Boolean) Match on the RST bit
+                            Match on the RST bit
+                          type: boolean
+                        sequence:
+                          description: |-
+                            (Number) Sequence number for this entry
+                            Sequence number for this entry
+                            - Range: `1`-`4294967294`
+                          type: number
+                        serviceObjectGroup:
+                          description: |-
+                            (String) Service object group name
+                            Service object group name
+                          type: string
+                        sourceAddress:
+                          description: (String)
+                          type: string
+                        sourceAny:
+                          description: (Boolean)
+                          type: boolean
+                        sourceFqdnGroup:
+                          description: |-
+                            (String) Source FQDN group
+                            Source FQDN group
+                          type: string
+                        sourceHost:
+                          description: (String)
+                          type: string
+                        sourceObjectGroup:
+                          description: |-
+                            (String) Source IPv6 network object group
+                            Source IPv6 network object group
+                          type: string
+                        sourcePortEqual:
+                          description: |-
+                            (String) Match only packets on a given port number up to 10 ports
+                            Match only packets on a given port number up to 10 ports
+                          type: string
+                        sourcePortEqual2:
+                          description: (String)
+                          type: string
+                        sourcePortEqual3:
+                          description: (String)
+                          type: string
+                        sourcePortEqual4:
+                          description: (String)
+                          type: string
+                        sourcePortEqual5:
+                          description: (String)
+                          type: string
+                        sourcePortEqual6:
+                          description: (String)
+                          type: string
+                        sourcePortEqual7:
+                          description: (String)
+                          type: string
+                        sourcePortEqual8:
+                          description: (String)
+                          type: string
+                        sourcePortEqual9:
+                          description: (String)
+                          type: string
+                        sourcePortEqual10:
+                          description: (String)
+                          type: string
+                        sourcePortGreaterThan:
+                          description: |-
+                            (String) Match only packets with a greater port number
+                            Match only packets with a greater port number
+                          type: string
+                        sourcePortLesserThan:
+                          description: |-
+                            (String) Match only packets with a lower port number
+                            Match only packets with a lower port number
+                          type: string
+                        sourcePortRangeFrom:
+                          description: |-
+                            (String) Match only packets in the range of port numbers
+                            Match only packets in the range of port numbers
+                          type: string
+                        sourcePortRangeTo:
+                          description: |-
+                            (String) Match only packets in the range of port numbers
+                            Match only packets in the range of port numbers
+                          type: string
+                        sourcePrefix:
+                          description: (String)
+                          type: string
+                        sourceWildcardBits:
+                          description: (String)
+                          type: string
+                        syn:
+                          description: |-
+                            (Boolean) Match on the SYN bit
+                            Match on the SYN bit
+                          type: boolean
+                        urg:
+                          description: |-
+                            (Boolean) Match on the URG bit
+                            Match on the URG bit
+                          type: boolean
+                      type: object
+                    type: array
+                  name:
+                    description: (String)
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+          status:
+            description: IPv6Status defines the observed state of IPv6.
+            properties:
+              atProvider:
+                properties:
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  entries:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        aceRuleAction:
+                          description: |-
+                            Choices: deny, permit
+
+                            - Choices: `deny`, `permit`
+                          type: string
+                        aceRuleProtocol:
+                          description: (String)
+                          type: string
+                        ack:
+                          description: |-
+                            (Boolean) Match on the ACK bit
+                            Match on the ACK bit
+                          type: boolean
+                        destinationAddress:
+                          description: (String)
+                          type: string
+                        destinationAny:
+                          description: (Boolean)
+                          type: boolean
+                        destinationFqdnGroup:
+                          description: |-
+                            (String) Destination FQDN group
+                            Destination FQDN group
+                          type: string
+                        destinationHost:
+                          description: (String)
+                          type: string
+                        destinationObjectGroup:
+                          description: |-
+                            (String) Destination IPv6 network object group
+                            Destination IPv6 network object group
+                          type: string
+                        destinationPortEqual:
+                          description: |-
+                            (String) Match only packets on a given port number up to 10 ports
+                            Match only packets on a given port number up to 10 ports
+                          type: string
+                        destinationPortEqual2:
+                          description: (String)
+                          type: string
+                        destinationPortEqual3:
+                          description: (String)
+                          type: string
+                        destinationPortEqual4:
+                          description: (String)
+                          type: string
+                        destinationPortEqual5:
+                          description: (String)
+                          type: string
+                        destinationPortEqual6:
+                          description: (String)
+                          type: string
+                        destinationPortEqual7:
+                          description: (String)
+                          type: string
+                        destinationPortEqual8:
+                          description: (String)
+                          type: string
+                        destinationPortEqual9:
+                          description: (String)
+                          type: string
+                        destinationPortEqual10:
+                          description: (String)
+                          type: string
+                        destinationPortGreaterThan:
+                          description: |-
+                            (String) Match only packets with a greater port number
+                            Match only packets with a greater port number
+                          type: string
+                        destinationPortLesserThan:
+                          description: |-
+                            (String) Match only packets with a lower port number
+                            Match only packets with a lower port number
+                          type: string
+                        destinationPortRangeFrom:
+                          description: |-
+                            (String) Match only packets in the range of port numbers
+                            Match only packets in the range of port numbers
+                          type: string
+                        destinationPortRangeTo:
+                          description: |-
+                            (String) Match only packets in the range of port numbers
+                            Match only packets in the range of port numbers
+                          type: string
+                        destinationPrefix:
+                          description: (String)
+                          type: string
+                        destinationWildcardBits:
+                          description: (String)
+                          type: string
+                        dscp:
+                          description: |-
+                            (String) Match packets with given dscp value
+                            Match packets with given dscp value
+                          type: string
+                        established:
+                          description: |-
+                            (Boolean) Match established connections
+                            Match established connections
+                          type: boolean
+                        fin:
+                          description: |-
+                            (Boolean) Match on the FIN bit
+                            Match on the FIN bit
+                          type: boolean
+                        fragments:
+                          description: |-
+                            initial fragments
+                            Check non-initial fragments
+                          type: boolean
+                        icmpMsgCode:
+                          description: |-
+                            Range: 0-255
+
+                            - Range: `0`-`255`
+                          type: number
+                        icmpMsgType:
+                          description: |-
+                            Range: 0-255
+
+                            - Range: `0`-`255`
+                          type: number
+                        icmpNamedMsgType:
+                          description: |-
+                            Choices: beyond-scope, destination-unreachable, dhaad-reply, dhaad-request, echo-reply, echo-request, header, hop-limit, mld-query, mld-reduction, mld-report, mpd-advertisement, mpd-solicitation, nd-na, nd-ns, next-header, no-admin, no-route, packet-too-big, parameter-option, parameter-problem, port-unreachable, reassembly-timeout, redirect, reject-route, renum-command, renum-result, renum-seq-number, router-advertisement, router-renumbering, router-solicitation, source-policy, time-exceeded, unreachable
+
+                            - Choices: `beyond-scope`, `destination-unreachable`, `dhaad-reply`, `dhaad-request`, `echo-reply`, `echo-request`, `header`, `hop-limit`, `mld-query`, `mld-reduction`, `mld-report`, `mpd-advertisement`, `mpd-solicitation`, `nd-na`, `nd-ns`, `next-header`, `no-admin`, `no-route`, `packet-too-big`, `parameter-option`, `parameter-problem`, `port-unreachable`, `reassembly-timeout`, `redirect`, `reject-route`, `renum-command`, `renum-result`, `renum-seq-number`, `router-advertisement`, `router-renumbering`, `router-solicitation`, `source-policy`, `time-exceeded`, `unreachable`
+                          type: string
+                        log:
+                          description: |-
+                            (Boolean) Log matches against this entry
+                            Log matches against this entry
+                          type: boolean
+                        logInput:
+                          description: |-
+                            (Boolean) Log matches against this entry, including input
+                            Log matches against this entry, including input
+                          type: boolean
+                        psh:
+                          description: |-
+                            (Boolean) Match on the PSH bit
+                            Match on the PSH bit
+                          type: boolean
+                        remark:
+                          description: |-
+                            (String) Access list entry comment
+                            Access list entry comment
+                          type: string
+                        rst:
+                          description: |-
+                            (Boolean) Match on the RST bit
+                            Match on the RST bit
+                          type: boolean
+                        sequence:
+                          description: |-
+                            (Number) Sequence number for this entry
+                            Sequence number for this entry
+                            - Range: `1`-`4294967294`
+                          type: number
+                        serviceObjectGroup:
+                          description: |-
+                            (String) Service object group name
+                            Service object group name
+                          type: string
+                        sourceAddress:
+                          description: (String)
+                          type: string
+                        sourceAny:
+                          description: (Boolean)
+                          type: boolean
+                        sourceFqdnGroup:
+                          description: |-
+                            (String) Source FQDN group
+                            Source FQDN group
+                          type: string
+                        sourceHost:
+                          description: (String)
+                          type: string
+                        sourceObjectGroup:
+                          description: |-
+                            (String) Source IPv6 network object group
+                            Source IPv6 network object group
+                          type: string
+                        sourcePortEqual:
+                          description: |-
+                            (String) Match only packets on a given port number up to 10 ports
+                            Match only packets on a given port number up to 10 ports
+                          type: string
+                        sourcePortEqual2:
+                          description: (String)
+                          type: string
+                        sourcePortEqual3:
+                          description: (String)
+                          type: string
+                        sourcePortEqual4:
+                          description: (String)
+                          type: string
+                        sourcePortEqual5:
+                          description: (String)
+                          type: string
+                        sourcePortEqual6:
+                          description: (String)
+                          type: string
+                        sourcePortEqual7:
+                          description: (String)
+                          type: string
+                        sourcePortEqual8:
+                          description: (String)
+                          type: string
+                        sourcePortEqual9:
+                          description: (String)
+                          type: string
+                        sourcePortEqual10:
+                          description: (String)
+                          type: string
+                        sourcePortGreaterThan:
+                          description: |-
+                            (String) Match only packets with a greater port number
+                            Match only packets with a greater port number
+                          type: string
+                        sourcePortLesserThan:
+                          description: |-
+                            (String) Match only packets with a lower port number
+                            Match only packets with a lower port number
+                          type: string
+                        sourcePortRangeFrom:
+                          description: |-
+                            (String) Match only packets in the range of port numbers
+                            Match only packets in the range of port numbers
+                          type: string
+                        sourcePortRangeTo:
+                          description: |-
+                            (String) Match only packets in the range of port numbers
+                            Match only packets in the range of port numbers
+                          type: string
+                        sourcePrefix:
+                          description: (String)
+                          type: string
+                        sourceWildcardBits:
+                          description: (String)
+                          type: string
+                        syn:
+                          description: |-
+                            (Boolean) Match on the SYN bit
+                            Match on the SYN bit
+                          type: boolean
+                        urg:
+                          description: |-
+                            (Boolean) Match on the URG bit
+                            Match on the URG bit
+                          type: boolean
+                      type: object
+                    type: array
+                  id:
+                    description: (String) The path of the object.
+                    type: string
+                  name:
+                    description: (String)
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              lastHandledReconcileAt:
+                description: |-
+                  LastHandledReconcileAt holds the value of the most recent
+                  reconcile-requested-at annotation token that the controller has
+                  processed. Users can compare this to the annotation to determine
+                  whether a reconcile request has been handled.
+                type: string
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

@@ -1,0 +1,23 @@
+apiVersion: aaa.iosxe.upbound.io/v1alpha1
+kind: Authorization
+metadata:
+  annotations:
+    meta.upbound.io/example-id: aaa/v1alpha1/authorization
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    console: true
+    execs:
+    - a1Group: GROUP1
+      a2Group: GROUP2
+      a3Group: GROUP3
+      a4Local: true
+      name: EXEC1
+    networks:
+    - a1Group: RGROUP1
+      a2Group: RGROUP2
+      a3Group: RGROUP3
+      a4Local: true
+      id: NET1

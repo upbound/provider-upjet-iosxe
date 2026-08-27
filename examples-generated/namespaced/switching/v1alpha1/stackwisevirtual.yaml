@@ -1,0 +1,14 @@
+apiVersion: switching.iosxe.m.upbound.io/v1alpha1
+kind: StackwiseVirtual
+metadata:
+  annotations:
+    meta.upbound.io/example-id: switching/v1alpha1/stackwisevirtual
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    domain: 10
+    dualActiveDetectionPagp: true
+    dualActiveDetectionPagpTrustChannelGroup: 1

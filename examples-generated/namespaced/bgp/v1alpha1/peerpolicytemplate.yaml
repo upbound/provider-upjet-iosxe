@@ -1,0 +1,22 @@
+apiVersion: bgp.iosxe.m.upbound.io/v1alpha1
+kind: PeerPolicyTemplate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: bgp/v1alpha1/peerpolicytemplate
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    allowasInAsNumber: 2
+    asOverrideSplitHorizon: true
+    asnSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    name: PEERPOLICY_1
+    routeMaps:
+    - inOut: in
+      routeMapName: ROUTEMAP_1
+    routeReflectorClient: true
+    sendCommunity: both

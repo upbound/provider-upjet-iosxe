@@ -1,0 +1,54 @@
+apiVersion: ospf.iosxe.upbound.io/v1alpha1
+kind: OSPFv3AddressFamilyIPv4VRF
+metadata:
+  annotations:
+    meta.upbound.io/example-id: ospf/v1alpha1/ospfv3addressfamilyipv4vrf
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    areas:
+    - areaId: "5"
+      nssa: true
+      nssaDefaultInformationOriginate: true
+      nssaDefaultInformationOriginateMetric: 100
+      nssaDefaultInformationOriginateMetricType: 1
+      nssaNoRedistribution: true
+      nssaNoSummary: true
+    autoCostReferenceBandwidth: 40000
+    bfdAllInterfaces: true
+    capabilityVrf: vrf-lite
+    defaultInformationOriginate: true
+    defaultInformationOriginateAlways: true
+    defaultInformationOriginateMetric: 1000
+    defaultInformationOriginateMetricType: 1
+    defaultMetric: 100
+    distance: 120
+    logAdjacencyChanges: true
+    logAdjacencyChangesDetail: true
+    maxMetricRouterConfigLsaOnStartupWaitForBgp: true
+    maxMetricRouterLsaConfig: true
+    maxMetricRouterLsaConfigExternalLsaMetric: 16711680
+    maxMetricRouterLsaConfigInterAreaLsasMetric: 16711680
+    maxMetricRouterLsaConfigStubPrefixLsa: true
+    passiveInterfaceDefault: true
+    processId: 2
+    redistributeConnected: true
+    redistributeStatic: true
+    routerId: 1.2.3.4
+    shutdown: false
+    summaryPrefix:
+    - prefix: 3.3.3.0/24
+    timersLsaArrival: 15
+    timersPacingLsaGroup: 15
+    timersThrottleLsaAllDelay: 0
+    timersThrottleLsaAllMaxDelay: 5000
+    timersThrottleLsaAllMinDelay: 50
+    timersThrottleSpfDelay: 10
+    timersThrottleSpfMaxDelay: 5000
+    timersThrottleSpfMinDelay: 50
+    unicast: true
+    vrfSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

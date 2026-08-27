@@ -1,0 +1,31 @@
+apiVersion: security.iosxe.m.upbound.io/v1alpha1
+kind: DeviceTracking
+metadata:
+  annotations:
+    meta.upbound.io/example-id: security/v1alpha1/devicetracking
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    bindingReachableLifetime: 7200
+    loggingTheft: true
+    policies:
+    - dataGleanRecoveryDhcp: true
+      dataGleanRecoveryNdp: true
+      destinationGleanRecoveryDhcp: true
+      limitAddressCount: 100
+      name: DT_trunk_policy
+      prefixGlean: true
+      protocolArp: false
+      protocolDhcp4: false
+      protocolDhcp6: false
+      protocolNdp: false
+      securityLevelGlean: true
+      trackingEnable: true
+      trustedPort: true
+    trackingAutoSourceFallbackIpv4: 10.0.0.1
+    trackingAutoSourceFallbackMask: 255.255.255.0
+    trackingAutoSourceFallbackOverride: true
+    trackingRetryInterval: 10

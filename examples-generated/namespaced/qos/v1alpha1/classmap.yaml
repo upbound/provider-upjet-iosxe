@@ -1,0 +1,28 @@
+apiVersion: qos.iosxe.m.upbound.io/v1alpha1
+kind: ClassMap
+metadata:
+  annotations:
+    meta.upbound.io/example-id: qos/v1alpha1/classmap
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: crossplane-system
+spec:
+  forProvider:
+    matchActivatedServiceTemplates:
+    - serviceName: CRITICAL_AUTH_ACCESS
+    matchAuthorizationStatusAuthorized: true
+    matchAuthorizingMethodPriorityGreaterThan:
+    - 20
+    matchMethodDot1X: true
+    matchMethodMab: true
+    matchResultTypeAaaTimeout: true
+    matchResultTypeMethodDot1XAgentNotFound: true
+    matchResultTypeMethodDot1XAuthoritative: true
+    matchResultTypeMethodDot1XMethodTimeout: true
+    matchResultTypeMethodMabAuthoritative: true
+    matchResultTypeSuccess: true
+    name: CM1
+    prematch: match-all
+    subscriber: true
+    type: control

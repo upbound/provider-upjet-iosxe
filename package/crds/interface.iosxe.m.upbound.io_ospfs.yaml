@@ -1,0 +1,701 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: ospfs.interface.iosxe.m.upbound.io
+spec:
+  group: interface.iosxe.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - iosxe
+    kind: OSPF
+    listKind: OSPFList
+    plural: ospfs
+    singular: ospf
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: OSPF is the Schema for the OSPFs API. This resource can manage
+          the Interface OSPF configuration.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: OSPFSpec defines the desired state of OSPF
+            properties:
+              forProvider:
+                properties:
+                  authenticationKeyChain:
+                    description: (String)
+                    type: string
+                  authenticationMessageDigest:
+                    description: |-
+                      digest authentication
+                      Use message-digest authentication
+                    type: boolean
+                  authenticationNull:
+                    description: |-
+                      (Boolean) Use no authentication
+                      Use no authentication
+                    type: boolean
+                  cost:
+                    description: |-
+                      (Number) Route cost of this interface
+                      Route cost of this interface
+                      - Range: `1`-`65535`
+                    type: number
+                  deadInterval:
+                    description: |-
+                      (Number) Interval after which a neighbor is declared dead
+                      Interval after which a neighbor is declared dead
+                      - Range: `1`-`65535`
+                    type: number
+                  deleteMode:
+                    description: |-
+                      is. Default value is all.
+                      Configure behavior when deleting/destroying the resource. Either delete the entire object (YANG container) being managed, or only delete the individual resource attributes configured explicitly and leave everything else as-is. Default value is `all`.
+                      - Choices: `all`, `attributes`
+                    type: string
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  helloInterval:
+                    description: |-
+                      (Number) Time between HELLO packets
+                      Time between HELLO packets
+                      - Range: `1`-`65535`
+                    type: number
+                  messageDigestKeys:
+                    description: (Attributes List) Message digest authentication password
+                      (key) (see below for nested schema)
+                    items:
+                      properties:
+                        id:
+                          description: |-
+                            (String) The path of the object.
+                            Key ID
+                            - Range: `1`-`255`
+                          type: number
+                        md5AuthKeySecretRef:
+                          description: |-
+                            (String, Sensitive) The OSPF password (key) (only the first 16 characters are used)
+                            The OSPF password (key) (only the first 16 characters are used)
+                          properties:
+                            key:
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          type: object
+                        md5AuthKeyWo:
+                          description: |-
+                            only) The write-only value of the attribute.
+                            The write-only value of the attribute.
+                          type: string
+                        md5AuthKeyWoVersion:
+                          description: |-
+                            only version of the attribute.
+                            The write-only version of the attribute.
+                          type: number
+                        md5AuthType:
+                          description: |-
+                            (Number) Encryption type (0 for not yet encrypted, 7 for proprietary)
+                            Encryption type (0 for not yet encrypted, 7 for proprietary)
+                            - Range: `0`-`7`
+                          type: number
+                      type: object
+                    type: array
+                  mtuIgnore:
+                    description: |-
+                      (Boolean) Ignores the MTU in DBD packets
+                      Ignores the MTU in DBD packets
+                    type: boolean
+                  multiAreaIds:
+                    description: area ID (see below for nested schema)
+                    items:
+                      properties:
+                        areaId:
+                          description: |-
+                            area ID
+                            OSPF multi-area ID
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: (String)
+                    type: string
+                  networkTypeBroadcast:
+                    description: |-
+                      access network
+                      Specify OSPF broadcast multi-access network
+                    type: boolean
+                  networkTypeNonBroadcast:
+                    description: |-
+                      (Boolean) Specify OSPF NBMA network
+                      Specify OSPF NBMA network
+                    type: boolean
+                  networkTypePointToMultipoint:
+                    description: |-
+                      to-multipoint network
+                      Specify OSPF point-to-multipoint network
+                    type: boolean
+                  networkTypePointToPoint:
+                    description: |-
+                      to-point network
+                      Specify OSPF point-to-point network
+                    type: boolean
+                  priority:
+                    description: |-
+                      (Number) Router priority
+                      Router priority
+                      - Range: `0`-`255`
+                    type: number
+                  processIds:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        areas:
+                          description: (Attributes List) (see below for nested schema)
+                          items:
+                            properties:
+                              areaId:
+                                description: |-
+                                  area ID
+                                  Set the OSPF area ID
+                                type: string
+                            type: object
+                          type: array
+                        id:
+                          description: |-
+                            (String) The path of the object.
+                            Process ID
+                            - Range: `1`-`65535`
+                          type: number
+                      type: object
+                    type: array
+                  ttlSecurityHops:
+                    description: |-
+                      (Number) IP hops
+                      IP hops
+                      - Range: `1`-`254`
+                    type: number
+                  type:
+                    description: |-
+                      (String) Interface type
+                      Interface type
+                      - Choices: `GigabitEthernet`, `TwoGigabitEthernet`, `FiveGigabitEthernet`, `TenGigabitEthernet`, `TwentyFiveGigE`, `FortyGigabitEthernet`, `FiftyGigabitEthernet`, `HundredGigE`, `TwoHundredGigE`, `FourHundredGigE`, `Loopback`, `Vlan`, `Port-channel`, `Port-channel-subinterface/Port-channel`, `Tunnel`
+                    type: string
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  authenticationKeyChain:
+                    description: (String)
+                    type: string
+                  authenticationMessageDigest:
+                    description: |-
+                      digest authentication
+                      Use message-digest authentication
+                    type: boolean
+                  authenticationNull:
+                    description: |-
+                      (Boolean) Use no authentication
+                      Use no authentication
+                    type: boolean
+                  cost:
+                    description: |-
+                      (Number) Route cost of this interface
+                      Route cost of this interface
+                      - Range: `1`-`65535`
+                    type: number
+                  deadInterval:
+                    description: |-
+                      (Number) Interval after which a neighbor is declared dead
+                      Interval after which a neighbor is declared dead
+                      - Range: `1`-`65535`
+                    type: number
+                  deleteMode:
+                    description: |-
+                      is. Default value is all.
+                      Configure behavior when deleting/destroying the resource. Either delete the entire object (YANG container) being managed, or only delete the individual resource attributes configured explicitly and leave everything else as-is. Default value is `all`.
+                      - Choices: `all`, `attributes`
+                    type: string
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  helloInterval:
+                    description: |-
+                      (Number) Time between HELLO packets
+                      Time between HELLO packets
+                      - Range: `1`-`65535`
+                    type: number
+                  messageDigestKeys:
+                    description: (Attributes List) Message digest authentication password
+                      (key) (see below for nested schema)
+                    items:
+                      properties:
+                        id:
+                          description: |-
+                            (String) The path of the object.
+                            Key ID
+                            - Range: `1`-`255`
+                          type: number
+                        md5AuthKeySecretRef:
+                          description: |-
+                            (String, Sensitive) The OSPF password (key) (only the first 16 characters are used)
+                            The OSPF password (key) (only the first 16 characters are used)
+                          properties:
+                            key:
+                              type: string
+                            name:
+                              description: Name of the secret.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          type: object
+                        md5AuthKeyWo:
+                          description: |-
+                            only) The write-only value of the attribute.
+                            The write-only value of the attribute.
+                          type: string
+                        md5AuthKeyWoVersion:
+                          description: |-
+                            only version of the attribute.
+                            The write-only version of the attribute.
+                          type: number
+                        md5AuthType:
+                          description: |-
+                            (Number) Encryption type (0 for not yet encrypted, 7 for proprietary)
+                            Encryption type (0 for not yet encrypted, 7 for proprietary)
+                            - Range: `0`-`7`
+                          type: number
+                      type: object
+                    type: array
+                  mtuIgnore:
+                    description: |-
+                      (Boolean) Ignores the MTU in DBD packets
+                      Ignores the MTU in DBD packets
+                    type: boolean
+                  multiAreaIds:
+                    description: area ID (see below for nested schema)
+                    items:
+                      properties:
+                        areaId:
+                          description: |-
+                            area ID
+                            OSPF multi-area ID
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: (String)
+                    type: string
+                  networkTypeBroadcast:
+                    description: |-
+                      access network
+                      Specify OSPF broadcast multi-access network
+                    type: boolean
+                  networkTypeNonBroadcast:
+                    description: |-
+                      (Boolean) Specify OSPF NBMA network
+                      Specify OSPF NBMA network
+                    type: boolean
+                  networkTypePointToMultipoint:
+                    description: |-
+                      to-multipoint network
+                      Specify OSPF point-to-multipoint network
+                    type: boolean
+                  networkTypePointToPoint:
+                    description: |-
+                      to-point network
+                      Specify OSPF point-to-point network
+                    type: boolean
+                  priority:
+                    description: |-
+                      (Number) Router priority
+                      Router priority
+                      - Range: `0`-`255`
+                    type: number
+                  processIds:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        areas:
+                          description: (Attributes List) (see below for nested schema)
+                          items:
+                            properties:
+                              areaId:
+                                description: |-
+                                  area ID
+                                  Set the OSPF area ID
+                                type: string
+                            type: object
+                          type: array
+                        id:
+                          description: |-
+                            (String) The path of the object.
+                            Process ID
+                            - Range: `1`-`65535`
+                          type: number
+                      type: object
+                    type: array
+                  ttlSecurityHops:
+                    description: |-
+                      (Number) IP hops
+                      IP hops
+                      - Range: `1`-`254`
+                    type: number
+                  type:
+                    description: |-
+                      (String) Interface type
+                      Interface type
+                      - Choices: `GigabitEthernet`, `TwoGigabitEthernet`, `FiveGigabitEthernet`, `TenGigabitEthernet`, `TwentyFiveGigE`, `FortyGigabitEthernet`, `FiftyGigabitEthernet`, `HundredGigE`, `TwoHundredGigE`, `FourHundredGigE`, `Loopback`, `Vlan`, `Port-channel`, `Port-channel-subinterface/Port-channel`, `Tunnel`
+                    type: string
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.name is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.name)
+                || (has(self.initProvider) && has(self.initProvider.name))'
+            - message: spec.forProvider.type is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.type)
+                || (has(self.initProvider) && has(self.initProvider.type))'
+          status:
+            description: OSPFStatus defines the observed state of OSPF.
+            properties:
+              atProvider:
+                properties:
+                  authenticationKeyChain:
+                    description: (String)
+                    type: string
+                  authenticationMessageDigest:
+                    description: |-
+                      digest authentication
+                      Use message-digest authentication
+                    type: boolean
+                  authenticationNull:
+                    description: |-
+                      (Boolean) Use no authentication
+                      Use no authentication
+                    type: boolean
+                  cost:
+                    description: |-
+                      (Number) Route cost of this interface
+                      Route cost of this interface
+                      - Range: `1`-`65535`
+                    type: number
+                  deadInterval:
+                    description: |-
+                      (Number) Interval after which a neighbor is declared dead
+                      Interval after which a neighbor is declared dead
+                      - Range: `1`-`65535`
+                    type: number
+                  deleteMode:
+                    description: |-
+                      is. Default value is all.
+                      Configure behavior when deleting/destroying the resource. Either delete the entire object (YANG container) being managed, or only delete the individual resource attributes configured explicitly and leave everything else as-is. Default value is `all`.
+                      - Choices: `all`, `attributes`
+                    type: string
+                  device:
+                    description: |-
+                      (String) A device name from the provider configuration.
+                      A device name from the provider configuration.
+                    type: string
+                  helloInterval:
+                    description: |-
+                      (Number) Time between HELLO packets
+                      Time between HELLO packets
+                      - Range: `1`-`65535`
+                    type: number
+                  id:
+                    description: (String) The path of the object.
+                    type: string
+                  messageDigestKeys:
+                    description: (Attributes List) Message digest authentication password
+                      (key) (see below for nested schema)
+                    items:
+                      properties:
+                        id:
+                          description: |-
+                            (String) The path of the object.
+                            Key ID
+                            - Range: `1`-`255`
+                          type: number
+                        md5AuthKeyWo:
+                          description: |-
+                            only) The write-only value of the attribute.
+                            The write-only value of the attribute.
+                          type: string
+                        md5AuthKeyWoVersion:
+                          description: |-
+                            only version of the attribute.
+                            The write-only version of the attribute.
+                          type: number
+                        md5AuthType:
+                          description: |-
+                            (Number) Encryption type (0 for not yet encrypted, 7 for proprietary)
+                            Encryption type (0 for not yet encrypted, 7 for proprietary)
+                            - Range: `0`-`7`
+                          type: number
+                      type: object
+                    type: array
+                  mtuIgnore:
+                    description: |-
+                      (Boolean) Ignores the MTU in DBD packets
+                      Ignores the MTU in DBD packets
+                    type: boolean
+                  multiAreaIds:
+                    description: area ID (see below for nested schema)
+                    items:
+                      properties:
+                        areaId:
+                          description: |-
+                            area ID
+                            OSPF multi-area ID
+                          type: string
+                      type: object
+                    type: array
+                  name:
+                    description: (String)
+                    type: string
+                  networkTypeBroadcast:
+                    description: |-
+                      access network
+                      Specify OSPF broadcast multi-access network
+                    type: boolean
+                  networkTypeNonBroadcast:
+                    description: |-
+                      (Boolean) Specify OSPF NBMA network
+                      Specify OSPF NBMA network
+                    type: boolean
+                  networkTypePointToMultipoint:
+                    description: |-
+                      to-multipoint network
+                      Specify OSPF point-to-multipoint network
+                    type: boolean
+                  networkTypePointToPoint:
+                    description: |-
+                      to-point network
+                      Specify OSPF point-to-point network
+                    type: boolean
+                  priority:
+                    description: |-
+                      (Number) Router priority
+                      Router priority
+                      - Range: `0`-`255`
+                    type: number
+                  processIds:
+                    description: (Attributes List) (see below for nested schema)
+                    items:
+                      properties:
+                        areas:
+                          description: (Attributes List) (see below for nested schema)
+                          items:
+                            properties:
+                              areaId:
+                                description: |-
+                                  area ID
+                                  Set the OSPF area ID
+                                type: string
+                            type: object
+                          type: array
+                        id:
+                          description: |-
+                            (String) The path of the object.
+                            Process ID
+                            - Range: `1`-`65535`
+                          type: number
+                      type: object
+                    type: array
+                  ttlSecurityHops:
+                    description: |-
+                      (Number) IP hops
+                      IP hops
+                      - Range: `1`-`254`
+                    type: number
+                  type:
+                    description: |-
+                      (String) Interface type
+                      Interface type
+                      - Choices: `GigabitEthernet`, `TwoGigabitEthernet`, `FiveGigabitEthernet`, `TenGigabitEthernet`, `TwentyFiveGigE`, `FortyGigabitEthernet`, `FiftyGigabitEthernet`, `HundredGigE`, `TwoHundredGigE`, `FourHundredGigE`, `Loopback`, `Vlan`, `Port-channel`, `Port-channel-subinterface/Port-channel`, `Tunnel`
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              lastHandledReconcileAt:
+                description: |-
+                  LastHandledReconcileAt holds the value of the most recent
+                  reconcile-requested-at annotation token that the controller has
+                  processed. Users can compare this to the annotation to determine
+                  whether a reconcile request has been handled.
+                type: string
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

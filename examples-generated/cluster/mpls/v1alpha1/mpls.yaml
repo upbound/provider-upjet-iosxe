@@ -1,0 +1,11 @@
+apiVersion: mpls.iosxe.upbound.io/v1alpha1
+kind: MPLS
+metadata:
+  annotations:
+    meta.upbound.io/example-id: mpls/v1alpha1/mpls
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    labelModeAllVrfsAllAfsPerVrf: true
