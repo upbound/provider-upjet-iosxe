@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"time"
@@ -26,6 +27,7 @@ import (
 	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/apimachinery/pkg/util/wait"
 	"k8s.io/client-go/tools/leaderelection/resourcelock"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/cache"
@@ -49,6 +51,12 @@ import (
 )
 
 const (
+	// crdWatchGracePeriod bounds how long the SafeStart precheck waits for the
+	// ClusterRole that Crossplane creates from the ProviderRevision to be bound
+	// to the service account the provider runs as.
+	crdWatchGracePeriod   = 30 * time.Second
+	crdWatchRetryInterval = 2 * time.Second
+
 	webhookTLSCertDirEnvVar = "WEBHOOK_TLS_CERT_DIR"
 	tlsServerCertDirEnvVar  = "TLS_SERVER_CERTS_DIR"
 	certsDirEnvVar          = "CERTS_DIR"
@@ -86,10 +94,14 @@ func main() {
 
 	zl := zap.New(zap.UseDevMode(*debug))
 	log := logging.NewLogrLogger(zl.WithName("provider-upjet-iosxe"))
+	// The controller-runtime is *very* verbose even at info level, so it logs
+	// to a discarded sink unless we are running in debug mode. The sink is
+	// installed unconditionally: leaving it unset makes controller-runtime
+	// print a "log.SetLogger(...) was never called" warning, together with the
+	// stack trace of whichever goroutine happened to log first, 30 seconds
+	// into every start.
+	ctrl.SetLogger(zap.New(zap.WriteTo(io.Discard)))
 	if *debug {
-		// The controller-runtime runs with a no-op logger by default. It is
-		// *very* verbose even at info level, so we only provide it a real
-		// logger when we're running in debug mode.
 		ctrl.SetLogger(zl)
 	}
 
@@ -244,7 +256,7 @@ func main() {
 		namespacedOpts.ChangeLogOptions = &clo
 	}
 
-	canSafeStart, err := canWatchCRD(context.TODO(), mgr)
+	canSafeStart, err := canWatchCRD(context.TODO(), mgr, log)
 	kingpin.FatalIfError(err, "SafeStart precheck failed")
 	if canSafeStart {
 		crdGate := new(gate.Gate[schema.GroupVersionKind])
@@ -258,7 +270,10 @@ func main() {
 		kingpin.FatalIfError(controllerCluster.SetupGated(mgr, clusterOpts), "Cannot setup cluster-scoped IOSXE controllers")
 		kingpin.FatalIfError(controllerNamespaced.SetupGated(mgr, namespacedOpts), "Cannot setup namespaced IOSXE controllers")
 	} else {
-		log.Info("Provider has missing RBAC permissions for watching CRDs, controller SafeStart capability will be disabled")
+		log.Info("Provider has missing RBAC permissions for watching CRDs, controller SafeStart capability will be disabled. "+
+			"Crossplane grants these permissions only to packages declaring the safe-start capability, through a ClusterRole "+
+			"owned by the ProviderRevision; check that the package metadata declares it and that the RBAC manager is enabled.",
+			"grace-period", crdWatchGracePeriod.String())
 		kingpin.FatalIfError(controllerCluster.Setup(mgr, clusterOpts), "Cannot setup cluster-scoped IOSXE controllers")
 		kingpin.FatalIfError(controllerNamespaced.Setup(mgr, namespacedOpts), "Cannot setup namespaced IOSXE controllers")
 	}
@@ -266,12 +281,47 @@ func main() {
 	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
 }
 
-func canWatchCRD(ctx context.Context, mgr manager.Manager) (bool, error) {
+// canWatchCRD reports whether the provider may watch CustomResourceDefinitions,
+// which is what the SafeStart capability needs in order to gate each controller
+// on its own CRD.
+//
+// Crossplane creates the ClusterRole carrying these permissions from the
+// ProviderRevision, so it can land after the pod is already running. The check
+// is therefore retried for a grace period rather than decided on the first
+// answer: a single early "no" would otherwise disable SafeStart for the whole
+// life of the pod.
+func canWatchCRD(ctx context.Context, mgr manager.Manager, log logging.Logger) (bool, error) {
 	if err := authv1.AddToScheme(mgr.GetScheme()); err != nil {
 		return false, err
 	}
-	verbs := []string{"get", "list", "watch"}
-	for _, verb := range verbs {
+
+	var denied string
+	err := wait.PollUntilContextTimeout(ctx, crdWatchRetryInterval, crdWatchGracePeriod, true, func(ctx context.Context) (bool, error) {
+		var err error
+		if denied, err = deniedCRDVerb(ctx, mgr.GetClient()); err != nil {
+			return false, err
+		}
+		if denied != "" {
+			log.Debug("Waiting for the RBAC permissions that the SafeStart capability needs", "denied-verb", denied)
+			return false, nil
+		}
+		return true, nil
+	})
+	switch {
+	case wait.Interrupted(err):
+		return false, nil
+	case err != nil:
+		return false, err
+	default:
+		return true, nil
+	}
+}
+
+// deniedCRDVerb returns the first of the verbs that the SafeStart capability
+// needs on CustomResourceDefinitions that the provider is not allowed to use,
+// or the empty string when all of them are allowed.
+func deniedCRDVerb(ctx context.Context, crClient client.Client) (string, error) {
+	for _, verb := range []string{"get", "list", "watch"} {
 		sar := &authv1.SelfSubjectAccessReview{
 			Spec: authv1.SelfSubjectAccessReviewSpec{
 				ResourceAttributes: &authv1.ResourceAttributes{
@@ -281,12 +331,12 @@ func canWatchCRD(ctx context.Context, mgr manager.Manager) (bool, error) {
 				},
 			},
 		}
-		if err := mgr.GetClient().Create(ctx, sar); err != nil {
-			return false, errors.Wrapf(err, "unable to perform RBAC check for verb %s on CustomResourceDefinitions", verbs)
+		if err := crClient.Create(ctx, sar); err != nil {
+			return "", errors.Wrapf(err, "unable to perform RBAC check for verb %s on CustomResourceDefinitions", verb)
 		}
 		if !sar.Status.Allowed {
-			return false, nil
+			return verb, nil
 		}
 	}
-	return true, nil
+	return "", nil
 }
