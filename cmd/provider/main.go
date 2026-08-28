@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	stdlog "log"
 	"os"
 	"path/filepath"
 	"time"
@@ -91,17 +92,15 @@ func main() {
 	)
 
 	kingpin.MustParse(app.Parse(os.Args[1:]))
+	stdlog.Default().SetOutput(io.Discard)
+	ctrl.SetLogger(zap.New(zap.WriteTo(io.Discard)))
 
 	zl := zap.New(zap.UseDevMode(*debug))
 	log := logging.NewLogrLogger(zl.WithName("provider-upjet-iosxe"))
-	// The controller-runtime is *very* verbose even at info level, so it logs
-	// to a discarded sink unless we are running in debug mode. The sink is
-	// installed unconditionally: leaving it unset makes controller-runtime
-	// print a "log.SetLogger(...) was never called" warning, together with the
-	// stack trace of whichever goroutine happened to log first, 30 seconds
-	// into every start.
-	ctrl.SetLogger(zap.New(zap.WriteTo(io.Discard)))
 	if *debug {
+		// The controller-runtime runs with a no-op logger by default. It is
+		// *very* verbose even at info level, so we only provide it a real
+		// logger when we're running in debug mode.
 		ctrl.SetLogger(zl)
 	}
 
